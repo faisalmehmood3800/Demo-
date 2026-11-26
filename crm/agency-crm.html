@@ -1,0 +1,1001 @@
+<title>Agency CRM</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: phone-first app shell. Sticky header, one scrolling view, fixed bottom tab bar; widens to a centered 760px column on desktop. */
+:root {
+  --bg: #F3F6F5;
+  --surface: #FFFFFF;
+  --sunk: #E9EEEC;
+  --ink: #13201C;
+  --muted: #5B6A65;
+  --line: #D9E1DE;
+  --accent: #0F6E66;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #DDEFEC;
+  --gold: #A86B12;
+  --gold-soft: #F6EAD4;
+  --good: #1F7A3F;
+  --good-soft: #DFF1E5;
+  --warn: #9A5B00;
+  --warn-soft: #FBEBD0;
+  --bad: #B3261E;
+  --bad-soft: #F8DEDB;
+  --shadow: 0 1px 2px rgba(19,32,28,.06), 0 4px 16px rgba(19,32,28,.06);
+  --f-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --r: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1412; --surface: #151F1C; --sunk: #1C2824; --ink: #E5EEEA; --muted: #93A39D; --line: #263430;
+    --accent: #3CC6B5; --accent-ink: #062320; --accent-soft: #143A35;
+    --gold: #E3B25A; --gold-soft: #3A2E17; --good: #5DCB85; --good-soft: #173323;
+    --warn: #E9A94A; --warn-soft: #3A2A12; --bad: #F07A70; --bad-soft: #3D1B18;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1412; --surface: #151F1C; --sunk: #1C2824; --ink: #E5EEEA; --muted: #93A39D; --line: #263430;
+  --accent: #3CC6B5; --accent-ink: #062320; --accent-soft: #143A35;
+  --gold: #E3B25A; --gold-soft: #3A2E17; --good: #5DCB85; --good-soft: #173323;
+  --warn: #E9A94A; --warn-soft: #3A2A12; --bad: #F07A70; --bad-soft: #3D1B18;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.45; -webkit-tap-highlight-color: transparent; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--surface); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: var(--accent); }
+.num { font-variant-numeric: tabular-nums; }
+
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.top-in { max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+.mark { width: 32px; height: 32px; border-radius: 9px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-family: var(--f-display); font-weight: 700; font-size: 15px; flex: none; }
+.brand h1 { font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brand small { display: block; color: var(--muted); font-size: 12px; }
+
+main { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px calc(96px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 18px; }
+
+.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--surface); border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: max(8px, env(safe-area-inset-left, 0px)); padding-right: max(8px, env(safe-area-inset-right, 0px)); }
+.tabs-in { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 9px 2px 8px; text-decoration: none; color: var(--muted); font-size: 11.5px; font-weight: 500; border-radius: 10px; }
+.tab svg { width: 22px; height: 22px; }
+.tab[aria-current="page"] { color: var(--accent); }
+.tab[aria-current="page"] svg { stroke-width: 2.2; }
+.tab .dot { position: absolute; }
+
+.section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.section-head h2 { font-size: 21px; }
+.section-head p { margin: 2px 0 0; color: var(--muted); font-size: 13.5px; }
+.label { font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 9px 14px; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--ink); min-height: 40px; }
+.btn:hover { background: var(--sunk); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn.good { background: var(--good-soft); border-color: transparent; color: var(--good); }
+.btn.danger { background: var(--bad-soft); border-color: transparent; color: var(--bad); }
+.btn.ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.btn.small { padding: 6px 10px; min-height: 34px; font-size: 13px; }
+.btn:focus-visible, .tab:focus-visible, .chip:focus-visible, .row:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.icon-btn { border: 0; background: transparent; width: 40px; height: 40px; border-radius: 10px; cursor: pointer; display: grid; place-items: center; color: var(--muted); font-size: 22px; }
+.icon-btn:hover { background: var(--sunk); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.hero-money { background: var(--accent); color: var(--accent-ink); border: 0; box-shadow: var(--shadow); }
+.hero-money .label { color: inherit; opacity: .8; }
+.big { font-family: var(--f-display); font-size: clamp(32px, 9vw, 44px); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; }
+.hero-sub { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13.5px; opacity: .92; }
+.hero-sub b { font-weight: 600; }
+
+.target { display: grid; gap: 8px; }
+.target-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.target-top strong { font-family: var(--f-display); font-size: 18px; }
+.bar { height: 10px; background: var(--sunk); border-radius: 99px; overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--gold); border-radius: 99px; }
+.bar.done > span { background: var(--good); }
+.target-meta { font-size: 13px; color: var(--muted); }
+
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 620px) { .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; text-decoration: none; color: var(--ink); display: grid; gap: 2px; }
+.stat b { font-family: var(--f-display); font-size: 24px; font-weight: 600; }
+.stat span { font-size: 12.5px; color: var(--muted); }
+
+.chart { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; align-items: end; height: 150px; padding-top: 18px; }
+.col { display: grid; grid-template-rows: auto 1fr auto; height: 100%; text-align: center; gap: 4px; min-width: 0; }
+.col .val { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.col .track { display: flex; align-items: flex-end; position: relative; border-bottom: 1px solid var(--line); }
+.col .fill { width: 100%; background: var(--accent-soft); border-radius: 6px 6px 0 0; min-height: 2px; }
+.col.current .fill { background: var(--accent); }
+.col .tline { position: absolute; left: -4px; right: -4px; border-top: 2px dashed var(--gold); }
+.col .mon { font-size: 12px; color: var(--muted); }
+.legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+.legend i { display: inline-block; width: 14px; height: 0; border-top: 2px dashed var(--gold); vertical-align: middle; margin-right: 5px; }
+
+.list { display: grid; gap: 10px; }
+.row { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; display: grid; gap: 8px; min-width: 0; }
+button.row, a.row { text-align: left; cursor: pointer; width: 100%; color: var(--ink); text-decoration: none; }
+button.row:hover, a.row:hover { border-color: var(--accent); }
+.row-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; min-width: 0; }
+.row-top > div { min-width: 0; }
+.row h3 { font-size: 16.5px; overflow-wrap: anywhere; }
+.sub { color: var(--muted); font-size: 13.5px; overflow-wrap: anywhere; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 600; }
+.note { font-size: 14px; background: var(--sunk); border-radius: 8px; padding: 8px 10px; overflow-wrap: anywhere; white-space: pre-wrap; }
+.money { font-family: var(--f-display); font-weight: 600; white-space: nowrap; }
+.money.pos { color: var(--good); }
+.money.neg { color: var(--bad); }
+
+.pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 99px; font-size: 12px; font-weight: 600; white-space: nowrap; background: var(--sunk); color: var(--muted); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.accent { background: var(--accent-soft); color: var(--accent); }
+.pill.gold { background: var(--gold-soft); color: var(--gold); }
+
+.chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 12px; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+
+.empty { border: 1.5px dashed var(--line); border-radius: var(--r); padding: 22px 16px; text-align: center; color: var(--muted); display: grid; gap: 10px; justify-items: center; }
+.empty strong { color: var(--ink); font-family: var(--f-display); font-size: 16px; }
+.empty p { margin: 0; max-width: 46ch; font-size: 14px; }
+.banner { border-radius: 10px; padding: 10px 12px; font-size: 13.5px; background: var(--warn-soft); color: var(--warn); }
+.banner.info { background: var(--accent-soft); color: var(--accent); }
+
+.kv { display: grid; grid-template-columns: minmax(90px, auto) 1fr; gap: 8px 14px; font-size: 14px; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; overflow-wrap: anywhere; min-width: 0; }
+.copy { border: 0; background: transparent; color: var(--accent); font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 0 0 0 6px; }
+
+.timeline { display: grid; gap: 0; }
+.talk { display: grid; grid-template-columns: 14px 1fr; gap: 10px; }
+.talk .rail { display: flex; flex-direction: column; align-items: center; }
+.talk .rail::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-top: 5px; flex: none; }
+.talk .rail::after { content: ""; flex: 1; width: 2px; background: var(--line); margin-top: 4px; }
+.talk:last-child .rail::after { display: none; }
+.talk .body { padding-bottom: 14px; min-width: 0; display: grid; gap: 4px; }
+.talk .when { font-size: 12.5px; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+
+.split { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.split > div { background: var(--sunk); border-radius: 10px; padding: 10px; display: grid; gap: 2px; min-width: 0; }
+.split span { font-size: 12px; color: var(--muted); }
+.split b { font-family: var(--f-display); font-size: 16px; overflow-wrap: anywhere; }
+
+.task { display: flex; align-items: flex-start; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 10px 12px; }
+.task input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); flex: none; }
+.task .t-body { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.task.done .t-title { text-decoration: line-through; color: var(--muted); }
+.t-title { overflow-wrap: anywhere; }
+
+.modal { position: fixed; inset: 0; z-index: 50; background: rgba(8,14,12,.5); display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: var(--surface); width: 100%; max-width: 560px; max-height: 92%; overflow-y: auto; border-radius: 18px 18px 0 0; padding: 18px max(16px, env(safe-area-inset-right, 0px)) calc(18px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 14px; box-shadow: var(--shadow); }
+@media (min-width: 620px) { .modal { align-items: center; } .sheet { border-radius: 18px; max-height: 86%; } }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sheet-head h2 { font-size: 19px; }
+form { display: grid; gap: 12px; }
+.field { display: grid; gap: 5px; min-width: 0; }
+.field label { font-size: 13px; font-weight: 600; color: var(--muted); }
+.field input, .field select, .field textarea { width: 100%; border: 1px solid var(--line); background: var(--bg); border-radius: 10px; padding: 10px 12px; min-height: 44px; font-size: 16px; }
+.field textarea { min-height: 84px; resize: vertical; }
+.field .hint { font-size: 12px; color: var(--muted); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 420px) { .two { grid-template-columns: 1fr; } }
+.form-err { color: var(--bad); font-size: 13.5px; }
+
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(84px + env(safe-area-inset-bottom, 0px)); z-index: 60; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; font-weight: 500; box-shadow: var(--shadow); max-width: calc(100% - 32px); }
+.skeleton { height: 90px; border-radius: var(--r); background: var(--sunk); }
+@media (prefers-reduced-motion: no-preference) {
+  .sheet { animation: rise .18s ease-out; }
+  @keyframes rise { from { transform: translateY(16px); opacity: .6; } to { transform: none; opacity: 1; } }
+}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <div class="mark" id="brand-mark">A</div>
+      <div style="min-width:0"><h1 id="brand-name">Agency CRM</h1><small id="brand-sub">Clients, prospects and money</small></div>
+    </div>
+  </div>
+</header>
+
+<main id="view" aria-live="polite">
+  <div class="skeleton"></div>
+  <div class="skeleton"></div>
+</main>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs-in">
+    <a class="tab" href="#home" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>Dashboard</a>
+    <a class="tab" href="#hunt" data-tab="hunt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Hunting</a>
+    <a class="tab" href="#clients" data-tab="clients"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.8c1.6.8 2.6 2.5 3 5.2"/></svg>Clients</a>
+    <a class="tab" href="#money" data-tab="money"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="2"/><circle cx="12" cy="12.5" r="2.6"/><path d="M6 9.5v.01M18 15.5v.01"/></svg>Money</a>
+    <a class="tab" href="#more" data-tab="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1 1 2-2M3.5 12l1 1 2-2M3.5 18l1 1 2-2"/></svg>Tasks &amp; more</a>
+  </div>
+</nav>
+
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="m-title">
+    <div class="sheet-head"><h2 id="m-title"></h2><button class="icon-btn" type="button" data-act="close-modal" aria-label="Close">×</button></div>
+    <div id="m-body"></div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+  "use strict";
+  const COLS = ["prospects", "clients", "payments", "expenses", "tasks", "blocked"];
+  const S = { settings: {}, loaded: {}, db: null, canWrite: true, slow: false, error: null, huntFilter: "all", clientFilter: "active", openClient: null, view: "home", noDb: false };
+  COLS.forEach(c => S[c] = []);
+
+  const PROSPECT_STAGES = ["New", "Contacted", "Interested", "Proposal sent"];
+  const SITE_STATUS = ["No website", "Weak website", "Good website", "Unknown"];
+  const SERVICES = ["Website", "AI automation", "Digital marketing", "SEO", "Other"];
+  const CLIENT_STATUS = ["Active", "Paused", "Completed"];
+  const EXPENSE_CATS = ["Tools & software", "Domain & hosting", "Ads", "Internet & phone", "Learning", "Other"];
+
+  // ---------- helpers ----------
+  const $ = s => document.querySelector(s);
+  const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const pad = n => String(n).padStart(2, "0");
+  const isoDate = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  const today = () => isoDate(new Date());
+  const daysBetween = (a, b) => Math.round((Date.parse(b + "T00:00:00") - Date.parse(a + "T00:00:00")) / 864e5);
+  const daysSince = s => (s ? daysBetween(s, today()) : null);
+  const num = v => { const n = parseFloat(String(v ?? "").replace(/,/g, "")); return isFinite(n) ? n : 0; };
+  function fmtDate(s) {
+    if (!s) return "—";
+    const d = new Date(s + "T00:00:00");
+    if (isNaN(d)) return esc(s);
+    const sameYear = d.getFullYear() === new Date().getFullYear();
+    return d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: sameYear ? undefined : "numeric" });
+  }
+  function relDay(s) {
+    if (!s) return "";
+    const d = daysSince(s);
+    if (d === 0) return "today";
+    if (d === 1) return "yesterday";
+    if (d === -1) return "tomorrow";
+    if (d > 0) return d + " days ago";
+    return "in " + (-d) + " days";
+  }
+  function money(n) {
+    const cur = (S.settings.currency || "USD").toUpperCase();
+    try { return new Intl.NumberFormat(undefined, { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(n || 0); }
+    catch (e) { return cur + " " + Math.round(n || 0).toLocaleString(); }
+  }
+  function shortMoney(n) {
+    const cur = (S.settings.currency || "USD").toUpperCase();
+    try { return new Intl.NumberFormat(undefined, { style: "currency", currency: cur, notation: "compact", maximumFractionDigits: 1 }).format(n || 0); }
+    catch (e) { return Math.round(n || 0).toLocaleString(); }
+  }
+  const normPhone = p => String(p || "").replace(/\D/g, "").slice(-9);
+  const normSite = w => String(w || "").toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "").trim();
+  const normName = n => String(n || "").toLowerCase().replace(/[^a-z0-9؀-ۿ]/g, "");
+  function safeUrl(w) {
+    const v = String(w || "").trim();
+    if (!v) return null;
+    const bare = v.replace(/^https?:\/\//i, "");
+    if (!/^[a-z0-9.-]+\.[a-z]{2,}([/?#].*)?$/i.test(bare)) return null;
+    return "https://" + bare;
+  }
+  function waLink(p) {
+    const d = String(p || "").replace(/\D/g, "");
+    return d.length >= 10 ? "https://wa.me/" + d : null;
+  }
+
+  function blockedMatch(rec) {
+    const ph = normPhone(rec.phone), site = normSite(rec.website), nm = normName(rec.business), em = String(rec.email || "").toLowerCase().trim();
+    return S.blocked.find(b =>
+      (ph && ph.length >= 7 && normPhone(b.phone) === ph) ||
+      (site && normSite(b.website) === site) ||
+      (em && String(b.email || "").toLowerCase().trim() === em) ||
+      (nm && nm.length > 2 && normName(b.business) === nm));
+  }
+
+  function toast(msg) {
+    const t = $("#toast");
+    t.textContent = msg; t.hidden = false;
+    clearTimeout(toast._t); toast._t = setTimeout(() => (t.hidden = true), 2600);
+  }
+
+  // ---------- derived numbers ----------
+  const paidBy = id => S.payments.filter(p => p.clientId === id).reduce((a, p) => a + num(p.amount), 0);
+  const monthKey = d => d.slice(0, 7);
+  function sumIn(list, prefix) { return list.filter(x => String(x.date || "").startsWith(prefix)).reduce((a, x) => a + num(x.amount), 0); }
+  function lastContact(c) {
+    const talks = (c.talks || []).map(t => t.date).filter(Boolean).sort();
+    return talks.length ? talks[talks.length - 1] : (c.lastContact || null);
+  }
+
+  // ---------- data writes ----------
+  async function write(fn, okMsg) {
+    if (!S.db) { toast("Saving is not available in this view."); return false; }
+    try { await fn(S.db); if (okMsg) toast(okMsg); return true; }
+    catch (e) {
+      const code = e && e.code;
+      if (code === "invalid_argument") toast("You don't have permission to change this CRM.");
+      else if (code === "quota_exceeded") toast("Storage is full. Delete old records to add more.");
+      else toast("Couldn't save. Check your connection and try again.");
+      return false;
+    }
+  }
+
+  // ---------- modal + forms ----------
+  let modalSubmit = null;
+  function openModal(title, html, onSubmit) {
+    $("#m-title").textContent = title;
+    $("#m-body").innerHTML = html;
+    modalSubmit = onSubmit || null;
+    $("#modal").hidden = false;
+    const f = $("#m-body").querySelector("input, select, textarea, button");
+    if (f && window.matchMedia("(min-width: 620px)").matches) f.focus();
+  }
+  function closeModal() { $("#modal").hidden = true; $("#m-body").innerHTML = ""; modalSubmit = null; }
+
+  function fieldHtml(f) {
+    const id = "f-" + f.name, v = f.value ?? "";
+    const req = f.required ? " required" : "";
+    let input;
+    if (f.type === "select") input = `<select id="${id}" name="${f.name}"${req}>${f.options.map(o => { const val = typeof o === "object" ? o.value : o, lab = typeof o === "object" ? o.label : o; return `<option value="${esc(val)}"${String(val) === String(v) ? " selected" : ""}>${esc(lab)}</option>`; }).join("")}</select>`;
+    else if (f.type === "textarea") input = `<textarea id="${id}" name="${f.name}" placeholder="${esc(f.placeholder || "")}"${req}>${esc(v)}</textarea>`;
+    else input = `<input id="${id}" name="${f.name}" type="${f.type || "text"}" value="${esc(v)}" placeholder="${esc(f.placeholder || "")}"${f.type === "number" ? ' inputmode="decimal" step="any" min="0"' : ""}${req}>`;
+    return `<div class="field"><label for="${id}">${esc(f.label)}</label>${input}${f.hint ? `<div class="hint">${esc(f.hint)}</div>` : ""}</div>`;
+  }
+  function formHtml(fields, submitLabel, opts = {}) {
+    const rows = [];
+    for (let i = 0; i < fields.length; i++) {
+      const f = fields[i];
+      if (f.half && fields[i + 1] && fields[i + 1].half) { rows.push(`<div class="two">${fieldHtml(f)}${fieldHtml(fields[i + 1])}</div>`); i++; }
+      else rows.push(fieldHtml(f));
+    }
+    return `<form id="m-form" novalidate>${opts.intro ? `<div class="banner info">${opts.intro}</div>` : ""}${rows.join("")}<div class="form-err" id="m-err" hidden></div><div class="btn-row"><button class="btn ${opts.danger ? "danger" : "primary"}" type="submit">${esc(submitLabel)}</button><button class="btn ghost" type="button" data-act="close-modal">Cancel</button></div></form>`;
+  }
+  function openForm(title, fields, submitLabel, onSubmit, opts) {
+    openModal(title, formHtml(fields, submitLabel, opts), onSubmit);
+  }
+  function formValues(form) {
+    const out = {};
+    new FormData(form).forEach((v, k) => (out[k] = typeof v === "string" ? v.trim() : v));
+    return out;
+  }
+  function confirmBox(title, bodyHtml, label, onYes, danger = true) {
+    openModal(title, `<form id="m-form"><div style="font-size:15px">${bodyHtml}</div><div class="form-err" id="m-err" hidden></div><div class="btn-row"><button class="btn ${danger ? "danger" : "primary"}" type="submit">${esc(label)}</button><button class="btn ghost" type="button" data-act="close-modal">Cancel</button></div></form>`, onYes);
+  }
+
+  // ---------- field specs ----------
+  const prospectFields = (p = {}) => [
+    { name: "business", label: "Business name", value: p.business, required: true },
+    { name: "category", label: "Type of business", value: p.category, placeholder: "Restaurant, clinic, gym…", half: true },
+    { name: "websiteStatus", label: "Their website", type: "select", options: SITE_STATUS, value: p.websiteStatus || "No website", half: true },
+    { name: "contactName", label: "Owner / contact person", value: p.contactName, half: true },
+    { name: "phone", label: "Phone / WhatsApp", type: "tel", value: p.phone, half: true },
+    { name: "email", label: "Email", type: "email", value: p.email, half: true },
+    { name: "website", label: "Website or Google Maps link", value: p.website, half: true },
+    { name: "city", label: "City", value: p.city, half: true },
+    { name: "country", label: "Country", value: p.country, half: true },
+    { name: "stage", label: "Stage", type: "select", options: PROSPECT_STAGES, value: p.stage || "New", half: true },
+    { name: "followUp", label: "Next follow-up", type: "date", value: p.followUp, half: true },
+    { name: "whyFit", label: "Why they need us", type: "textarea", value: p.whyFit, placeholder: "No website, 4.6★ on Maps with 300 reviews, only a Facebook page…" },
+    { name: "notes", label: "Deal notes", type: "textarea", value: p.notes, placeholder: "What they said, price discussed…" },
+  ];
+  const clientFields = (c = {}) => [
+    { name: "business", label: "Business name", value: c.business, required: true },
+    { name: "contactName", label: "Contact person", value: c.contactName, half: true },
+    { name: "phone", label: "Phone / WhatsApp", type: "tel", value: c.phone, half: true },
+    { name: "email", label: "Email", type: "email", value: c.email, half: true },
+    { name: "website", label: "Website", value: c.website, half: true },
+    { name: "city", label: "City", value: c.city, half: true },
+    { name: "country", label: "Country", value: c.country, half: true },
+    { name: "service", label: "Main service", type: "select", options: SERVICES, value: c.service || "Website", half: true },
+    { name: "status", label: "Status", type: "select", options: CLIENT_STATUS, value: c.status || "Active", half: true },
+    { name: "projectValue", label: "Agreed project price", type: "number", value: c.projectValue ?? "", half: true },
+    { name: "monthlyFee", label: "Monthly fee (if any)", type: "number", value: c.monthlyFee ?? "", half: true },
+    { name: "startDate", label: "Start date", type: "date", value: c.startDate || today(), half: true },
+    { name: "deadline", label: "Delivery deadline", type: "date", value: c.deadline, half: true },
+    { name: "work", label: "Work we are doing", type: "textarea", value: c.work, placeholder: "5-page website, WhatsApp button, Google Business profile…" },
+    { name: "focus", label: "What to focus on next", type: "textarea", value: c.focus, placeholder: "Send homepage draft by Friday; ask for menu photos" },
+    { name: "notes", label: "Other notes", type: "textarea", value: c.notes, placeholder: "Likes simple designs, prefers voice notes, pays on time…" },
+  ];
+  const cleanClient = v => ({
+    business: v.business, contactName: v.contactName || "", phone: v.phone || "", email: v.email || "", website: v.website || "",
+    city: v.city || "", country: v.country || "", service: v.service || "Website", status: v.status || "Active",
+    projectValue: num(v.projectValue), monthlyFee: num(v.monthlyFee), startDate: v.startDate || "", deadline: v.deadline || "",
+    work: v.work || "", focus: v.focus || "", notes: v.notes || "",
+  });
+  const cleanProspect = v => ({
+    business: v.business, category: v.category || "", websiteStatus: v.websiteStatus || "Unknown", contactName: v.contactName || "",
+    phone: v.phone || "", email: v.email || "", website: v.website || "", city: v.city || "", country: v.country || "",
+    stage: v.stage || "New", followUp: v.followUp || "", whyFit: v.whyFit || "", notes: v.notes || "",
+  });
+
+  // ---------- actions ----------
+  const A = {
+    "close-modal": closeModal,
+
+    "add-prospect"() {
+      openForm("Add prospect", prospectFields(), "Add prospect", async v => {
+        if (!v.business) return "Add the business name.";
+        const hit = blockedMatch(v);
+        if (hit) return `“${hit.business || "This business"}” is on your Do-Not-Contact list, so it can't be added.`;
+        const ok = await write(db => db.collection("prospects").add({ ...cleanProspect(v), source: "Me", createdAt: today() }), "Prospect added");
+        if (ok) closeModal();
+      });
+    },
+    "edit-prospect"(id) {
+      const p = S.prospects.find(x => x.id === id); if (!p) return;
+      openForm("Edit prospect", prospectFields(p), "Save changes", async v => {
+        if (!v.business) return "Add the business name.";
+        const ok = await write(db => db.doc("prospects/" + id).update(cleanProspect(v)), "Saved");
+        if (ok) closeModal();
+      });
+    },
+    "won"(id) {
+      const p = S.prospects.find(x => x.id === id); if (!p) return;
+      openForm("Make them a client", [
+        { name: "service", label: "Service", type: "select", options: SERVICES, value: "Website", half: true },
+        { name: "projectValue", label: "Agreed price", type: "number", value: "", half: true },
+        { name: "deadline", label: "Delivery deadline", type: "date", value: "", half: true },
+        { name: "monthlyFee", label: "Monthly fee (if any)", type: "number", value: "", half: true },
+        { name: "work", label: "Work we will do", type: "textarea", value: "" },
+        { name: "focus", label: "First thing to focus on", type: "textarea", value: "" },
+      ], "Move to Clients", async v => {
+        const client = cleanClient({ ...p, ...v, status: "Active", startDate: today(), notes: [p.whyFit, p.notes].filter(Boolean).join("\n\n") });
+        client.createdAt = today(); client.lastContact = today();
+        client.talks = [{ id: "t" + Date.now(), date: today(), summary: "Deal closed. " + (v.work ? "Agreed: " + v.work : ""), next: v.focus || "" }];
+        let newId = null;
+        const ok = await write(async db => {
+          const ref = await db.collection("clients").add(client);
+          newId = ref.id;
+          await db.doc("prospects/" + id).delete();
+        }, "🎉 New client added");
+        if (ok) { closeModal(); S.openClient = newId; location.hash = "#clients"; }
+      }, { intro: `<b>${esc(p.business)}</b> said yes. Their details move to Active Clients.` });
+    },
+    "not-client"(id) {
+      const p = S.prospects.find(x => x.id === id); if (!p) return;
+      openForm("Not our client", [
+        { name: "reason", label: "Why not? (optional)", type: "textarea", value: "", placeholder: "Not interested, too expensive, already has an agency…" },
+      ], "Delete and never contact", async v => {
+        const ok = await write(async db => {
+          await db.collection("blocked").add({ business: p.business, phone: p.phone || "", email: p.email || "", website: p.website || "", city: p.city || "", reason: v.reason || "Said no as a prospect", removedAt: today(), from: "Prospect" });
+          await db.doc("prospects/" + id).delete();
+        }, "Deleted. Added to Do-Not-Contact.");
+        if (ok) closeModal();
+      }, { danger: true, intro: `<b>${esc(p.business)}</b> will be deleted for good. Their name and contact go on your Do-Not-Contact list so they are never researched or contacted again.` });
+    },
+    "mistake-prospect"(id) {
+      const p = S.prospects.find(x => x.id === id); if (!p) return;
+      confirmBox("Remove entry added by mistake?", `<b>${esc(p.business)}</b> will be deleted completely. It will <b>not</b> go on the Do-Not-Contact list.`, "Delete entry", async () => {
+        const ok = await write(db => db.doc("prospects/" + id).delete(), "Deleted");
+        if (ok) closeModal();
+      });
+    },
+
+    "add-client"() {
+      openForm("Add client", clientFields(), "Add client", async v => {
+        if (!v.business) return "Add the business name.";
+        const hit = blockedMatch(v);
+        if (hit) return `“${hit.business || "This business"}” is on your Do-Not-Contact list, so it can't be added.`;
+        const ok = await write(db => db.collection("clients").add({ ...cleanClient(v), createdAt: today(), talks: [] }), "Client added");
+        if (ok) closeModal();
+      });
+    },
+    "open-client"(id) { S.openClient = id; if (location.hash !== "#clients") location.hash = "#clients"; render(); window.scrollTo(0, 0); },
+    "back"() { S.openClient = null; render(); window.scrollTo(0, 0); },
+    "edit-client"(id) {
+      const c = S.clients.find(x => x.id === id); if (!c) return;
+      openForm("Edit client", clientFields(c), "Save changes", async v => {
+        if (!v.business) return "Add the business name.";
+        const ok = await write(db => db.doc("clients/" + id).update(cleanClient(v)), "Saved");
+        if (ok) closeModal();
+      });
+    },
+    "log-talk"(id) {
+      const c = S.clients.find(x => x.id === id); if (!c) return;
+      openForm("Log a conversation", [
+        { name: "date", label: "When did you talk?", type: "date", value: today(), half: true },
+        { name: "channel", label: "How", type: "select", options: ["WhatsApp", "Call", "Meeting", "Email", "Other"], value: "WhatsApp", half: true },
+        { name: "summary", label: "What was discussed", type: "textarea", value: "", required: true },
+        { name: "next", label: "Next step / what to focus on", type: "textarea", value: "" },
+        { name: "followUp", label: "Follow up on", type: "date", value: "" },
+      ], "Save conversation", async v => {
+        if (!v.summary) return "Write what was discussed.";
+        const talks = [...(c.talks || []), { id: "t" + Date.now(), date: v.date || today(), channel: v.channel, summary: v.summary, next: v.next || "" }];
+        const patch = { talks, lastContact: talks.map(t => t.date).sort().pop() };
+        if (v.next) patch.focus = v.next;
+        if (v.followUp) patch.followUp = v.followUp;
+        const ok = await write(db => db.doc("clients/" + id).update(patch), "Conversation saved");
+        if (ok) closeModal();
+      }, { intro: `With <b>${esc(c.business)}</b>` });
+    },
+    "del-talk"(id, tid) {
+      const c = S.clients.find(x => x.id === id); if (!c) return;
+      confirmBox("Delete this conversation note?", "This note will be removed from the client's history.", "Delete note", async () => {
+        const talks = (c.talks || []).filter(t => t.id !== tid);
+        const ok = await write(db => db.doc("clients/" + id).update({ talks, lastContact: talks.map(t => t.date).sort().pop() || "" }), "Note deleted");
+        if (ok) closeModal();
+      });
+    },
+    "remove-client"(id) {
+      const c = S.clients.find(x => x.id === id); if (!c) return;
+      openForm("Remove client", [
+        { name: "reason", label: "Reason (for your records)", type: "textarea", value: "", placeholder: "Didn't pay, rude, asked us to stop…" },
+      ], "Remove and never contact", async v => {
+        const ok = await write(async db => {
+          await db.collection("blocked").add({ business: c.business, phone: c.phone || "", email: c.email || "", website: c.website || "", city: c.city || "", reason: v.reason || "Removed client", removedAt: today(), from: "Client" });
+          await db.doc("clients/" + id).delete();
+        }, "Client removed. Added to Do-Not-Contact.");
+        if (ok) { closeModal(); S.openClient = null; render(); }
+      }, { danger: true, intro: `<b>${esc(c.business)}</b> will be removed and put on the Do-Not-Contact list for good. Payments they already made stay in your earnings.` });
+    },
+    "mistake-client"(id) {
+      const c = S.clients.find(x => x.id === id); if (!c) return;
+      confirmBox("Delete client added by mistake?", `<b>${esc(c.business)}</b> will be deleted completely and will <b>not</b> go on the Do-Not-Contact list. Payments linked to them stay in Money.`, "Delete entry", async () => {
+        const ok = await write(db => db.doc("clients/" + id).delete(), "Deleted");
+        if (ok) { closeModal(); S.openClient = null; render(); }
+      });
+    },
+
+    "add-payment"(clientId) {
+      const opts = [{ value: "", label: "Not linked to a client" }, ...S.clients.map(c => ({ value: c.id, label: c.business }))];
+      openForm("Record payment received", [
+        { name: "amount", label: "Amount received", type: "number", value: "", required: true, half: true },
+        { name: "date", label: "Date", type: "date", value: today(), half: true },
+        { name: "clientId", label: "From client", type: "select", options: opts, value: clientId || "" },
+        { name: "method", label: "Method", type: "select", options: ["Bank transfer", "Cash", "Mobile wallet", "Payoneer", "Wise", "PayPal", "Fiverr", "Upwork", "Other"], value: "Bank transfer", half: true },
+        { name: "note", label: "For what", value: "", placeholder: "50% advance for website", half: true },
+      ], "Save payment", async v => {
+        const amt = num(v.amount);
+        if (amt <= 0) return "Enter the amount you received.";
+        const c = S.clients.find(x => x.id === v.clientId);
+        const ok = await write(db => db.collection("payments").add({ amount: amt, date: v.date || today(), clientId: v.clientId || "", clientName: c ? c.business : "", method: v.method, note: v.note || "" }), "Payment saved: " + money(amt));
+        if (ok) closeModal();
+      });
+    },
+    "del-payment"(id) {
+      const p = S.payments.find(x => x.id === id); if (!p) return;
+      confirmBox("Delete this payment?", `${esc(money(p.amount))} on ${fmtDate(p.date)} will be removed from your earnings.`, "Delete payment", async () => {
+        const ok = await write(db => db.doc("payments/" + id).delete(), "Payment deleted");
+        if (ok) closeModal();
+      });
+    },
+    "add-expense"() {
+      openForm("Record expense", [
+        { name: "amount", label: "Amount spent", type: "number", value: "", required: true, half: true },
+        { name: "date", label: "Date", type: "date", value: today(), half: true },
+        { name: "category", label: "Category", type: "select", options: EXPENSE_CATS, value: EXPENSE_CATS[0], half: true },
+        { name: "note", label: "Details", value: "", placeholder: "Domain for client site", half: true },
+      ], "Save expense", async v => {
+        const amt = num(v.amount);
+        if (amt <= 0) return "Enter the amount you spent.";
+        const ok = await write(db => db.collection("expenses").add({ amount: amt, date: v.date || today(), category: v.category, note: v.note || "" }), "Expense saved");
+        if (ok) closeModal();
+      });
+    },
+    "del-expense"(id) {
+      const p = S.expenses.find(x => x.id === id); if (!p) return;
+      confirmBox("Delete this expense?", `${esc(money(p.amount))} on ${fmtDate(p.date)} will be removed.`, "Delete expense", async () => {
+        const ok = await write(db => db.doc("expenses/" + id).delete(), "Expense deleted");
+        if (ok) closeModal();
+      });
+    },
+
+    "add-task"(clientId) {
+      const opts = [{ value: "", label: "General (no client)" }, ...S.clients.map(c => ({ value: c.id, label: c.business }))];
+      openForm("Add task", [
+        { name: "title", label: "Task", value: "", required: true, placeholder: "Send website draft" },
+        { name: "due", label: "Due date", type: "date", value: today(), half: true },
+        { name: "clientId", label: "For", type: "select", options: opts, value: clientId || "", half: true },
+      ], "Add task", async v => {
+        if (!v.title) return "Write the task.";
+        const ok = await write(db => db.collection("tasks").add({ title: v.title, due: v.due || "", clientId: v.clientId || "", done: false, createdAt: today() }), "Task added");
+        if (ok) closeModal();
+      });
+    },
+    async "toggle-task"(id) {
+      const t = S.tasks.find(x => x.id === id); if (!t) return;
+      await write(db => db.doc("tasks/" + id).update({ done: !t.done, doneAt: !t.done ? today() : "" }));
+    },
+    "del-task"(id) {
+      const t = S.tasks.find(x => x.id === id); if (!t) return;
+      confirmBox("Delete task?", esc(t.title), "Delete task", async () => {
+        const ok = await write(db => db.doc("tasks/" + id).delete(), "Task deleted");
+        if (ok) closeModal();
+      });
+    },
+    "clear-done"() {
+      const done = S.tasks.filter(t => t.done);
+      if (!done.length) return;
+      confirmBox("Clear completed tasks?", `${done.length} completed task${done.length > 1 ? "s" : ""} will be deleted.`, "Clear", async () => {
+        const ok = await write(async db => { for (const t of done) await db.doc("tasks/" + t.id).delete(); }, "Cleared");
+        if (ok) closeModal();
+      });
+    },
+
+    "add-blocked"() {
+      openForm("Add to Do-Not-Contact", [
+        { name: "business", label: "Business or person", value: "", required: true },
+        { name: "phone", label: "Phone", type: "tel", value: "", half: true },
+        { name: "website", label: "Website", value: "", half: true },
+        { name: "email", label: "Email", type: "email", value: "", half: true },
+        { name: "city", label: "City", value: "", half: true },
+        { name: "reason", label: "Reason", type: "textarea", value: "" },
+      ], "Add to list", async v => {
+        if (!v.business) return "Add the business or person's name.";
+        const ok = await write(db => db.collection("blocked").add({ ...v, removedAt: today(), from: "Manual" }), "Added to Do-Not-Contact");
+        if (ok) closeModal();
+      }, { intro: "Anyone on this list can never be added again as a prospect or client." });
+    },
+
+    "settings"() {
+      const s = S.settings;
+      openForm("Agency settings", [
+        { name: "agencyName", label: "Agency name", value: s.agencyName || "" },
+        { name: "currency", label: "Currency code", value: s.currency || "USD", hint: "3 letters: USD, PKR, INR, AED, GBP, EUR…", half: true },
+        { name: "attentionDays", label: "Flag clients not contacted for (days)", type: "number", value: s.attentionDays ?? 10, half: true },
+        { name: "monthlyTarget", label: "Monthly earnings target", type: "number", value: s.monthlyTarget ?? "", half: true },
+        { name: "yearlyTarget", label: "Yearly earnings target", type: "number", value: s.yearlyTarget ?? "", half: true },
+        { name: "clientTarget", label: "Active clients target", type: "number", value: s.clientTarget ?? "", half: true },
+        { name: "prospectTarget", label: "New prospects per month target", type: "number", value: s.prospectTarget ?? "", half: true },
+        { name: "goal", label: "Big goal (shown on dashboard)", type: "textarea", value: s.goal || "", placeholder: "First international client by June" },
+      ], "Save settings", async v => {
+        const cur = (v.currency || "USD").toUpperCase();
+        try { new Intl.NumberFormat(undefined, { style: "currency", currency: cur }); } catch (e) { return "That currency code isn't valid. Use 3 letters, like USD or PKR."; }
+        const data = { agencyName: v.agencyName || "", currency: cur, attentionDays: num(v.attentionDays) || 10, monthlyTarget: num(v.monthlyTarget), yearlyTarget: num(v.yearlyTarget), clientTarget: num(v.clientTarget), prospectTarget: num(v.prospectTarget), goal: v.goal || "" };
+        const ok = await write(db => db.doc("config/settings").set(data), "Settings saved");
+        if (ok) closeModal();
+      });
+    },
+
+    "hunt-filter"(f) { S.huntFilter = f; render(); },
+    "client-filter"(f) { S.clientFilter = f; render(); },
+    async "copy"(text) {
+      try { await navigator.clipboard.writeText(text); toast("Copied"); }
+      catch (e) { toast(text); }
+    },
+  };
+
+  document.addEventListener("click", e => {
+    const t = e.target.closest("[data-act]");
+    if (!t) { if (e.target.id === "modal") closeModal(); return; }
+    const fn = A[t.dataset.act];
+    if (!fn) return;
+    if (t.tagName === "INPUT" && t.type === "checkbox") { fn(t.dataset.id, t.dataset.arg); return; }
+    e.preventDefault();
+    fn(t.dataset.id, t.dataset.arg);
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#modal").hidden) closeModal(); });
+  document.addEventListener("submit", async e => {
+    if (e.target.id !== "m-form") return;
+    e.preventDefault();
+    if (!modalSubmit) return;
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    const err = await modalSubmit(formValues(e.target));
+    if (!btn.isConnected) return;
+    btn.disabled = false;
+    if (typeof err === "string") { const el = $("#m-err"); el.textContent = err; el.hidden = false; }
+  });
+
+  // ---------- views ----------
+  const empty = (title, text, btn) => `<div class="empty"><strong>${title}</strong><p>${text}</p>${btn || ""}</div>`;
+  function stagePill(s) { const m = { "New": "", "Contacted": "accent", "Interested": "gold", "Proposal sent": "good" }; return `<span class="pill ${m[s] || ""}">${esc(s || "New")}</span>`; }
+  function sitePill(s) { const m = { "No website": "bad", "Weak website": "warn", "Good website": "good" }; return `<span class="pill ${m[s] || ""}">${esc(s || "Unknown")}</span>`; }
+  function statusPill(s) { const m = { "Active": "good", "Paused": "warn", "Completed": "accent" }; return `<span class="pill ${m[s] || ""}">${esc(s || "Active")}</span>`; }
+  function contactBits(r) {
+    const out = [];
+    if (r.phone) { const wa = waLink(r.phone); out.push(`<span>📞 <b>${esc(r.phone)}</b><button class="copy" data-act="copy" data-id="${esc(r.phone)}">Copy</button>${wa ? ` <a href="${esc(wa)}" target="_blank" rel="noopener">WhatsApp</a>` : ""}</span>`); }
+    if (r.email) out.push(`<span>✉️ <b>${esc(r.email)}</b><button class="copy" data-act="copy" data-id="${esc(r.email)}">Copy</button></span>`);
+    const u = safeUrl(r.website);
+    if (u) out.push(`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(normSite(r.website) || "Link")} ↗</a>`);
+    else if (r.website) out.push(`<span>${esc(r.website)}</span>`);
+    return out.length ? `<div class="meta">${out.join("")}</div>` : "";
+  }
+
+  function viewHome() {
+    const s = S.settings, t = today(), mk = monthKey(t), yk = t.slice(0, 4);
+    const total = S.payments.reduce((a, p) => a + num(p.amount), 0);
+    const spent = S.expenses.reduce((a, p) => a + num(p.amount), 0);
+    const month = sumIn(S.payments, mk), year = sumIn(S.payments, yk);
+    const monthSpent = sumIn(S.expenses, mk);
+    const active = S.clients.filter(c => (c.status || "Active") === "Active");
+    const owed = S.clients.reduce((a, c) => a + Math.max(0, num(c.projectValue) - paidBy(c.id)), 0);
+    const newProspects = S.prospects.filter(p => String(p.createdAt || "").startsWith(mk)).length;
+
+    const targets = [];
+    if (s.monthlyTarget) targets.push(target("This month", month, s.monthlyTarget, true));
+    if (s.yearlyTarget) targets.push(target("This year", year, s.yearlyTarget, true));
+    if (s.clientTarget) targets.push(target("Active clients", active.length, s.clientTarget, false));
+    if (s.prospectTarget) targets.push(target("New prospects this month", newProspects, s.prospectTarget, false));
+
+    // last 6 months chart
+    const months = [];
+    const d0 = new Date(); d0.setDate(1);
+    for (let i = 5; i >= 0; i--) { const d = new Date(d0.getFullYear(), d0.getMonth() - i, 1); months.push({ key: isoDate(d).slice(0, 7), label: d.toLocaleDateString(undefined, { month: "short" }), v: 0 }); }
+    months.forEach(m => (m.v = sumIn(S.payments, m.key)));
+    const maxV = Math.max(1, ...months.map(m => m.v), num(s.monthlyTarget));
+    const chart = `<div class="chart" role="img" aria-label="Earnings for the last six months">${months.map((m, i) => `<div class="col${i === 5 ? " current" : ""}"><div class="val num">${m.v ? esc(shortMoney(m.v)) : ""}</div><div class="track">${s.monthlyTarget ? `<div class="tline" style="bottom:${(num(s.monthlyTarget) / maxV) * 100}%"></div>` : ""}<div class="fill" style="height:${(m.v / maxV) * 100}%"></div></div><div class="mon">${esc(m.label)}</div></div>`).join("")}</div>`;
+
+    // attention lists
+    const due = [];
+    S.tasks.filter(x => !x.done && x.due && x.due <= t).forEach(x => due.push({ kind: "task", date: x.due, title: x.title, sub: clientName(x.clientId), id: x.id }));
+    S.clients.filter(c => c.followUp && c.followUp <= t && (c.status || "Active") !== "Completed").forEach(c => due.push({ kind: "client", date: c.followUp, title: "Follow up with " + c.business, sub: c.focus || "", id: c.id }));
+    S.prospects.filter(p => p.followUp && p.followUp <= t).forEach(p => due.push({ kind: "prospect", date: p.followUp, title: "Follow up: " + p.business, sub: p.stage || "", id: p.id }));
+    due.sort((a, b) => a.date.localeCompare(b.date));
+    const limit = num(s.attentionDays) || 10;
+    const quiet = active.filter(c => { const lc = lastContact(c); return !lc || daysSince(lc) >= limit; });
+
+    return `
+      <div class="section-head"><div><h2>${greeting()}</h2><p>${esc(new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" }))}</p></div>
+        <button class="btn primary" data-act="add-payment">+ Payment</button></div>
+      ${s.goal ? `<div class="banner info"><b>Goal:</b> ${esc(s.goal)}</div>` : ""}
+      <section class="panel hero-money">
+        <div class="label">Total earned</div>
+        <div class="big num">${esc(money(total))}</div>
+        <div class="hero-sub num"><span>This month <b>${esc(money(month))}</b></span><span>Spent <b>${esc(money(spent))}</b></span><span>Profit <b>${esc(money(total - spent))}</b></span></div>
+      </section>
+      <section class="panel">
+        <div class="section-head"><h3>Targets</h3><button class="btn small ghost" data-act="settings">Set targets</button></div>
+        ${targets.length ? targets.join("") : `<p class="sub" style="margin:0">No targets yet. Set a monthly and yearly earnings target so you can see your progress here.</p>`}
+      </section>
+      <div class="stats">
+        <a class="stat" href="#clients"><b class="num">${active.length}</b><span>Active clients</span></a>
+        <a class="stat" href="#hunt"><b class="num">${S.prospects.length}</b><span>Prospects in pipeline</span></a>
+        <a class="stat" href="#clients"><b class="num">${esc(shortMoney(owed))}</b><span>Still owed by clients</span></a>
+        <a class="stat" href="#money"><b class="num">${esc(shortMoney(month - monthSpent))}</b><span>Profit this month</span></a>
+      </div>
+      <section class="panel">
+        <div class="section-head"><h3>Earnings, last 6 months</h3>${s.monthlyTarget ? `<div class="legend"><span><i></i>Monthly target</span></div>` : ""}</div>
+        ${chart}
+      </section>
+      <section class="panel">
+        <div class="section-head"><h3>Due today or overdue</h3><button class="btn small" data-act="add-task">+ Task</button></div>
+        ${due.length ? `<div class="list">${due.slice(0, 8).map(x => `<a class="row" href="${x.kind === "prospect" ? "#hunt" : x.kind === "client" ? "#clients" : "#more"}" ${x.kind === "client" ? `data-act="open-client" data-id="${esc(x.id)}"` : ""}><div class="row-top"><div><h3 style="font-size:15px">${esc(x.title)}</h3>${x.sub ? `<div class="sub">${esc(x.sub)}</div>` : ""}</div><span class="pill ${x.date < t ? "bad" : "warn"}">${x.date < t ? esc(relDay(x.date)) : "Today"}</span></div></a>`).join("")}</div>` : `<p class="sub" style="margin:0">Nothing due. Add tasks and follow-up dates and they'll show up here on the day.</p>`}
+      </section>
+      ${quiet.length ? `<section class="panel"><h3>Clients you haven't talked to in ${limit}+ days</h3><div class="list">${quiet.map(c => `<button class="row" data-act="open-client" data-id="${esc(c.id)}"><div class="row-top"><div><h3 style="font-size:15px">${esc(c.business)}</h3><div class="sub">${lastContact(c) ? "Last talk " + esc(relDay(lastContact(c))) : "No conversation logged yet"}</div></div><span class="pill warn">Check in</span></div></button>`).join("")}</div></section>` : ""}
+    `;
+  }
+  function target(label, val, goal, isMoney) {
+    const pct = goal > 0 ? Math.min(100, (val / goal) * 100) : 0;
+    const left = Math.max(0, goal - val);
+    const f = isMoney ? money : (n => String(n));
+    return `<div class="target"><div class="target-top"><span class="label">${esc(label)}</span><strong class="num">${esc(f(val))} <span class="sub" style="font-size:14px;font-family:var(--f-body)">of ${esc(f(goal))}</span></strong></div><div class="bar${pct >= 100 ? " done" : ""}"><span style="width:${pct}%"></span></div><div class="target-meta">${pct >= 100 ? "Target reached 🎯" : Math.round(pct) + "% done · " + esc(f(left)) + " to go"}</div></div>`;
+  }
+  function greeting() {
+    const h = new Date().getHours();
+    return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+  }
+  const clientName = id => (S.clients.find(c => c.id === id) || {}).business || "";
+
+  function viewHunt() {
+    const f = S.huntFilter;
+    const counts = Object.fromEntries(PROSPECT_STAGES.map(s => [s, S.prospects.filter(p => (p.stage || "New") === s).length]));
+    let list = S.prospects.slice();
+    if (f !== "all") list = list.filter(p => (p.stage || "New") === f);
+    list.sort((a, b) => String(b.createdAt || "").localeCompare(String(a.createdAt || "")));
+    const chips = [["all", "All " + S.prospects.length], ...PROSPECT_STAGES.map(s => [s, s + " " + counts[s]])];
+    return `
+      <div class="section-head"><div><h2>Client Hunting</h2><p>Prospects researched for you. You close the deal, then mark the result.</p></div><button class="btn primary" data-act="add-prospect">+ Prospect</button></div>
+      <div class="banner info">Ask Claude in chat: <b>“Find 10 restaurants in my city with no website”</b>. They'll appear here, marked “Researched by Claude”.</div>
+      <div class="chips" role="group" aria-label="Filter by stage">${chips.map(([k, l]) => `<button class="chip" aria-pressed="${f === k}" data-act="hunt-filter" data-id="${esc(k)}">${esc(l)}</button>`).join("")}</div>
+      <div class="list">
+        ${list.length ? list.map(prospectCard).join("") : empty(S.prospects.length ? "No prospects at this stage" : "No prospects yet", S.prospects.length ? "Pick another stage above." : "Ask Claude to research businesses for you, or add one you found yourself.", S.prospects.length ? "" : `<button class="btn primary" data-act="add-prospect">+ Add first prospect</button>`)}
+      </div>`;
+  }
+  function prospectCard(p) {
+    const fu = p.followUp ? `<span class="pill ${p.followUp <= today() ? "bad" : ""}">Follow up ${esc(relDay(p.followUp))}</span>` : "";
+    return `<article class="row">
+      <div class="row-top"><div><h3>${esc(p.business)}</h3><div class="sub">${esc([p.category, p.contactName, [p.city, p.country].filter(Boolean).join(", ")].filter(Boolean).join(" · "))}</div></div>${stagePill(p.stage)}</div>
+      <div class="meta">${sitePill(p.websiteStatus)}${p.source === "Claude" ? `<span class="pill accent">Researched by Claude</span>` : ""}${fu}${p.createdAt ? `<span>Added ${esc(fmtDate(p.createdAt))}</span>` : ""}</div>
+      ${contactBits(p)}
+      ${p.whyFit ? `<div class="note"><b>Why they need us:</b> ${esc(p.whyFit)}</div>` : ""}
+      ${p.notes ? `<div class="note">${esc(p.notes)}</div>` : ""}
+      <div class="btn-row">
+        <button class="btn good small" data-act="won" data-id="${esc(p.id)}">✓ Our client</button>
+        <button class="btn danger small" data-act="not-client" data-id="${esc(p.id)}">✕ Not a client</button>
+        <button class="btn small" data-act="edit-prospect" data-id="${esc(p.id)}">Edit</button>
+        <button class="btn ghost small" data-act="mistake-prospect" data-id="${esc(p.id)}">Added by mistake</button>
+      </div>
+    </article>`;
+  }
+
+  function viewClients() {
+    if (S.openClient) {
+      const c = S.clients.find(x => x.id === S.openClient);
+      if (c) return clientDetail(c);
+      S.openClient = null;
+    }
+    const f = S.clientFilter;
+    const counts = Object.fromEntries(CLIENT_STATUS.map(s => [s, S.clients.filter(c => (c.status || "Active") === s).length]));
+    let list = S.clients.filter(c => f === "all" || (c.status || "Active").toLowerCase() === f);
+    list.sort((a, b) => String(lastContact(b) || "").localeCompare(String(lastContact(a) || "")));
+    const chips = [["active", "Active " + counts.Active], ["paused", "Paused " + counts.Paused], ["completed", "Completed " + counts.Completed], ["all", "All " + S.clients.length]];
+    return `
+      <div class="section-head"><div><h2>Clients</h2><p>Who we work with, what we're doing, and what we've been paid.</p></div><button class="btn primary" data-act="add-client">+ Client</button></div>
+      <div class="chips" role="group" aria-label="Filter by status">${chips.map(([k, l]) => `<button class="chip" aria-pressed="${f === k}" data-act="client-filter" data-id="${k}">${esc(l)}</button>`).join("")}</div>
+      <div class="list">${list.length ? list.map(clientCard).join("") : empty(S.clients.length ? "No clients here" : "No clients yet", S.clients.length ? "Pick another filter above." : "When a prospect says yes, tap “Our client” in Hunting and they'll move here.", S.clients.length ? "" : `<a class="btn" href="#hunt">Go to Hunting</a>`)}</div>`;
+  }
+  function clientCard(c) {
+    const paid = paidBy(c.id), val = num(c.projectValue), lc = lastContact(c);
+    const limit = num(S.settings.attentionDays) || 10;
+    const stale = (c.status || "Active") === "Active" && (!lc || daysSince(lc) >= limit);
+    return `<button class="row" data-act="open-client" data-id="${esc(c.id)}">
+      <div class="row-top"><div><h3>${esc(c.business)}</h3><div class="sub">${esc([c.service, c.contactName, c.city].filter(Boolean).join(" · "))}</div></div>${statusPill(c.status)}</div>
+      ${c.focus ? `<div class="note"><b>Focus:</b> ${esc(c.focus)}</div>` : ""}
+      <div class="meta num"><span>Paid <b>${esc(money(paid))}</b>${val ? ` of ${esc(money(val))}` : ""}</span><span class="${stale ? "" : ""}">${lc ? "Last talk " + esc(relDay(lc)) : "No talks logged"}</span>${stale ? `<span class="pill warn">Check in</span>` : ""}</div>
+    </button>`;
+  }
+  function clientDetail(c) {
+    const paid = paidBy(c.id), val = num(c.projectValue), due = Math.max(0, val - paid);
+    const pays = S.payments.filter(p => p.clientId === c.id).sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    const tasks = S.tasks.filter(t => t.clientId === c.id).sort((a, b) => (a.done - b.done) || String(a.due).localeCompare(String(b.due)));
+    const talks = (c.talks || []).slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    const lc = lastContact(c);
+    return `
+      <div><button class="btn ghost small" data-act="back">← All clients</button></div>
+      <div class="section-head"><div style="min-width:0"><h2 style="overflow-wrap:anywhere">${esc(c.business)}</h2><p>${esc([c.service, c.contactName, [c.city, c.country].filter(Boolean).join(", ")].filter(Boolean).join(" · "))}</p></div>${statusPill(c.status)}</div>
+      <div class="btn-row">
+        <button class="btn primary" data-act="log-talk" data-id="${esc(c.id)}">+ Log conversation</button>
+        <button class="btn" data-act="add-payment" data-id="${esc(c.id)}">+ Payment</button>
+        <button class="btn" data-act="add-task" data-id="${esc(c.id)}">+ Task</button>
+        <button class="btn" data-act="edit-client" data-id="${esc(c.id)}">Edit</button>
+      </div>
+      <section class="panel">
+        <div class="split num">
+          <div><span>Paid us</span><b style="color:var(--good)">${esc(money(paid))}</b></div>
+          <div><span>Agreed price</span><b>${val ? esc(money(val)) : "—"}</b></div>
+          <div><span>Still owed</span><b style="color:${due ? "var(--warn)" : "inherit"}">${val ? esc(money(due)) : "—"}</b></div>
+        </div>
+        ${c.monthlyFee ? `<div class="sub">Monthly fee: <b>${esc(money(c.monthlyFee))}</b></div>` : ""}
+      </section>
+      <section class="panel">
+        <h3>Focus now</h3>
+        ${c.focus ? `<div class="note">${esc(c.focus)}</div>` : `<p class="sub" style="margin:0">Nothing set. Log a conversation with a next step, or edit the client.</p>`}
+        <div class="meta"><span>Last talk <b>${lc ? esc(fmtDate(lc)) + " (" + esc(relDay(lc)) + ")" : "never"}</b></span>${c.followUp ? `<span>Follow up <b>${esc(fmtDate(c.followUp))}</b></span>` : ""}${c.deadline ? `<span>Deadline <b>${esc(fmtDate(c.deadline))}</b></span>` : ""}</div>
+      </section>
+      <section class="panel">
+        <h3>Conversation history</h3>
+        ${talks.length ? `<div class="timeline">${talks.map(t => `<div class="talk"><div class="rail"></div><div class="body"><div class="when"><span>${esc(fmtDate(t.date))}${t.channel ? " · " + esc(t.channel) : ""}</span><button class="copy" data-act="del-talk" data-id="${esc(c.id)}" data-arg="${esc(t.id)}" aria-label="Delete note">Delete</button></div><div style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(t.summary)}</div>${t.next ? `<div class="sub"><b>Next:</b> ${esc(t.next)}</div>` : ""}</div></div>`).join("")}</div>` : `<p class="sub" style="margin:0">No conversations yet. After every call or chat, log what was discussed so nothing is forgotten.</p>`}
+      </section>
+      <section class="panel">
+        <h3>Work &amp; details</h3>
+        <dl class="kv">
+          <dt>Work</dt><dd style="white-space:pre-wrap">${esc(c.work || "—")}</dd>
+          <dt>Started</dt><dd>${esc(fmtDate(c.startDate))}</dd>
+          <dt>Phone</dt><dd>${c.phone ? esc(c.phone) + `<button class="copy" data-act="copy" data-id="${esc(c.phone)}">Copy</button>` + (waLink(c.phone) ? ` <a href="${esc(waLink(c.phone))}" target="_blank" rel="noopener">WhatsApp</a>` : "") : "—"}</dd>
+          <dt>Email</dt><dd>${c.email ? esc(c.email) + `<button class="copy" data-act="copy" data-id="${esc(c.email)}">Copy</button>` : "—"}</dd>
+          <dt>Website</dt><dd>${safeUrl(c.website) ? `<a href="${esc(safeUrl(c.website))}" target="_blank" rel="noopener">${esc(normSite(c.website))} ↗</a>` : esc(c.website || "—")}</dd>
+          <dt>Notes</dt><dd style="white-space:pre-wrap">${esc(c.notes || "—")}</dd>
+        </dl>
+      </section>
+      <section class="panel">
+        <h3>Tasks</h3>
+        ${tasks.length ? `<div class="list">${tasks.map(taskRow).join("")}</div>` : `<p class="sub" style="margin:0">No tasks for this client.</p>`}
+      </section>
+      <section class="panel">
+        <h3>Payments</h3>
+        ${pays.length ? `<div class="list">${pays.map(paymentRow).join("")}</div>` : `<p class="sub" style="margin:0">No payments recorded yet.</p>`}
+      </section>
+      <section class="panel">
+        <h3>Remove</h3>
+        <p class="sub" style="margin:0">Removing a client deletes them and adds them to Do-Not-Contact, so they're never contacted again.</p>
+        <div class="btn-row"><button class="btn danger" data-act="remove-client" data-id="${esc(c.id)}">Remove client</button><button class="btn ghost" data-act="mistake-client" data-id="${esc(c.id)}">Added by mistake</button></div>
+      </section>`;
+  }
+  function paymentRow(p) {
+    return `<div class="row"><div class="row-top"><div><h3 style="font-size:15px">${esc(p.clientName || clientName(p.clientId) || "Other income")}</h3><div class="sub">${esc([fmtDate(p.date), p.method, p.note].filter(Boolean).join(" · "))}</div></div><div style="display:grid;justify-items:end;gap:2px"><span class="money pos num">+${esc(money(p.amount))}</span><button class="copy" data-act="del-payment" data-id="${esc(p.id)}">Delete</button></div></div></div>`;
+  }
+  function expenseRow(p) {
+    return `<div class="row"><div class="row-top"><div><h3 style="font-size:15px">${esc(p.category || "Expense")}</h3><div class="sub">${esc([fmtDate(p.date), p.note].filter(Boolean).join(" · "))}</div></div><div style="display:grid;justify-items:end;gap:2px"><span class="money neg num">−${esc(money(p.amount))}</span><button class="copy" data-act="del-expense" data-id="${esc(p.id)}">Delete</button></div></div></div>`;
+  }
+  function taskRow(t) {
+    const od = !t.done && t.due && t.due < today();
+    return `<div class="task${t.done ? " done" : ""}"><input type="checkbox" aria-label="Done" ${t.done ? "checked" : ""} data-act="toggle-task" data-id="${esc(t.id)}"><div class="t-body"><span class="t-title">${esc(t.title)}</span><span class="sub">${esc([t.due ? (od ? "Overdue · " : "") + fmtDate(t.due) : "", clientName(t.clientId)].filter(Boolean).join(" · "))}</span></div><button class="copy" data-act="del-task" data-id="${esc(t.id)}">Delete</button></div>`;
+  }
+
+  function viewMoney() {
+    const t = today(), mk = monthKey(t), yk = t.slice(0, 4);
+    const inc = S.payments.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    const exp = S.expenses.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    const earned = S.payments.reduce((a, p) => a + num(p.amount), 0), spent = S.expenses.reduce((a, p) => a + num(p.amount), 0);
+    // top clients
+    const byClient = {};
+    S.payments.forEach(p => { const k = p.clientName || clientName(p.clientId) || "Other income"; byClient[k] = (byClient[k] || 0) + num(p.amount); });
+    const top = Object.entries(byClient).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    return `
+      <div class="section-head"><div><h2>Money</h2><p>Every payment in and every expense out.</p></div><div class="btn-row"><button class="btn primary" data-act="add-payment">+ Payment</button><button class="btn" data-act="add-expense">+ Expense</button></div></div>
+      <section class="panel">
+        <div class="split num">
+          <div><span>Earned this month</span><b style="color:var(--good)">${esc(money(sumIn(S.payments, mk)))}</b></div>
+          <div><span>Spent this month</span><b style="color:var(--bad)">${esc(money(sumIn(S.expenses, mk)))}</b></div>
+          <div><span>Profit this month</span><b>${esc(money(sumIn(S.payments, mk) - sumIn(S.expenses, mk)))}</b></div>
+        </div>
+        <div class="split num">
+          <div><span>Earned this year</span><b>${esc(money(sumIn(S.payments, yk)))}</b></div>
+          <div><span>All-time earned</span><b>${esc(money(earned))}</b></div>
+          <div><span>All-time profit</span><b>${esc(money(earned - spent))}</b></div>
+        </div>
+      </section>
+      ${top.length ? `<section class="panel"><h3>Top paying clients</h3><div class="list">${top.map(([n, v]) => `<div class="target"><div class="target-top"><span>${esc(n)}</span><strong class="num" style="font-size:15px">${esc(money(v))}</strong></div><div class="bar"><span style="width:${(v / top[0][1]) * 100}%;background:var(--accent)"></span></div></div>`).join("")}</div></section>` : ""}
+      <section class="panel"><h3>Payments received</h3>${inc.length ? `<div class="list">${inc.map(paymentRow).join("")}</div>` : `<p class="sub" style="margin:0">No payments yet. Your first one is coming. Record it here the day it lands.</p>`}</section>
+      <section class="panel"><h3>Expenses</h3>${exp.length ? `<div class="list">${exp.map(expenseRow).join("")}</div>` : `<p class="sub" style="margin:0">No expenses recorded. Track domains, tools and ads here so you know your real profit.</p>`}</section>`;
+  }
+
+  function viewMore() {
+    const open = S.tasks.filter(t => !t.done).sort((a, b) => String(a.due || "9999").localeCompare(String(b.due || "9999")));
+    const done = S.tasks.filter(t => t.done).sort((a, b) => String(b.doneAt || "").localeCompare(String(a.doneAt || "")));
+    const blocked = S.blocked.slice().sort((a, b) => String(b.removedAt || "").localeCompare(String(a.removedAt || "")));
+    return `
+      <div class="section-head"><div><h2>Tasks</h2><p>Everything you need to do, for every client.</p></div><button class="btn primary" data-act="add-task">+ Task</button></div>
+      <div class="list">${open.length ? open.map(taskRow).join("") : empty("No open tasks", "Add what needs doing so nothing slips.", "")}</div>
+      ${done.length ? `<details class="panel"><summary style="cursor:pointer;font-weight:600">Completed (${done.length})</summary><div class="list" style="margin-top:10px">${done.slice(0, 30).map(taskRow).join("")}</div><div><button class="btn small ghost" data-act="clear-done">Clear completed</button></div></details>` : ""}
+      <div class="section-head" style="margin-top:8px"><div><h2>Do-Not-Contact</h2><p>Removed for good. These can never be added again as prospects or clients.</p></div><button class="btn" data-act="add-blocked">+ Add</button></div>
+      <div class="list">${blocked.length ? blocked.map(b => `<div class="row"><div class="row-top"><div><h3 style="font-size:15px">${esc(b.business)}</h3><div class="sub">${esc([b.phone, normSite(b.website), b.email, b.city].filter(Boolean).join(" · "))}</div></div><span class="pill bad">${esc(b.from || "Removed")}</span></div>${b.reason ? `<div class="sub">${esc(b.reason)} · ${esc(fmtDate(b.removedAt))}</div>` : `<div class="sub">${esc(fmtDate(b.removedAt))}</div>`}</div>`).join("") : `<p class="sub" style="margin:0">Nobody on the list.</p>`}</div>
+      <div class="section-head" style="margin-top:8px"><div><h2>Settings</h2><p>Agency name, currency and targets.</p></div><button class="btn" data-act="settings">Open settings</button></div>
+      <section class="panel"><dl class="kv"><dt>Agency</dt><dd>${esc(S.settings.agencyName || "Not set")}</dd><dt>Currency</dt><dd>${esc(S.settings.currency || "USD")}</dd><dt>Monthly target</dt><dd class="num">${S.settings.monthlyTarget ? esc(money(S.settings.monthlyTarget)) : "Not set"}</dd><dt>Yearly target</dt><dd class="num">${S.settings.yearlyTarget ? esc(money(S.settings.yearlyTarget)) : "Not set"}</dd></dl></section>`;
+  }
+
+  // ---------- render ----------
+  let raf = 0;
+  function render() { if (!raf) raf = requestAnimationFrame(() => { raf = 0; draw(); }); }
+  function draw() {
+    const v = (location.hash || "#home").slice(1);
+    S.view = ["home", "hunt", "clients", "money", "more"].includes(v) ? v : "home";
+    document.querySelectorAll(".tab").forEach(t => { if (t.dataset.tab === S.view) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current"); });
+    const name = S.settings.agencyName || "Agency CRM";
+    $("#brand-name").textContent = name;
+    $("#brand-mark").textContent = (name.trim()[0] || "A").toUpperCase();
+    const main = $("#view");
+    if (S.noDb) {
+      main.innerHTML = empty("Open this CRM in Claude", "Your records are stored with this artifact. Sign in to claude.ai and open the page there to see and edit them.", "");
+      return;
+    }
+    const loaded = COLS.every(c => S.loaded[c]);
+    if (!loaded && !S.error) {
+      main.innerHTML = S.slow ? `<div class="banner">Your data can't be reached yet. Check your connection; it will load as soon as it's back.</div><div class="skeleton"></div>` : `<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>`;
+      return;
+    }
+    let html = "";
+    if (S.error) html += `<div class="banner">Some data couldn't load. Reload the page to try again.</div>`;
+    if (!S.canWrite) html += `<div class="banner">You can view this CRM but not change it.</div>`;
+    html += { home: viewHome, hunt: viewHunt, clients: viewClients, money: viewMoney, more: viewMore }[S.view]();
+    main.innerHTML = html;
+  }
+  window.addEventListener("hashchange", () => { if (location.hash !== "#clients") S.openClient = null; render(); window.scrollTo(0, 0); });
+
+  // ---------- boot ----------
+  async function boot() {
+    render();
+    const use = window.claude && window.claude.use;
+    if (!use) { S.noDb = true; render(); return; }
+    const db = await window.claude.use("db");
+    if (!db) { S.noDb = true; render(); return; }
+    S.db = db;
+    window.claude.use("user").then(async u => { if (u) { const w = await u.can("data.write"); if (w === false) { S.canWrite = false; render(); } } }).catch(() => {});
+    const timer = setTimeout(() => { S.slow = true; render(); }, 10000);
+    const fail = e => { clearTimeout(timer); S.error = (e && e.code) || "unavailable"; render(); };
+    COLS.forEach(c => db.collection(c).onSnapshot(snap => {
+      S[c] = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+      S.loaded[c] = true;
+      if (COLS.every(k => S.loaded[k])) clearTimeout(timer);
+      render();
+    }, fail));
+    db.doc("config/settings").onSnapshot(s => { S.settings = s.exists ? { ...s.data() } : {}; render(); }, () => {});
+  }
+  boot();
+})();
+</script>
