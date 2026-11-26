@@ -1,0 +1,16 @@
+{
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "shopify-ai-toolkit@claude-plugins-official": true
+  },
+  "env": {
+    "OPT_OUT_INSTRUMENTATION": "true"
+  }
+}

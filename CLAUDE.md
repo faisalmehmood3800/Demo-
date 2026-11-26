@@ -51,11 +51,29 @@ Workflow:
 3. Validate the workflow (`n8n-validation-expert`) and add error handling before delivery.
 4. If no n8n MCP server is connected, deliver the workflow as an importable JSON file and say so; with one connected, build and test it in the user's n8n directly.
 
+## Shopify stores (always use the Shopify skills)
+
+For any task that builds, sets up or customises a Shopify store or theme, always use these together:
+
+- `shopify-ai-toolkit` plugin (Shopify's official, from `claude-plugins-official`, enabled in `.claude/settings.json`): its `shopify` skill is the reference for every Shopify API, Liquid, CLI and theme task.
+- `shopify-liquid` (lunaticfluker/shopify-liquid-skill, MIT): Online Store 2.0 themes, section schemas, template JSON, Shopify CLI.
+- ramonguilhe/claude-skills (no upstream license, personal use only): `shopify-theme-customize`, `shopify-liquid-reference`, `shopify-store-setup`, `shopify-admin-api`, `shopify-storefront-api`, `shopify-app-dev`, `shopify-niche-research`, `shopify-product-research`.
+
+Start every store from a free, Shopify-made Online Store 2.0 theme and customise it; never write a theme from scratch:
+
+- Default: Horizon (github.com/Shopify/horizon), Shopify's newest theme architecture with nested theme blocks, or Dawn (github.com/Shopify/dawn), the all-purpose reference theme.
+- Pick another free Shopify theme when it fits the niche better (Theme Store has 24, all by Shopify): Savor, Crave or Taste for food and drink; Studio for artists; Publisher for editorial or independent brands; Refresh or Sense for detailed product pages; Origin for makers; Spotlight for a fast simple launch.
+- Customise through sections, blocks and theme settings first, then Liquid edits, and keep changes in a way that survives theme updates. Develop with Shopify CLI (`shopify theme dev`, `theme push`) against the client's store.
+- The UI/UX Pro Max and unslop rules above also apply to the store's look.
+
+Shopify's plugin sends usage data, including the prompt, to shopify.dev when its skill runs; it is turned off with `OPT_OUT_INSTRUMENTATION=true` in `.claude/settings.json`. Keep it off unless the user asks otherwise.
+
 ## Other installed skills
 
 - Sales: `sales` and `sales-*` skills plus `.claude/agents/sales-*` (zubair-trabzada/ai-sales-team-claude).
 - Trading: `trader-*` skills (Jakeschincariol/day-trader-skill).
 - n8n: `n8n-*-official` (n8n-io/skills) and the community `n8n-*` skills (czlonkowski/n8n-skills).
+- Shopify: `shopify-*` skills and the `shopify-ai-toolkit` plugin (see above).
 - Design: `unslop` (heydamir/unslop, CC BY 4.0).
 - Video: `ultimate-video-editor` (Rajbharti06/Ultimate-Video-Editing-Skills) and `motion-video-director` (mattypark/Motion-graphics-skill; upstream has no license, personal use only).
 
