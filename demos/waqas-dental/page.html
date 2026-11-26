@@ -94,8 +94,11 @@ img, svg { max-width: 100%; }
 .nav-links a { text-decoration: none; font-size: 15.5px; font-weight: 500; color: var(--muted); padding: 10px 14px; border-radius: 999px; transition: color .2s, background-color .2s; }
 .nav-links a:hover { color: var(--ink); background: var(--soft); }
 .nav .btn { min-height: 46px; padding: 0 20px; font-size: 15px; }
-@media (max-width: 960px) { .nav-links { display: none; } .nav .btn { margin-left: auto; } }
-@media (max-width: 480px) { .nav .btn span { display: none; } .nav .btn { padding: 0; width: 46px; } .logo-text span { display: none; } }
+@media (max-width: 960px) { .nav-links { display: none; } }
+@media (max-width: 760px) { .nav-in .btn-primary { display: none; } .menu-btn { margin-left: auto; } }
+.logo { min-width: 0; }
+.logo-text b { overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 480px) { .logo-text span { display: none; } }
 
 /* Hero */
 .hero { position: relative; overflow: hidden; padding-block: clamp(40px, 7vw, 96px) clamp(56px, 8vw, 110px); }
@@ -327,6 +330,46 @@ footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); bord
 
 .toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 15px; z-index: 70; }
 
+/* Map */
+.map-box { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 10; background: var(--soft); border: 1px solid var(--line); }
+.map-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.map-fallback { position: absolute; inset: 0; display: grid; place-items: center; gap: 14px; align-content: center; text-align: center; padding: 20px;
+  background-color: var(--soft); background-image: linear-gradient(var(--soft-2) 1px, transparent 1px), linear-gradient(90deg, var(--soft-2) 1px, transparent 1px); background-size: 28px 28px; }
+.radar { position: relative; width: 96px; height: 96px; display: grid; place-items: center; }
+.radar span { position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--primary); opacity: 0; animation: radar 2.8s ease-out infinite; }
+.radar span:nth-child(2) { animation-delay: .9s; } .radar span:nth-child(3) { animation-delay: 1.8s; }
+.radar svg { width: 40px; height: 40px; color: var(--primary); position: relative; animation: bob 2s ease-in-out infinite; filter: drop-shadow(0 6px 8px rgba(0,0,0,.2)); }
+@keyframes radar { from { transform: scale(.3); opacity: .7; } to { transform: scale(1.6); opacity: 0; } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.map-fb-text { display: grid; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; box-shadow: var(--shadow); }
+.map-fb-text b { font-family: var(--f-display); font-weight: 600; }
+.map-fb-text span { font-size: 14.5px; color: var(--muted); }
+.coords { font-size: 13px !important; }
+.map-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.map-actions .btn { flex: 1 1 200px; }
+
+/* Mobile menu */
+.menu-btn { display: none; width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); place-items: center; cursor: pointer; flex: none; }
+.menu-btn svg { width: 22px; height: 22px; }
+.mobile-menu { display: grid; gap: 4px; padding: 8px var(--gutter-r) 18px var(--gutter-l); border-top: 1px solid var(--line); background: var(--surface); }
+.mobile-menu a:not(.btn) { text-decoration: none; font-family: var(--f-display); font-size: 18px; font-weight: 500; padding: 14px 4px; border-bottom: 1px solid var(--line); }
+.mobile-menu .btn { margin-top: 10px; }
+@media (max-width: 960px) { .menu-btn { display: grid; } .nav-in .btn-primary { margin-left: auto; } }
+@media (min-width: 961px) { .mobile-menu { display: none !important; } }
+
+/* Tooth shine */
+.sweep { animation: sweep 5s ease-in-out infinite 1.5s; }
+@keyframes sweep { 0% { transform: skewX(-18deg) translateX(0); } 40%, 100% { transform: skewX(-18deg) translateX(260px); } }
+
+/* Laptop heights: keep the hero inside one screen */
+@media (min-width: 961px) and (max-height: 820px) {
+  .hero { padding-block: 28px 56px; }
+  .hero h1 { font-size: clamp(40px, 5.2vw, 64px); }
+  .hero-art { max-width: 480px; }
+}
+/* Small phones: tighter hero art */
+@media (max-width: 960px) { .hero-art { max-width: 440px; } }
+
 /* Motion + polish layer */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
@@ -365,6 +408,9 @@ html.lenis, html.lenis body { height: auto; }
     <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 7v5l3 2"/></symbol>
     <symbol id="i-sparkle" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5c.6 4.6 2.4 7.3 7 8-4.6.7-6.4 3.4-7 8-.6-4.6-2.4-7.3-7-8 4.6-.7 6.4-3.4 7-8Z"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"/></g></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="i-left" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6"/></symbol>
     <symbol id="i-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></symbol>
     <symbol id="i-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></symbol>
@@ -407,7 +453,15 @@ html.lenis, html.lenis body { height: auto; }
       <a href="#visit">Visit us</a>
     </nav>
     <a class="btn btn-primary" href="#book" aria-label="Book an appointment"><svg><use href="#i-wa"/></svg><span>Book appointment</span></a>
+    <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><svg><use href="#i-menu"/></svg></button>
   </div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" hidden>
+    <a href="#services">Treatments</a>
+    <a href="#doctor">Dr. Bilal</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#visit">Timings &amp; location</a>
+    <a class="btn btn-primary" href="tel:+923214488421"><svg><use href="#i-phone"/></svg>Call 0321 448 8421</a>
+  </nav>
 </header>
 
 <div class="progress" aria-hidden="true"><span id="progress"></span></div>
@@ -458,6 +512,9 @@ html.lenis, html.lenis body { height: auto; }
               <path d="M56 14C34 14 22 30 24 54c2 22 10 34 12 56" fill="none" stroke="url(#gloss)" stroke-width="0"/>
               <ellipse cx="54" cy="44" rx="18" ry="26" fill="url(#gloss)" transform="rotate(-18 54 44)"/>
               <path d="M70 30c6 3 14 3 20 0" stroke="var(--enamel-2)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+              <clipPath id="tooth-clip"><use href="#tooth-path"/></clipPath>
+              <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+              <g clip-path="url(#tooth-clip)"><rect class="sweep" x="-60" y="0" width="40" height="170" fill="url(#sweep)" transform="skewX(-18)"/></g>
             </svg>
           </div>
         </div>
@@ -666,20 +723,20 @@ html.lenis, html.lenis body { height: auto; }
             <div class="contact"><i><svg><use href="#i-pin"/></svg></i><div><b>Address</b><span>Shop #644, Mian Chowk, Hassan Basri Road, Sector D-2, Block 5, Green Town, Lahore</span></div></div>
             <div class="contact"><i><svg><use href="#i-phone"/></svg></i><div><b>Phone &amp; WhatsApp</b><span class="num">+92 321 448 8421</span> <button class="copy-btn" data-copy="+923214488421">Copy</button></div></div>
           </div>
-          <a class="map-card" href="https://www.google.com/maps/search/?api=1&amp;query=31.4329943,74.3070841" target="_blank" rel="noopener" aria-label="Open the clinic location in Google Maps">
-            <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <rect width="400" height="225" fill="var(--soft)"/>
-              <g stroke="var(--surface)" stroke-width="14" fill="none" stroke-linecap="round">
-                <path d="M-10 150 L410 120"/><path d="M190 -10 L215 240"/>
-              </g>
-              <g stroke="var(--surface)" stroke-width="6" fill="none" opacity=".8">
-                <path d="M-10 60 L410 40"/><path d="M80 -10 L100 240"/><path d="M310 -10 L330 240"/><path d="M-10 200 L410 180"/>
-              </g>
-              <g fill="var(--soft-2)"><rect x="110" y="62" width="70" height="44" rx="6"/><rect x="225" y="55" width="76" height="52" rx="6"/><rect x="112" y="135" width="66" height="42" rx="6"/><rect x="232" y="130" width="70" height="40" rx="6"/><rect x="20" y="72" width="52" height="40" rx="6"/><rect x="342" y="60" width="50" height="46" rx="6"/></g>
-            </svg>
-            <div class="map-pin"><b>Waqas Dental</b><svg><use href="#i-pin"/></svg></div>
-            <span class="map-open">Open in Google Maps ↗</span>
-          </a>
+          <div class="map-box" id="map-box" data-embed="https://maps.google.com/maps?q=31.4329943,74.3070841&amp;z=17&amp;output=embed">
+            <div class="map-fallback" id="map-fallback">
+              <div class="radar" aria-hidden="true"><span></span><span></span><span></span><svg><use href="#i-pin"/></svg></div>
+              <div class="map-fb-text">
+                <b>Waqas Medical &amp; Dental Clinic</b>
+                <span>Mian Chowk, Hassan Basri Road, Green Town, Lahore</span>
+                <span class="num coords">31.43299° N, 74.30708° E</span>
+              </div>
+            </div>
+          </div>
+          <div class="map-actions">
+            <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Waqas%20Medical%20and%20Dental%20Clinic%2C%20Green%20Town%2C%20Lahore&amp;query_place_id=ChIJny6CQ8QBGTkRHWE2gbhmqls" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Open in Google Maps</a>
+            <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=Waqas%20Medical%20and%20Dental%20Clinic%2C%20Green%20Town%2C%20Lahore&amp;destination_place_id=ChIJny6CQ8QBGTkRHWE2gbhmqls" target="_blank" rel="noopener"><svg><use href="#i-route"/></svg>Get directions</a>
+          </div>
         </div>
 
         <div class="panel reveal" id="book">
@@ -1019,6 +1076,28 @@ html.lenis, html.lenis body { height: auto; }
   const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
   window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
+  // ---------- Live Google Map (embedded maps work on normal hosting, not inside the Claude viewer) ----------
+  const mapBox = $("#map-box");
+  if (!window.claude && mapBox) {
+    const f = document.createElement("iframe");
+    f.src = mapBox.dataset.embed; f.loading = "lazy"; f.title = "Map showing Waqas Medical and Dental Clinic, Green Town, Lahore";
+    f.referrerPolicy = "no-referrer-when-downgrade"; f.allowFullscreen = true;
+    f.addEventListener("load", () => { $("#map-fallback").hidden = true; });
+    mapBox.append(f);
+  }
+
+  // ---------- Mobile menu ----------
+  const menuBtn = $("#menu-btn"), menu = $("#mobile-menu");
+  function setMenu(open) {
+    menu.hidden = !open; menuBtn.setAttribute("aria-expanded", open);
+    menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    menuBtn.innerHTML = `<svg aria-hidden="true"><use href="#i-${open ? "x" : "menu"}"/></svg>`;
+    if (open && window.gsap && !reduce) gsap.from("#mobile-menu > *", { y: -8, opacity: 0, duration: .3, stagger: .04, ease: "power2.out" });
+  }
+  menuBtn.addEventListener("click", () => setMenu(menu.hidden));
+  menu.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
+
   // ---------- Accessibility: decorative icons are hidden from screen readers ----------
   document.querySelectorAll("svg").forEach(s => { if (!s.hasAttribute("aria-label") && !s.hasAttribute("role")) s.setAttribute("aria-hidden", "true"); });
 
@@ -1054,6 +1133,16 @@ html.lenis, html.lenis body { height: auto; }
     });
     gsap.from(h.querySelectorAll(".wi"), { yPercent: 110, duration: .9, ease: "power4.out", stagger: .045, scrollTrigger: { trigger: h, start: "top 88%", once: true } });
   });
+
+  // Timings rows, reviews and "why" cards arrive in sequence
+  ScrollTrigger.batch("#hours > div", { start: "top 92%", once: true, onEnter: b => gsap.from(b, { x: -16, opacity: 0, duration: .45, stagger: .05, ease: "power2.out" }) });
+  ScrollTrigger.batch(".review", { start: "top 90%", once: true, onEnter: b => gsap.from(b, { y: 30, opacity: 0, scale: .96, duration: .6, stagger: .08, ease: "power3.out" }) });
+  ScrollTrigger.batch(".why-item", { start: "top 90%", once: true, onEnter: b => gsap.from(b.map(x => x.querySelector("svg")), { scale: 0, rotate: -30, duration: .6, stagger: .08, ease: "back.out(2)" }) });
+  // Doctor portrait rings slowly turn; portrait rises with a little parallax
+  gsap.to(".portrait svg.bg", { rotate: 360, duration: 80, ease: "none", repeat: -1, transformOrigin: "50% 44%" });
+  gsap.fromTo(".portrait", { y: 40 }, { y: -20, ease: "none", scrollTrigger: { trigger: "#doctor", start: "top bottom", end: "bottom top", scrub: true } });
+  // Booking panel and map nudge in
+  gsap.from(".map-actions .btn", { y: 14, opacity: 0, duration: .5, stagger: .1, scrollTrigger: { trigger: ".map-actions", start: "top 92%", once: true } });
 
   // Ambient light drifting in the hero
   gsap.to(".blob.b1", { x: 120, y: 60, duration: 14, yoyo: true, repeat: -1, ease: "sine.inOut" });
