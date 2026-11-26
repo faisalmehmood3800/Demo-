@@ -1,16 +1,24 @@
 {
+  "env": {
+    "OPT_OUT_INSTRUMENTATION": "true",
+    "HYPERFRAMES_NO_TELEMETRY": "1"
+  },
+  "enabledPlugins": {
+    "shopify-ai-toolkit@claude-plugins-official": true,
+    "hyperframes@hyperframes": true
+  },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
       "source": {
         "source": "github",
         "repo": "anthropics/claude-plugins-official"
       }
+    },
+    "hyperframes": {
+      "source": {
+        "source": "github",
+        "repo": "heygen-com/hyperframes"
+      }
     }
-  },
-  "enabledPlugins": {
-    "shopify-ai-toolkit@claude-plugins-official": true
-  },
-  "env": {
-    "OPT_OUT_INSTRUMENTATION": "true"
   }
 }

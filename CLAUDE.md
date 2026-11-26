@@ -68,6 +68,14 @@ Start every store from a free, Shopify-made Online Store 2.0 theme and customise
 
 Shopify's plugin sends usage data, including the prompt, to shopify.dev when its skill runs; it is turned off with `OPT_OUT_INSTRUMENTATION=true` in `.claude/settings.json`. Keep it off unless the user asks otherwise.
 
+## Video
+
+- HyperFrames (heygen-com/hyperframes, Apache 2.0; `hyperframes` plugin enabled in `.claude/settings.json`): the default for videos made in code, such as launch and promo films, explainers, reels and vertical clips, captions on footage, data and chart videos, slideshows and remakes of an existing video. Start with its `hyperframes` skill, then `hyperframes-cli`, `hyperframes-registry` and `media-use` as needed. Render with `npx hyperframes render` and check the result before delivery.
+- `ultimate-video-editor`: cutting, grading, audio and export of existing footage with FFmpeg.
+- `motion-video-director`: an alternative motion-graphics workflow when the user asks for it.
+
+HyperFrames telemetry is off with `HYPERFRAMES_NO_TELEMETRY=1` in `.claude/settings.json`, so skip the skill's `hyperframes feedback` reports. Keep it off unless the user asks otherwise. Don't sign in to HeyGen or use paid HeyGen media without the user's go-ahead.
+
 ## Other installed skills
 
 - Sales: `sales` and `sales-*` skills plus `.claude/agents/sales-*` (zubair-trabzada/ai-sales-team-claude).
@@ -75,7 +83,7 @@ Shopify's plugin sends usage data, including the prompt, to shopify.dev when its
 - n8n: `n8n-*-official` (n8n-io/skills) and the community `n8n-*` skills (czlonkowski/n8n-skills).
 - Shopify: `shopify-*` skills and the `shopify-ai-toolkit` plugin (see above).
 - Design: `unslop` (heydamir/unslop, CC BY 4.0).
-- Video: `ultimate-video-editor` (Rajbharti06/Ultimate-Video-Editing-Skills) and `motion-video-director` (mattypark/Motion-graphics-skill; upstream has no license, personal use only).
+- Video: `hyperframes` plugin (heygen-com/hyperframes, Apache 2.0), `ultimate-video-editor` (Rajbharti06/Ultimate-Video-Editing-Skills) and `motion-video-director` (mattypark/Motion-graphics-skill; upstream has no license, personal use only).
 
 ## Motion
 
