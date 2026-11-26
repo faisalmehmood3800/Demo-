@@ -27,6 +27,20 @@ Default stack: Next.js + Tailwind + shadcn/ui (see `website/`, where shadcn is i
 
 Use `--dry-run` or `--view` first to see what a component adds, and review third-party component code before shipping it.
 
+## Automations and AI agents (always use the n8n skills)
+
+For any task that builds, edits, reviews or debugs an automation, workflow, chatbot or AI agent, build it in n8n and always use both installed n8n skill sets:
+
+- Official skills from n8n-io/skills: the `n8n-*-official` skills, routed by `using-n8n-skills-official`.
+- Community skills from czlonkowski/n8n-skills: the `n8n-*` skills without the `-official` suffix, routed by `using-n8n-mcp-skills`.
+
+Workflow:
+
+1. Load `using-n8n-skills-official` and `using-n8n-mcp-skills` first, then the specific skills the task needs (for example `n8n-agents-official` and `n8n-agents` for an AI agent, `n8n-workflow-patterns` for structure, `n8n-error-handling-official` for webhooks and unattended runs).
+2. Where an official and a community skill cover the same topic, read both and follow the official one if they disagree.
+3. Validate the workflow (`n8n-validation-expert`) and add error handling before delivery.
+4. If no n8n MCP server is connected, deliver the workflow as an importable JSON file and say so; with one connected, build and test it in the user's n8n directly.
+
 ## Other installed skills
 
 - Sales: `sales` and `sales-*` skills plus `.claude/agents/sales-*` (zubair-trabzada/ai-sales-team-claude).
