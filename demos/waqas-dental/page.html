@@ -3,7 +3,7 @@
 <meta name="description" content="Gentle, painless dental care and family medicine in Green Town, Lahore. Dr. Bilal Khalid and team. Open Monday to Saturday, 11 AM to 10 PM.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@500&display=swap">
 <style>
 /* Layout: one long clinical-calm page. Full-bleed bands with an inner 1200px column; hero splits copy / animated tooth; mobile keeps a sticky Call + WhatsApp bar. */
 :root {
@@ -327,6 +327,27 @@ footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); bord
 
 .toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 15px; z-index: 70; }
 
+/* Motion + polish layer */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.progress { position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); height: 3px; z-index: 61; pointer-events: none; }
+.progress span { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), var(--mint)); transform-origin: left; transform: scaleX(0); }
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; }
+.blob.b1 { width: 380px; height: 380px; background: var(--mint); top: 60px; left: -40px; opacity: .2; }
+.blob.b2 { width: 300px; height: 300px; background: var(--gold); bottom: 40px; left: 40%; opacity: .1; }
+.urdu { font-family: "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif; font-size: clamp(20px, 2vw, 24px); line-height: 2.1; color: var(--primary); margin-top: -8px; }
+.wm { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+.wi { display: inline-block; will-change: transform; }
+.hero-art { perspective: 1000px; }
+.tooth-wrap { transform-style: preserve-3d; }
+.svc::before { content: ""; position: absolute; inset: 0; background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--primary) 14%, transparent), transparent 70%); opacity: 0; transition: opacity .3s ease; pointer-events: none; }
+.svc.featured::before { background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(127,216,200,.16), transparent 70%); }
+.svc:hover::before { opacity: 1; }
+.svc > * { position: relative; }
+.ba-frame { background: #A86E50; }
+.ba-layer svg { width: 100%; height: 100%; display: block; }
+.family-line { color: var(--muted); font-size: 17px; max-width: 52ch; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -389,13 +410,17 @@ footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); bord
   </div>
 </header>
 
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
 <main id="top">
   <!-- HERO -->
   <section class="hero">
+    <div class="blob b1" aria-hidden="true"></div>
+    <div class="blob b2" aria-hidden="true"></div>
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <div class="status-pill" id="status"><span class="dot" id="status-dot"></span><span id="status-text">Open Monday to Saturday, 11 AM – 10 PM</span></div>
         <h1 id="hero-title">Gentle dentistry, <em>explained</em> before it begins.</h1>
+        <p class="urdu" lang="ur" dir="rtl">آپ کی مسکراہٹ، ہماری ذمہ داری</p>
         <p class="hero-lede">Root canals, implants, braces and smile makeovers in Green Town, Lahore. <b>Dr. Bilal Khalid</b> and team walk you through every step, so treatment feels calm and almost painless.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#book"><svg><use href="#i-wa"/></svg>Book on WhatsApp</a>
@@ -529,16 +554,16 @@ footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); bord
       <div class="reveal">
         <div class="ba-frame" id="ba" style="--pos:50%">
           <div class="ba-layer" aria-hidden="true">
-            <svg viewBox="0 0 400 180" id="teeth-before"></svg>
+            <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" id="teeth-before"></svg>
           </div>
           <div class="ba-layer ba-after" aria-hidden="true">
-            <svg viewBox="0 0 400 180" id="teeth-after"></svg>
+            <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" id="teeth-after"></svg>
           </div>
           <span class="ba-label l">Before</span><span class="ba-label r">After</span>
           <div class="ba-handle"></div>
           <input class="ba-range" id="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after: slide to reveal">
         </div>
-        <p class="ba-note">Illustration. Real before-and-after photos from the clinic's patients will appear here.</p>
+        <p class="ba-note">Illustration of a typical veneers and whitening result. Real before-and-after photos of the clinic's own patients will replace it.</p>
       </div>
     </div>
   </section>
@@ -598,6 +623,7 @@ footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); bord
         <div class="section-head reveal" style="margin:0">
           <span class="eyebrow">Patient stories</span>
           <h2>In our patients' own words.</h2>
+          <p class="family-line">People bring their mothers, fathers and children here. These are their words, from Google.</p>
         </div>
         <div class="score reveal"><b class="num">4.9</b><div><span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><small>from 176 reviews on Google</small></div></div>
       </div>
@@ -717,6 +743,7 @@ footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); bord
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 (() => {
   "use strict";
@@ -780,53 +807,114 @@ footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); bord
     s.append(document.createTextNode(t)); mq.append(s);
   });
 
-  // ---------- Before / after teeth illustration ----------
-  function teeth(svg, after) {
+  // ---------- Before / after: anatomical smile illustration ----------
+  function smile(svg, after) {
     const ns = "http://www.w3.org/2000/svg";
-    const g = document.createElementNS(ns, "g");
-    const gum = document.createElementNS(ns, "path");
-    gum.setAttribute("d", "M0 0 H400 V48 C330 70 270 74 200 74 C130 74 70 70 0 48 Z");
-    gum.setAttribute("fill", "#D9737A"); g.append(gum);
-    const widths = [34, 40, 48, 56, 56, 48, 40, 34];
-    const total = widths.reduce((a, b) => a + b, 0) + 7 * 4;
-    let x = (400 - total) / 2;
-    widths.forEach((w, i) => {
-      const center = Math.abs(i - 3.5);
-      const h = 92 - center * 7;
-      const y = 40 + center * 4;
-      const p = document.createElementNS(ns, "path");
-      const r = 10;
-      let tilt = 0, dy = 0, ww = w;
-      if (!after) { tilt = [3, -4, 2, -3, 4, -2, 5, -3][i]; dy = [4, -2, 6, 0, 3, -3, 5, 2][i]; ww = w - [2, 4, 0, 3, 1, 5, 2, 3][i]; }
-      p.setAttribute("d", `M${x} ${y} h${ww} v${h - r} q0 ${r} -${r} ${r} h-${ww - 2 * r} q-${r} 0 -${r} -${r} Z`);
-      p.setAttribute("transform", `rotate(${tilt} ${x + ww / 2} ${y}) translate(0 ${dy})`);
-      const id = (after ? "a" : "b") + i;
-      const grad = document.createElementNS(ns, "linearGradient");
-      grad.setAttribute("id", id); grad.setAttribute("x1", "0"); grad.setAttribute("y1", "0"); grad.setAttribute("x2", "0"); grad.setAttribute("y2", "1");
-      const s1 = document.createElementNS(ns, "stop"); s1.setAttribute("offset", "0"); s1.setAttribute("stop-color", after ? "#FFFFFF" : "#EBD9A6");
-      const s2 = document.createElementNS(ns, "stop"); s2.setAttribute("offset", "1"); s2.setAttribute("stop-color", after ? "#E6F3F0" : "#C9A86A");
-      grad.append(s1, s2); svg.append(grad);
-      p.setAttribute("fill", `url(#${id})`);
-      p.setAttribute("stroke", after ? "#D8ECE7" : "#B38F55"); p.setAttribute("stroke-width", "1");
-      g.append(p);
-      if (after) {
-        const shine = document.createElementNS(ns, "rect");
-        shine.setAttribute("x", x + 6); shine.setAttribute("y", y + 10); shine.setAttribute("width", 5); shine.setAttribute("height", h * 0.45); shine.setAttribute("rx", 2.5);
-        shine.setAttribute("fill", "#fff"); shine.setAttribute("opacity", ".8"); g.append(shine);
-      } else if (i % 3 === 1) {
-        const spot = document.createElementNS(ns, "circle");
-        spot.setAttribute("cx", x + ww / 2); spot.setAttribute("cy", y + h * 0.7); spot.setAttribute("r", 4);
-        spot.setAttribute("fill", "#9C7A3E"); spot.setAttribute("opacity", ".6"); spot.setAttribute("transform", `rotate(${tilt} ${x + ww / 2} ${y})`); g.append(spot);
-      }
-      x += w + 4;
+    const P = after ? "a" : "b";
+    const el = (tag, attrs, parent) => { const n = document.createElementNS(ns, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); (parent || svg).append(n); return n; };
+    const defs = el("defs", {});
+    const lin = (id, stops, x2 = 0, y2 = 1) => { const g = el("linearGradient", { id: P + id, x1: 0, y1: 0, x2, y2 }, defs); stops.forEach(([o, c, op]) => el("stop", { offset: o, "stop-color": c, "stop-opacity": op == null ? 1 : op }, g)); };
+    const rad = (id, stops, attrs) => { const g = el("radialGradient", Object.assign({ id: P + id }, attrs || {}), defs); stops.forEach(([o, c, op]) => el("stop", { offset: o, "stop-color": c, "stop-opacity": op == null ? 1 : op }, g)); };
+    lin("skin", [[0, "#C9906C"], [1, "#9E6649"]]);
+    rad("vig", [[.55, "#000", 0], [1, "#000", .35]], { cx: .5, cy: .5, r: .75 });
+    lin("lipU", [[0, "#9C4B53"], [.7, "#8A3D46"], [1, "#6E2C35"]]);
+    lin("lipL", [[0, "#6E2C35"], [.18, "#9A4850"], [.6, "#B25F66"], [1, "#8B4049"]]);
+    rad("mouth", [[0, "#3A1418"], [1, "#160507"]], { cx: .5, cy: .35, r: .7 });
+    lin("gum", [[0, "#A8424C"], [.6, "#D97C83"], [1, "#E79A9E"]]);
+    lin("tooth", after
+      ? [[0, "#EADFC9"], [.18, "#F8F5EE"], [.6, "#FCFCFA"], [.88, "#EEF2F3"], [1, "#C9D4DA"]]
+      : [[0, "#B88F4E"], [.22, "#D9BE82"], [.6, "#E3CF9C"], [.88, "#D8C79C"], [1, "#B7A985"]]);
+    lin("toothL", after ? [[0, "#BDB9AF"], [1, "#9DA4A8"]] : [[0, "#9C8250"], [1, "#8A7B58"]]);
+    lin("side", [[0, "#000", .42], [.22, "#000", .04], [.5, "#000", 0], [.78, "#000", .04], [1, "#000", .42]], 1, 0);
+    lin("shine", [[0, "#fff", 0], [.5, "#fff", after ? .85 : .4], [1, "#fff", 0]]);
+    const f1 = el("filter", { id: P + "blur", x: "-50%", y: "-50%", width: "200%", height: "200%" }, defs); el("feGaussianBlur", { stdDeviation: 1.6 }, f1);
+    const f2 = el("filter", { id: P + "soft", x: "-50%", y: "-50%", width: "200%", height: "200%" }, defs); el("feGaussianBlur", { stdDeviation: 9 }, f2);
+
+    const cx = 200, EDGE = 178;
+    const yUL = dx => 80 + 0.00117 * dx * dx;          // inner edge of upper lip
+    const yLL = dx => 168 - 0.0016 * dx * dx;          // inner edge of lower lip
+    const yG = dx => 93 + 0.0008 * dx * dx;            // gum line
+    const yE = dx => 157 - 0.0007 * dx * dx;           // incisal edges follow the smile arc
+    const yOU = dx => 52 + 0.00195 * dx * dx - 8 * Math.exp(-Math.pow((Math.abs(dx) - 24) / 15, 2)) + 4 * Math.exp(-Math.pow(dx / 9, 2));
+    const yOL = dx => 232 - 0.0035 * dx * dx;
+    const pts = (f, a, b, s = 3) => { const o = []; if (a < b) for (let d = a; d <= b; d += s) o.push([cx + d, f(d)]); else for (let d = a; d >= b; d -= s) o.push([cx + d, f(d)]); return o; };
+    const poly = arr => "M" + arr.map(p => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L") + " Z";
+
+    // skin + soft shading
+    el("rect", { width: 400, height: 250, fill: `url(#${P}skin)` });
+    el("ellipse", { cx: 200, cy: 125, rx: 215, ry: 95, fill: "#7A4632", opacity: .35, filter: `url(#${P}soft)` });
+    el("ellipse", { cx: 200, cy: 34, rx: 26, ry: 14, fill: "#6E3F2C", opacity: .3, filter: `url(#${P}soft)` });
+
+    // mouth interior (clip for gums + teeth)
+    const mouthD = poly([...pts(yUL, -EDGE, EDGE), ...pts(yLL, EDGE, -EDGE)]);
+    const clip = el("clipPath", { id: P + "mclip" }, defs); el("path", { d: mouthD }, clip);
+    el("path", { d: mouthD, fill: `url(#${P}mouth)` });
+    const inner = el("g", { "clip-path": `url(#${P}mclip)` });
+
+    // upper gums
+    el("path", { d: poly([...pts(d => yUL(d) - 4, -EDGE, EDGE), ...pts(d => yG(d) + 17, EDGE, -EDGE)]), fill: `url(#${P}gum)` }, inner);
+
+    // lower teeth (behind)
+    const lw = [17, 19, 21, 23, 23, 21, 19, 17];
+    let lx = cx - (lw.reduce((a, b) => a + b, 0) + 7 * 2) / 2;
+    lw.forEach(w => {
+      const dx = lx + w / 2 - cx, top = yE(dx) - 6, bot = yLL(dx) + 10, r = 6;
+      const d = `M${lx} ${bot} L${lx} ${top + r} Q${lx} ${top} ${lx + r} ${top} L${lx + w - r} ${top} Q${lx + w} ${top} ${lx + w} ${top + r} L${lx + w} ${bot} Z`;
+      el("path", { d, fill: `url(#${P}toothL)` }, inner);
+      el("path", { d, fill: `url(#${P}side)`, opacity: .75 }, inner);
+      lx += w + 2;
     });
-    const lip = document.createElementNS(ns, "path");
-    lip.setAttribute("d", "M0 150 C80 128 140 140 200 140 C260 140 320 128 400 150 V180 H0 Z");
-    lip.setAttribute("fill", "#7A2E33"); g.append(lip);
-    svg.append(g);
+
+    // upper teeth, left to right: PM2 PM1 C L CI | CI L C PM1 PM2
+    const T = [["P", 18], ["P", 24], ["C", 30], ["I", 36], ["I", 48], ["I", 48], ["I", 36], ["C", 30], ["P", 24], ["P", 18]];
+    const bDy = [3, -2, 4, -5, 2, 6, -4, 2, -2, 3], bRot = [0, 2, -3, 5, -2, 3, -5, 2, 0, -1];
+    let x = cx - (T.reduce((a, t) => a + t[1], 0) + 9 * 2) / 2;
+    T.forEach(([type, w], i) => {
+      let x0 = x;
+      if (!after) x0 += i < 5 ? -3 : 3; // small gap between the front teeth
+      const dx = x0 + w / 2 - cx;
+      let top = yG(dx), bot = yE(dx);
+      if (type === "P") bot -= 4;
+      if (type === "I" && (i === 3 || i === 6)) bot -= 5; // laterals a touch shorter
+      if (!after) bot += bDy[i];
+      const h = bot - top, c = w * .1, r = Math.min(7, w * .22), x1 = x0 + w;
+      let d = `M${x0 + c} ${top + 5} Q${x0 + w / 2} ${top - 6} ${x1 - c} ${top + 5} C${x1 + .5} ${top + h * .3} ${x1 + 1} ${bot - h * .3} `;
+      if (type === "I") {
+        d += `${x1 - .5} ${bot - r} Q${x1 - 1} ${bot} ${x1 - r} ${bot} `;
+        if (!after && i === 5) d += `L${x0 + w * .64} ${bot} L${x0 + w * .52} ${bot - 7} L${x0 + w * .38} ${bot - 3} `; // chipped edge
+        d += `L${x0 + r} ${bot} Q${x0 + 1} ${bot} ${x0 + .5} ${bot - r} `;
+      } else {
+        const tip = type === "C" ? 6 : 3;
+        d += `${x1 - .5} ${bot - r * 1.4} Q${x1 - w * .2} ${bot + tip * .2} ${x0 + w * .5} ${bot + tip} Q${x0 + w * .2} ${bot + tip * .2} ${x0 + .5} ${bot - r * 1.4} `;
+      }
+      d += `C${x0 - 1} ${bot - h * .3} ${x0 - .5} ${top + h * .3} ${x0 + c} ${top + 5} Z`;
+      const g = el("g", after ? {} : { transform: `rotate(${bRot[i]} ${x0 + w / 2} ${top})` }, inner);
+      const tc = el("clipPath", { id: `${P}t${i}` }, defs); el("path", { d }, tc);
+      el("path", { d, fill: `url(#${P}tooth)`, stroke: after ? "rgba(150,140,120,.25)" : "rgba(110,80,40,.35)", "stroke-width": .7 }, g);
+      const detail = el("g", { "clip-path": `url(#${P}t${i})` }, g);
+      const depth = .18 + .6 * Math.min(1, Math.abs(dx) / 165);
+      el("rect", { x: x0 - 2, y: top - 8, width: w + 4, height: h + 16, fill: `url(#${P}side)`, opacity: depth }, detail);
+      el("rect", { x: x0 - 2, y: bot - h * .16, width: w + 4, height: h * .2, fill: after ? "#9FB6C2" : "#9C8A60", opacity: .22, filter: `url(#${P}blur)` }, detail);
+      el("rect", { x: x0 - 2, y: top - 4, width: w + 4, height: h * .22, fill: after ? "#E5D4B5" : "#8C6428", opacity: after ? .35 : .55, filter: `url(#${P}blur)` }, detail);
+      el("ellipse", { cx: x0 + w * .34, cy: top + h * .45, rx: Math.max(2, w * .1), ry: h * .3, fill: `url(#${P}shine)`, opacity: 1 - depth * .6 }, detail);
+      if (type === "I") el("path", { d: `M${x0 + w * .3} ${top + h * .25} L${x0 + w * .3} ${bot - 6} M${x0 + w * .7} ${top + h * .25} L${x0 + w * .7} ${bot - 6}`, stroke: "#fff", "stroke-width": 1, opacity: after ? .18 : .08, filter: `url(#${P}blur)` }, detail);
+      if (!after && [2, 4, 5, 7].includes(i)) {
+        el("ellipse", { cx: x0 + w * (i % 2 ? .3 : .7), cy: top + h * .3, rx: w * .16, ry: h * .1, fill: "#6E4A1E", opacity: .45, filter: `url(#${P}blur)` }, detail);
+        el("rect", { x: i < 5 ? x1 - 3 : x0, y: top, width: 3, height: h, fill: "#5E3E18", opacity: .4, filter: `url(#${P}blur)` }, detail);
+      }
+      x += w + 2;
+    });
+
+    // lips over everything
+    el("path", { d: poly([...pts(yOU, -EDGE - 3, EDGE + 3), ...pts(yUL, EDGE, -EDGE)]), fill: `url(#${P}lipU)` });
+    el("path", { d: poly([...pts(yLL, -EDGE, EDGE), ...pts(yOL, EDGE + 3, -EDGE - 3)]), fill: `url(#${P}lipL)` });
+    el("ellipse", { cx: 200, cy: 206, rx: 60, ry: 8, fill: "#fff", opacity: .22, filter: `url(#${P}blur)` });
+    el("ellipse", { cx: 186, cy: 66, rx: 22, ry: 3, fill: "#fff", opacity: .14, filter: `url(#${P}blur)` });
+    [-1, 1].forEach(s => el("circle", { cx: cx + s * (EDGE + 2), cy: 120, r: 7, fill: "#3B1A14", opacity: .55, filter: `url(#${P}blur)` }));
+    el("rect", { width: 400, height: 250, fill: `url(#${P}vig)` });
   }
-  teeth($("#teeth-before"), false);
-  teeth($("#teeth-after"), true);
+  smile($("#teeth-before"), false);
+  smile($("#teeth-after"), true);
   const ba = $("#ba"), range = $("#ba-range");
   range.addEventListener("input", () => ba.style.setProperty("--pos", range.value + "%"));
 
@@ -931,9 +1019,76 @@ footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); bord
   const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
   window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
+  // ---------- Accessibility: decorative icons are hidden from screen readers ----------
+  document.querySelectorAll("svg").forEach(s => { if (!s.hasAttribute("aria-label") && !s.hasAttribute("role")) s.setAttribute("aria-hidden", "true"); });
+
   // ---------- Motion (GSAP) ----------
   if (!window.gsap || reduce) return;
   gsap.registerPlugin(ScrollTrigger);
+  const fine = window.matchMedia("(pointer: fine)").matches;
+
+  // Smooth scrolling, wired to ScrollTrigger
+  if (window.Lenis) {
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click", e => {
+      const id = a.getAttribute("href");
+      if (id.length > 1 && document.querySelector(id)) { e.preventDefault(); lenis.scrollTo(id, { offset: -84 }); }
+    }));
+  }
+
+  // Reading progress bar
+  gsap.to("#progress", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: .3 } });
+
+  // Section headlines rise word by word
+  document.querySelectorAll(".section-head h2, .ba-copy h2, .doc-copy h2, .cta-band h2").forEach(h => {
+    const words = h.textContent.trim().split(/\s+/);
+    h.textContent = "";
+    words.forEach((w, i) => {
+      const m = document.createElement("span"); m.className = "wm";
+      const inner = document.createElement("span"); inner.className = "wi"; inner.textContent = w;
+      m.append(inner); h.append(m);
+      if (i < words.length - 1) h.append(document.createTextNode(" "));
+    });
+    gsap.from(h.querySelectorAll(".wi"), { yPercent: 110, duration: .9, ease: "power4.out", stagger: .045, scrollTrigger: { trigger: h, start: "top 88%", once: true } });
+  });
+
+  // Ambient light drifting in the hero
+  gsap.to(".blob.b1", { x: 120, y: 60, duration: 14, yoyo: true, repeat: -1, ease: "sine.inOut" });
+  gsap.to(".blob.b2", { x: -140, y: -40, duration: 18, yoyo: true, repeat: -1, ease: "sine.inOut" });
+
+  if (fine) {
+    // Hero tooth tilts toward the cursor
+    const art = $(".hero-art"), tw = $(".tooth-wrap");
+    const rx = gsap.quickTo(tw, "rotationX", { duration: .8, ease: "power3.out" });
+    const ry = gsap.quickTo(tw, "rotationY", { duration: .8, ease: "power3.out" });
+    art.addEventListener("pointermove", e => {
+      const b = art.getBoundingClientRect();
+      ry(((e.clientX - b.left) / b.width - .5) * 22);
+      rx(-((e.clientY - b.top) / b.height - .5) * 18);
+    });
+    art.addEventListener("pointerleave", () => { rx(0); ry(0); });
+
+    // Primary buttons lean toward the cursor
+    document.querySelectorAll(".btn-primary").forEach(btn => {
+      const mx = gsap.quickTo(btn, "x", { duration: .4, ease: "power3.out" });
+      const my = gsap.quickTo(btn, "y", { duration: .4, ease: "power3.out" });
+      btn.addEventListener("pointermove", e => {
+        const b = btn.getBoundingClientRect();
+        mx((e.clientX - b.left - b.width / 2) * .22); my((e.clientY - b.top - b.height / 2) * .3);
+      });
+      btn.addEventListener("pointerleave", () => { mx(0); my(0); });
+    });
+
+    // Soft light follows the cursor across service cards
+    document.querySelectorAll(".svc").forEach(card => card.addEventListener("pointermove", e => {
+      const b = card.getBoundingClientRect();
+      card.style.setProperty("--mx", (e.clientX - b.left) + "px");
+      card.style.setProperty("--my", (e.clientY - b.top) + "px");
+    }));
+  }
 
   // Hero headline: word-by-word rise
   const h1 = $("#hero-title");
@@ -951,7 +1106,7 @@ footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); bord
   const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
   tl.from(".status-pill", { y: 12, opacity: 0, duration: .5 })
     .from("#hero-title .w", { yPercent: 60, opacity: 0, duration: .7, stagger: .06 }, "-=.2")
-    .from(".hero-lede, .cta-row, .trust-row", { y: 16, opacity: 0, duration: .6, stagger: .1 }, "-=.4")
+    .from(".urdu, .hero-lede, .cta-row, .trust-row", { y: 16, opacity: 0, duration: .6, stagger: .1 }, "-=.4")
     .from(".halo", { scale: .85, opacity: 0, duration: 1, ease: "expo.out" }, .1)
     .from("#hero-tooth", { y: 40, scale: .9, opacity: 0, duration: 1.1, ease: "expo.out" }, .25)
     .from(".chip, .card-float", { y: 18, scale: .9, opacity: 0, duration: .6, stagger: .12, ease: "back.out(1.6)" }, .6);
