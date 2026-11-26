@@ -1,5 +1,17 @@
 # Agency workspace
 
+## How to work (applies to every task)
+
+The user does not name skills. Choose and load them yourself, every time:
+
+1. Before starting any task, match it against the installed skills, plugins and agents listed in this file and in the session's skill list, and load every one that applies, without waiting to be asked. A task that spans areas loads each area's skills (for example a client launch: sales research, website, n8n chatbot and promo video).
+2. Follow each loaded skill's workflow, references and checklists in full; don't skim them or skip their verification steps.
+3. Work to the standard of a senior specialist in that field: research before answering, verify facts and results (build, render, test, check at phone width), and deliver finished, client-ready work rather than drafts or placeholders. Never invent facts, data, testimonials or claims; say plainly what is unverified or blocked.
+4. When no installed skill covers a task, still work to that standard and say which skill or tool would help, if one exists.
+5. Briefly tell the user which skills you used, so they can see why the work looks the way it does.
+
+Communication: reply in the user's language (Roman Urdu when they write in it), research before answering, be honest about limits and risks, and stay encouraging; never demotivate.
+
 ## UI, UX and website work
 
 For any task that designs, builds, reviews or fixes a user interface (websites, landing pages, components, colors, typography, layout, animation, accessibility), always load the `ui-ux-pro-max` skill first and follow its workflow:
