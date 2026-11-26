@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Waqas Medical &amp; Dental Clinic</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Gentle, painless dental care and family medicine in Green Town, Lahore. Dr. Bilal Khalid and team. Open Monday to Saturday, 11 AM to 10 PM.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one long clinical-calm page. Full-bleed bands with an inner 1200px column; hero splits copy / animated tooth; mobile keeps a sticky Call + WhatsApp bar. */
+:root {
+  --bg: #F5FAF9;
+  --surface: #FFFFFF;
+  --soft: #E4F2EF;
+  --soft-2: #D3EAE5;
+  --ink: #0D2B2A;
+  --muted: #4A625F;
+  --line: #D6E5E1;
+  --primary: #0B7470;
+  --primary-ink: #FFFFFF;
+  --primary-deep: #07423F;
+  --mint: #7FD8C8;
+  --gold: #C98A12;
+  --gold-soft: #FBF0D9;
+  --enamel-1: #FFFFFF;
+  --enamel-2: #DDEFEA;
+  --stain-1: #F3E4BE;
+  --stain-2: #D9C08A;
+  --band: #07423F;
+  --band-ink: #EAF6F3;
+  --band-muted: #A9CDC6;
+  --shadow: 0 1px 2px rgba(13,43,42,.05), 0 12px 32px -12px rgba(13,43,42,.18);
+  --shadow-lg: 0 30px 60px -24px rgba(7,66,63,.35);
+  --f-display: "Lexend", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --r: 18px;
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #081716; --surface: #0E2120; --soft: #12302D; --soft-2: #183D39; --ink: #E3F3EF; --muted: #9DBAB4; --line: #1F3B38;
+    --primary: #3CC2B3; --primary-ink: #04201E; --primary-deep: #9BE3D6; --mint: #4FB9A8; --gold: #E8B54E; --gold-soft: #3A2D12;
+    --enamel-1: #F4FBF9; --enamel-2: #BFDCD5; --stain-1: #D9C79A; --stain-2: #A88E55;
+    --band: #0B2A28; --band-ink: #E3F3EF; --band-muted: #93B9B2;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px -12px rgba(0,0,0,.6); --shadow-lg: 0 30px 60px -24px rgba(0,0,0,.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #081716; --surface: #0E2120; --soft: #12302D; --soft-2: #183D39; --ink: #E3F3EF; --muted: #9DBAB4; --line: #1F3B38;
+  --primary: #3CC2B3; --primary-ink: #04201E; --primary-deep: #9BE3D6; --mint: #4FB9A8; --gold: #E8B54E; --gold-soft: #3A2D12;
+  --enamel-1: #F4FBF9; --enamel-2: #BFDCD5; --stain-1: #D9C79A; --stain-2: #A88E55;
+  --band: #0B2A28; --band-ink: #E3F3EF; --band-muted: #93B9B2;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px -12px rgba(0,0,0,.6); --shadow-lg: 0 30px 60px -24px rgba(0,0,0,.7);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--surface); }
+h1, h2, h3, h4 { font-family: var(--f-display); margin: 0; line-height: 1.12; letter-spacing: -0.02em; text-wrap: balance; color: var(--ink); }
+p { margin: 0; }
+a { color: inherit; }
+img, svg { max-width: 100%; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.eyebrow { font-family: var(--f-display); font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--primary); display: inline-flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; border-radius: 2px; }
+.section { padding-block: clamp(72px, 10vw, 128px); }
+.section-head { display: grid; gap: 14px; max-width: 720px; margin-bottom: clamp(36px, 5vw, 56px); }
+.section-head h2 { font-size: clamp(30px, 4.4vw, 48px); font-weight: 600; }
+.section-head p { color: var(--muted); font-size: 18px; max-width: 60ch; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 999px; font-family: var(--f-display); font-weight: 500; font-size: 16px; text-decoration: none; cursor: pointer; border: 1.5px solid transparent; transition: transform .2s ease, box-shadow .25s ease, background-color .2s ease; white-space: nowrap; }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn-primary { background: var(--primary); color: var(--primary-ink); box-shadow: 0 10px 24px -10px var(--primary); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -12px var(--primary); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { background: var(--surface); transform: translateY(-2px); }
+.btn:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
+
+/* Nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s ease, background-color .3s ease; }
+.nav.scrolled { border-bottom-color: var(--line); background: color-mix(in srgb, var(--surface) 90%, transparent); }
+.nav-in { display: flex; align-items: center; gap: 20px; min-height: 72px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+.logo-mark { width: 42px; height: 42px; border-radius: 13px; background: var(--primary); display: grid; place-items: center; flex: none; }
+.logo-mark svg { width: 24px; height: 24px; }
+.logo-text { display: grid; line-height: 1.15; min-width: 0; }
+.logo-text b { font-family: var(--f-display); font-weight: 600; font-size: 16px; white-space: nowrap; }
+.logo-text span { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.nav-links { display: flex; gap: 6px; margin-left: auto; }
+.nav-links a { text-decoration: none; font-size: 15.5px; font-weight: 500; color: var(--muted); padding: 10px 14px; border-radius: 999px; transition: color .2s, background-color .2s; }
+.nav-links a:hover { color: var(--ink); background: var(--soft); }
+.nav .btn { min-height: 46px; padding: 0 20px; font-size: 15px; }
+@media (max-width: 960px) { .nav-links { display: none; } .nav .btn { margin-left: auto; } }
+@media (max-width: 480px) { .nav .btn span { display: none; } .nav .btn { padding: 0; width: 46px; } .logo-text span { display: none; } }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; padding-block: clamp(40px, 7vw, 96px) clamp(56px, 8vw, 110px); }
+.hero::before { content: ""; position: absolute; inset: -20% -10% auto auto; width: 70vw; height: 70vw; max-width: 980px; max-height: 980px; background: radial-gradient(closest-side, var(--soft-2), transparent 72%); opacity: .8; pointer-events: none; }
+.hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(24px, 4vw, 64px); align-items: center; }
+@media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; } }
+.hero-copy { display: grid; gap: 26px; min-width: 0; }
+.status-pill { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px 8px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 14.5px; font-weight: 600; width: fit-content; box-shadow: var(--shadow); }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: #9AA9A6; position: relative; flex: none; }
+.dot.open { background: #1E9E58; }
+.dot.open::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid #1E9E58; opacity: .5; animation: ping 2s ease-out infinite; }
+@keyframes ping { from { transform: scale(.6); opacity: .6; } to { transform: scale(1.6); opacity: 0; } }
+.hero h1 { font-size: clamp(40px, 6.4vw, 76px); font-weight: 600; letter-spacing: -0.035em; }
+.hero h1 em { font-style: normal; color: var(--primary); position: relative; white-space: nowrap; }
+.hero h1 .w { display: inline-block; }
+.hero-lede { font-size: clamp(18px, 1.6vw, 20px); color: var(--muted); max-width: 52ch; }
+.hero-lede b { color: var(--ink); font-weight: 600; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.trust-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; padding-top: 6px; }
+.trust { display: flex; align-items: center; gap: 12px; }
+.trust b { font-family: var(--f-display); font-size: 26px; font-weight: 600; }
+.trust small { display: block; font-size: 13.5px; color: var(--muted); line-height: 1.25; }
+.stars { display: inline-flex; gap: 2px; color: var(--gold); }
+.stars svg { width: 16px; height: 16px; }
+.trust-sep { width: 1px; height: 36px; background: var(--line); }
+
+.hero-art { position: relative; aspect-ratio: 1 / 1; width: 100%; max-width: 580px; justify-self: center; }
+.halo { position: absolute; inset: 9%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, var(--surface), var(--soft) 55%, var(--soft-2)); box-shadow: inset 0 -30px 60px -30px rgba(7,66,63,.25), var(--shadow-lg); }
+.orbit { position: absolute; inset: 2%; border-radius: 50%; border: 1.5px dashed color-mix(in srgb, var(--primary) 35%, transparent); }
+.orbit-2 { inset: 17%; border-style: solid; border-color: color-mix(in srgb, var(--primary) 14%, transparent); }
+.tooth-wrap { position: absolute; inset: 22%; display: grid; place-items: center; }
+.tooth-wrap svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 26px 28px rgba(7,66,63,.28)); }
+.float { animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(2deg); } }
+.sparkle { position: absolute; width: 18px; height: 18px; color: var(--gold); animation: twinkle 3.2s ease-in-out infinite; }
+.sparkle svg { width: 100%; height: 100%; }
+@keyframes twinkle { 0%, 100% { transform: scale(.6) rotate(0); opacity: .4; } 50% { transform: scale(1.1) rotate(45deg); opacity: 1; } }
+.chip { position: absolute; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); font-family: var(--f-display); font-size: 14px; font-weight: 500; white-space: nowrap; }
+.chip i { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; background: var(--soft); color: var(--primary); font-style: normal; flex: none; }
+.chip i svg { width: 16px; height: 16px; }
+.chip-1 { top: 10%; left: -2%; } .chip-2 { top: 44%; right: -4%; } .chip-3 { bottom: 9%; left: 6%; }
+.card-float { position: absolute; padding: 14px 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-lg); display: grid; gap: 4px; min-width: 170px; }
+.card-float b { font-family: var(--f-display); font-size: 15px; }
+.card-float span { font-size: 13px; color: var(--muted); }
+.card-a { right: 2%; top: 4%; }
+@media (max-width: 520px) { .chip { font-size: 12.5px; padding: 8px 10px; } .chip i { width: 24px; height: 24px; } .card-float { min-width: 0; padding: 10px 12px; } .chip-2 { right: -2%; } }
+
+/* Marquee */
+.marquee { border-block: 1px solid var(--line); background: var(--surface); overflow: hidden; padding-block: 18px; }
+.marquee-track { display: flex; gap: 48px; width: max-content; animation: marquee 38s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee-item { display: inline-flex; align-items: center; gap: 14px; font-family: var(--f-display); font-size: clamp(18px, 2vw, 24px); font-weight: 500; color: var(--muted); white-space: nowrap; }
+.marquee-item svg { width: 18px; height: 18px; color: var(--mint); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 820px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 26px 22px; display: grid; gap: 6px; }
+.stat b { font-family: var(--f-display); font-size: clamp(36px, 4.6vw, 52px); font-weight: 600; letter-spacing: -0.03em; color: var(--primary); line-height: 1; }
+.stat span { color: var(--muted); font-size: 15.5px; }
+
+/* Services */
+.tabs { display: inline-flex; padding: 5px; border-radius: 999px; background: var(--soft); gap: 4px; margin-bottom: 28px; }
+.tab { border: 0; background: transparent; padding: 11px 22px; border-radius: 999px; font-family: var(--f-display); font-weight: 500; font-size: 15.5px; color: var(--muted); cursor: pointer; min-height: 44px; transition: background-color .2s, color .2s, box-shadow .2s; }
+.tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+.svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 960px) { .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .svc-grid { grid-template-columns: 1fr; } }
+.svc { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 26px; display: grid; gap: 12px; align-content: start; transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease; overflow: hidden; }
+.svc:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--primary) 40%, var(--line)); }
+.svc-icon { width: 52px; height: 52px; border-radius: 15px; background: var(--soft); color: var(--primary); display: grid; place-items: center; transition: background-color .3s, color .3s; }
+.svc:hover .svc-icon { background: var(--primary); color: var(--primary-ink); }
+.svc-icon svg { width: 26px; height: 26px; }
+.svc h3 { font-size: 20px; font-weight: 600; }
+.svc p { color: var(--muted); font-size: 16px; }
+.svc .tag { font-size: 12.5px; font-weight: 600; color: var(--gold); background: var(--gold-soft); width: fit-content; padding: 3px 10px; border-radius: 999px; }
+.svc.featured { grid-row: span 2; background: var(--band); border-color: transparent; color: var(--band-ink); }
+.svc.featured h3 { color: var(--band-ink); font-size: 26px; }
+.svc.featured p { color: var(--band-muted); }
+.svc.featured .svc-icon { background: color-mix(in srgb, var(--band-ink) 12%, transparent); color: var(--mint); }
+.svc.featured ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.svc.featured li { display: flex; gap: 10px; align-items: flex-start; color: var(--band-ink); font-size: 15.5px; }
+.svc.featured li svg { width: 18px; height: 18px; color: var(--mint); flex: none; margin-top: 3px; }
+@media (max-width: 960px) { .svc.featured { grid-row: auto; grid-column: 1 / -1; } }
+.svc-panel[hidden] { display: none !important; }
+
+/* Before / after */
+.ba { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 72px); align-items: center; }
+@media (max-width: 900px) { .ba { grid-template-columns: 1fr; } }
+.ba-copy { display: grid; gap: 18px; }
+.ba-copy p { color: var(--muted); }
+.ba-list { display: grid; gap: 12px; margin: 6px 0 0; padding: 0; list-style: none; }
+.ba-list li { display: flex; gap: 12px; align-items: flex-start; }
+.ba-list li svg { width: 22px; height: 22px; color: var(--primary); flex: none; margin-top: 2px; }
+.ba-frame { position: relative; border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, #8A3B3B, #6E2A2E); aspect-ratio: 16 / 10; box-shadow: var(--shadow-lg); user-select: none; touch-action: pan-y; }
+.ba-layer { position: absolute; inset: 0; display: grid; place-items: center; }
+.ba-layer svg { width: 88%; height: auto; }
+.ba-after { clip-path: inset(0 0 0 var(--pos, 50%)); }
+.ba-handle { position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); width: 3px; background: #fff; transform: translateX(-50%); pointer-events: none; }
+.ba-handle::after { content: ""; position: absolute; top: 50%; left: 50%; width: 46px; height: 46px; transform: translate(-50%, -50%); border-radius: 50%; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.3); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B7470' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6-6 6 6 6M15 6l6 6-6 6'/%3E%3C/svg%3E"); background-size: 24px; background-repeat: no-repeat; background-position: center; }
+.ba-label { position: absolute; top: 14px; padding: 6px 12px; border-radius: 999px; font-family: var(--f-display); font-size: 13px; font-weight: 600; background: rgba(0,0,0,.45); color: #fff; backdrop-filter: blur(6px); }
+.ba-label.l { left: 14px; } .ba-label.r { right: 14px; }
+.ba-range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+.ba-note { font-size: 13.5px; color: var(--muted); margin-top: 12px; }
+
+/* Process */
+.process { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+@media (max-width: 900px) { .process { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .process { grid-template-columns: 1fr; } }
+.process-line { position: absolute; left: 0; right: 0; top: 31px; height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.process-line span { display: block; height: 100%; width: 100%; background: var(--primary); transform-origin: left; transform: scaleX(1); }
+@media (max-width: 900px) { .process-line { display: none; } }
+.step { position: relative; display: grid; gap: 12px; align-content: start; }
+.step-n { width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 2px solid var(--primary); color: var(--primary); font-family: var(--f-display); font-weight: 600; font-size: 20px; position: relative; z-index: 1; }
+.step h3 { font-size: 20px; font-weight: 600; }
+.step p { color: var(--muted); font-size: 16px; }
+.step q { font-size: 14.5px; color: var(--ink); background: var(--soft); border-radius: 12px; padding: 10px 12px; display: block; quotes: "“" "”"; }
+
+/* Doctor */
+.band { background: var(--band); color: var(--band-ink); }
+.band h2, .band h3 { color: var(--band-ink); }
+.band .eyebrow { color: var(--mint); }
+.doc { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+@media (max-width: 900px) { .doc { grid-template-columns: 1fr; } }
+.portrait { position: relative; aspect-ratio: 4 / 5; border-radius: 28px; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, #14625D, #0A3735 60%, #062624); border: 1px solid rgba(255,255,255,.08); max-width: 460px; width: 100%; }
+.portrait svg.bg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
+.monogram { position: absolute; inset: 0; display: grid; place-items: center; }
+.monogram div { width: 46%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); font-family: var(--f-display); font-size: clamp(48px, 7vw, 76px); font-weight: 600; color: #EAF6F3; letter-spacing: -0.04em; }
+.portrait-tag { position: absolute; left: 16px; right: 16px; bottom: 16px; padding: 14px 16px; border-radius: 16px; background: rgba(255,255,255,.92); color: #0D2B2A; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.portrait-tag b { font-family: var(--f-display); font-size: 16px; }
+.portrait-tag span { font-size: 13px; color: #4A625F; display: block; }
+.portrait-note { position: absolute; top: 14px; left: 14px; font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 999px; background: rgba(0,0,0,.35); color: #fff; }
+.doc-copy { display: grid; gap: 22px; }
+.doc-copy h2 { font-size: clamp(32px, 4.4vw, 50px); font-weight: 600; }
+.doc-copy > p { color: var(--band-muted); font-size: 18px; max-width: 58ch; }
+.qualities { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 560px) { .qualities { grid-template-columns: 1fr; } }
+.quality { padding: 18px; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); display: grid; gap: 6px; }
+.quality b { font-family: var(--f-display); font-weight: 500; font-size: 17px; color: var(--band-ink); }
+.quality span { color: var(--band-muted); font-size: 15px; }
+.team { display: flex; flex-wrap: wrap; gap: 8px; }
+.team span { padding: 7px 12px; border-radius: 999px; font-size: 14px; border: 1px solid rgba(255,255,255,.16); color: var(--band-ink); }
+
+/* Reviews */
+.reviews-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+.score { display: flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 20px; }
+.score b { font-family: var(--f-display); font-size: 44px; font-weight: 600; line-height: 1; }
+.score small { color: var(--muted); font-size: 14px; display: block; }
+.carousel { position: relative; }
+.track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 40px) / 3); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 6px; scrollbar-width: none; }
+.track::-webkit-scrollbar { display: none; }
+@media (max-width: 960px) { .track { grid-auto-columns: calc((100% - 20px) / 2); } }
+@media (max-width: 640px) { .track { grid-auto-columns: 88%; } }
+.review { scroll-snap-align: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 26px; display: grid; gap: 16px; align-content: space-between; min-width: 0; }
+.review blockquote { margin: 0; font-size: 17px; line-height: 1.55; }
+.review-who { display: flex; align-items: center; gap: 12px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--soft); color: var(--primary); font-family: var(--f-display); font-weight: 600; flex: none; }
+.review-who b { font-family: var(--f-display); font-weight: 500; font-size: 15.5px; display: block; }
+.review-who span { font-size: 13.5px; color: var(--muted); }
+.review .treat { font-size: 12.5px; font-weight: 600; color: var(--primary); background: var(--soft); padding: 4px 10px; border-radius: 999px; width: fit-content; }
+.car-ctrl { display: flex; gap: 10px; align-items: center; margin-top: 22px; }
+.icon-btn { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); display: grid; place-items: center; cursor: pointer; transition: background-color .2s, border-color .2s, transform .2s; }
+.icon-btn:hover { border-color: var(--primary); transform: translateY(-2px); }
+.icon-btn svg { width: 20px; height: 20px; }
+.car-pos { font-size: 14px; color: var(--muted); margin-left: 6px; }
+
+/* Why */
+.why { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 960px) { .why { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .why { grid-template-columns: 1fr; } }
+.why-item { padding: 24px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); display: grid; gap: 10px; align-content: start; }
+.why-item svg { width: 30px; height: 30px; color: var(--primary); }
+.why-item h3 { font-size: 18px; font-weight: 600; }
+.why-item p { color: var(--muted); font-size: 15.5px; }
+
+/* Visit + booking */
+.visit { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+@media (max-width: 900px) { .visit { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: clamp(22px, 3vw, 34px); display: grid; gap: 20px; align-content: start; min-width: 0; }
+.panel h3 { font-size: 24px; font-weight: 600; }
+.hours { display: grid; gap: 2px; }
+.hours div { display: flex; justify-content: space-between; gap: 12px; padding: 11px 14px; border-radius: 12px; font-size: 16px; }
+.hours div.today { background: var(--soft); font-weight: 600; }
+.hours div.closed span:last-child { color: var(--muted); }
+.contact-list { display: grid; gap: 14px; }
+.contact { display: flex; gap: 14px; align-items: flex-start; }
+.contact i { width: 44px; height: 44px; border-radius: 12px; background: var(--soft); color: var(--primary); display: grid; place-items: center; flex: none; }
+.contact i svg { width: 20px; height: 20px; }
+.contact b { display: block; font-family: var(--f-display); font-weight: 500; }
+.contact span, .contact a { color: var(--muted); font-size: 15.5px; overflow-wrap: anywhere; }
+.copy-btn { border: 0; background: none; color: var(--primary); font-weight: 600; font-size: 14px; cursor: pointer; padding: 4px 6px; }
+.map-card { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; background: var(--soft); border: 1px solid var(--line); text-decoration: none; display: block; }
+.map-card svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-pin { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -100%); display: grid; justify-items: center; gap: 6px; }
+.map-pin b { background: var(--ink); color: var(--bg); font-family: var(--f-display); font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 10px; white-space: nowrap; }
+.map-pin svg { position: static; width: 38px; height: 38px; color: var(--primary); filter: drop-shadow(0 6px 8px rgba(0,0,0,.25)); }
+.map-open { position: absolute; right: 12px; bottom: 12px; background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 600; padding: 8px 12px; border-radius: 10px; box-shadow: var(--shadow); }
+form { display: grid; gap: 14px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-size: 14.5px; font-weight: 600; }
+.field input, .field select, .field textarea { width: 100%; min-height: 50px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); padding: 12px 14px; font: inherit; font-size: 16px; color: var(--ink); transition: border-color .2s; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); }
+.field textarea { min-height: 96px; resize: vertical; }
+.field .err { color: #C0392B; font-size: 13.5px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 480px) { .two { grid-template-columns: 1fr; } }
+.form-note { font-size: 13.5px; color: var(--muted); }
+.wa-ready { display: grid; gap: 10px; padding: 16px; border-radius: 14px; background: var(--soft); }
+
+/* CTA band */
+.cta-band { position: relative; overflow: hidden; border-radius: 32px; background: var(--band); color: var(--band-ink); padding: clamp(36px, 6vw, 72px); display: grid; grid-template-columns: 1.3fr .7fr; gap: 28px; align-items: center; }
+.cta-band h2 { color: var(--band-ink); font-size: clamp(30px, 4.2vw, 48px); font-weight: 600; }
+.cta-band p { color: var(--band-muted); margin-top: 12px; font-size: 18px; }
+.cta-band .cta-row { justify-content: flex-end; }
+.cta-band .btn-ghost { color: var(--band-ink); border-color: rgba(255,255,255,.25); }
+.cta-band .btn-ghost:hover { background: rgba(255,255,255,.08); }
+.cta-band::after { content: ""; position: absolute; right: -120px; top: -120px; width: 360px; height: 360px; border-radius: 50%; border: 60px solid rgba(127,216,200,.08); }
+@media (max-width: 860px) { .cta-band { grid-template-columns: 1fr; } .cta-band .cta-row { justify-content: flex-start; } }
+
+footer { padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); margin-top: clamp(72px, 10vw, 120px); }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; align-items: center; color: var(--muted); font-size: 14.5px; }
+.demo-note { font-size: 13px; color: var(--muted); max-width: 70ch; margin-top: 14px; }
+
+/* Mobile action bar */
+.mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 55; display: none; gap: 10px; padding: 10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gutter-l); background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line); }
+.mbar .btn { flex: 1; min-height: 50px; }
+@media (max-width: 760px) { .mbar { display: flex; } footer { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px)); } }
+
+.toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 15px; z-index: 70; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<!-- Icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-tooth" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M8.5 3C6 3 4.5 4.8 4.7 7.6c.2 2.4 1.1 3.8 1.4 6.2.3 2.6.8 6.2 2.2 6.2s1.4-3.4 2.1-5c.4-.9 2.8-.9 3.2 0 .7 1.6.8 5 2.2 5s1.9-3.6 2.2-6.2c.3-2.4 1.2-3.8 1.4-6.2C19.5 4.8 18 3 15.5 3c-1.5 0-2.1.8-3.5.8S10 3 8.5 3Z"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2a9.8 9.8 0 0 0-8.4 14.9L2.3 21.8l4.8-1.3A9.8 9.8 0 1 0 12 2.2Zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1l-.5-.6Z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M21 16.5v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 1.2 3.9 2 2 0 0 1 3.2 1.7h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L7.2 9.6a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2.5 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9L12 2.5Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5c.6 4.6 2.4 7.3 7 8-4.6.7-6.4 3.4-7 8-.6-4.6-2.4-7.3-7-8 4.6-.7 6.4-3.4 7-8Z"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l10-6.5-10-6.5Z"/></symbol>
+    <!-- service icons -->
+    <symbol id="i-root" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 3C6 3 4.5 4.8 4.7 7.6c.2 2.4 1.1 3.8 1.4 6.2.3 2.6.8 6.2 2.2 6.2s1.4-3.4 2.1-5c.4-.9 2.8-.9 3.2 0 .7 1.6.8 5 2.2 5s1.9-3.6 2.2-6.2c.3-2.4 1.2-3.8 1.4-6.2C19.5 4.8 18 3 15.5 3c-1.5 0-2.1.8-3.5.8S10 3 8.5 3Z"/><path d="M12 7.5v4M9.5 9.5h5"/></g></symbol>
+    <symbol id="i-implant" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h10c0 3-1.5 4.5-5 4.5S7 6.5 7 3.5Z"/><path d="M9 10h6M9.5 13h5M10 16h4M10.5 19h3M12 8v14"/></g></symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 4.5 3.5L12 5l4.5 6.5L21 8l-2 10H5L3 8Z"/><path d="M5 21h14"/></g></symbol>
+    <symbol id="i-veneer" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c3 6 15 6 18 0"/><path d="M7.5 12.2v2.3M12 13v2.5M16.5 12.2v2.3"/><path d="m18 3 .6 1.4L20 5l-1.4.6L18 7l-.6-1.4L16 5l1.4-.6L18 3Z"/></g></symbol>
+    <symbol id="i-braces" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="4.5" height="8" rx="1.5"/><rect x="9.75" y="8" width="4.5" height="8" rx="1.5"/><rect x="16.5" y="8" width="4.5" height="8" rx="1.5"/><path d="M2 12h20"/></g></symbol>
+    <symbol id="i-clean" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3l7 7-3 3-7-7 3-3Z"/><path d="M11 6 3.5 13.5a2 2 0 0 0 0 2.8l4.2 4.2a2 2 0 0 0 2.8 0L18 13"/><path d="M5 3v3M3.5 4.5h3"/></g></symbol>
+    <symbol id="i-fill" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 3C6 3 4.5 4.8 4.7 7.6c.2 2.4 1.1 3.8 1.4 6.2.3 2.6.8 6.2 2.2 6.2s1.4-3.4 2.1-5c.4-.9 2.8-.9 3.2 0 .7 1.6.8 5 2.2 5s1.9-3.6 2.2-6.2c.3-2.4 1.2-3.8 1.4-6.2C19.5 4.8 18 3 15.5 3c-1.5 0-2.1.8-3.5.8S10 3 8.5 3Z"/><circle cx="12" cy="9" r="2" fill="currentColor" stroke="none"/></g></symbol>
+    <symbol id="i-extract" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M9 5l3-3 3 3"/><path d="M8.5 10c-2 0-3 1.4-2.8 3.4.2 1.7.8 2.6 1 4.3.2 1.8.5 3.8 1.5 3.8s1-2.2 1.5-3.3c.3-.6 2-.6 2.3 0 .5 1.1.6 3.3 1.5 3.3s1.3-2 1.5-3.8c.2-1.7.8-2.6 1-4.3.2-2-.8-3.4-2.8-3.4-1 0-1.5.5-2.5.5S9.5 10 8.5 10Z"/></g></symbol>
+    <symbol id="i-whiten" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
+    <symbol id="i-child" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01"/></g></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></g></symbol>
+    <symbol id="i-steth" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v5a4 4 0 0 0 8 0V3"/><path d="M9 12v2a5 5 0 0 0 10 0v-1"/><circle cx="19" cy="11" r="2"/></g></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1Z"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M6 13c1.5-4 3-4 4.5 0s3 4 4.5 0 2-2 3-1M8 21h8"/></g></symbol>
+    <symbol id="i-baby" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5 21v-1a7 7 0 0 1 14 0v1"/><path d="M10.5 7h.01M13.5 7h.01"/></g></symbol>
+    <symbol id="i-physio" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="m4 21 4-6 3 2 2-5 4 4 3-1"/><path d="M11 17 8 9l5-2 3 4"/></g></symbol>
+    <symbol id="i-aesthetic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c4 0 7 3 7 8 0 6-4 10-7 10s-7-4-7-10c0-5 3-8 7-8Z"/><path d="m16.5 2 .5 1.5 1.5.5-1.5.5-.5 1.5-.5-1.5L14.5 4l1.5-.5L16.5 2Z"/></g></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></g></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4M7 9h4M7 12h7"/></g></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H5a2 2 0 0 1 0-4h13v4"/><path d="M3 5v14a2 2 0 0 0 2 2h15V7"/><path d="M16 14h.01"/></g></symbol>
+    <symbol id="i-time" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14M5 2h14M17 22v-4.2a2 2 0 0 0-.6-1.4L12 12l-4.4 4.4a2 2 0 0 0-.6 1.4V22M7 2v4.2a2 2 0 0 0 .6 1.4L12 12l4.4-4.4a2 2 0 0 0 .6-1.4V2"/></g></symbol>
+  </defs>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top" aria-label="Waqas Medical and Dental Clinic, home">
+      <span class="logo-mark"><svg style="color:var(--primary-ink)"><use href="#i-tooth"/></svg></span>
+      <span class="logo-text"><b>Waqas Medical &amp; Dental</b><span>Green Town, Lahore</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#services">Treatments</a>
+      <a href="#doctor">Dr. Bilal</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit us</a>
+    </nav>
+    <a class="btn btn-primary" href="#book" aria-label="Book an appointment"><svg><use href="#i-wa"/></svg><span>Book appointment</span></a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="status-pill" id="status"><span class="dot" id="status-dot"></span><span id="status-text">Open Monday to Saturday, 11 AM – 10 PM</span></div>
+        <h1 id="hero-title">Gentle dentistry, <em>explained</em> before it begins.</h1>
+        <p class="hero-lede">Root canals, implants, braces and smile makeovers in Green Town, Lahore. <b>Dr. Bilal Khalid</b> and team walk you through every step, so treatment feels calm and almost painless.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#book"><svg><use href="#i-wa"/></svg>Book on WhatsApp</a>
+          <a class="btn btn-ghost" href="tel:+923214488421"><svg><use href="#i-phone"/></svg>0321 448 8421</a>
+        </div>
+        <div class="trust-row">
+          <div class="trust">
+            <b class="num">4.9</b>
+            <div><span class="stars" aria-label="4.9 out of 5 stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><small>176 Google reviews</small></div>
+          </div>
+          <span class="trust-sep" aria-hidden="true"></span>
+          <div class="trust"><div><b class="num" style="font-size:20px">Dental + Medical</b><small>Physician, gynae, child specialist, physio</small></div></div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit" id="orbit"></div>
+        <div class="orbit orbit-2"></div>
+        <div class="halo"></div>
+        <div class="tooth-wrap">
+          <div class="float" style="width:100%;height:100%">
+            <svg viewBox="0 0 160 170" id="hero-tooth">
+              <defs>
+                <linearGradient id="enamel" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="var(--enamel-1)"/>
+                  <stop offset=".6" stop-color="var(--enamel-1)"/>
+                  <stop offset="1" stop-color="var(--enamel-2)"/>
+                </linearGradient>
+                <radialGradient id="gloss" cx=".32" cy=".22" r=".5">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".95"/>
+                  <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <path id="tooth-path" d="M56 14C34 14 22 30 24 54c2 22 10 34 12 56 2 22 7 46 19 46s12-28 18-42c4-8 10-8 14 0 6 14 6 42 18 42s17-24 19-46c2-22 10-34 12-56 2-24-10-40-32-40-12 0-17 7-24 7s-12-7-24-7Z" fill="url(#enamel)" stroke="var(--enamel-2)" stroke-width="1.5"/>
+              <path d="M56 14C34 14 22 30 24 54c2 22 10 34 12 56" fill="none" stroke="url(#gloss)" stroke-width="0"/>
+              <ellipse cx="54" cy="44" rx="18" ry="26" fill="url(#gloss)" transform="rotate(-18 54 44)"/>
+              <path d="M70 30c6 3 14 3 20 0" stroke="var(--enamel-2)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+            </svg>
+          </div>
+        </div>
+        <span class="sparkle" style="top:20%;left:30%"><svg><use href="#i-sparkle"/></svg></span>
+        <span class="sparkle" style="top:30%;right:22%;animation-delay:1.1s;width:12px;height:12px"><svg><use href="#i-sparkle"/></svg></span>
+        <span class="sparkle" style="bottom:28%;right:30%;animation-delay:2s;width:14px;height:14px"><svg><use href="#i-sparkle"/></svg></span>
+        <div class="chip chip-1"><i><svg><use href="#i-implant"/></svg></i>Dental implants</div>
+        <div class="chip chip-2"><i><svg><use href="#i-braces"/></svg></i>Braces &amp; aligners</div>
+        <div class="chip chip-3"><i><svg><use href="#i-veneer"/></svg></i>Veneers</div>
+        <div class="card-float card-a"><b>Painless root canal</b><span>“Completely pain-free.”</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-label="Treatments offered">
+    <div class="marquee-track" id="marquee"></div>
+  </div>
+
+  <!-- STATS -->
+  <section class="section" style="padding-bottom:0">
+    <div class="wrap stats">
+      <div class="stat reveal"><b class="num" data-count="4.9" data-dec="1">4.9</b><span>Average Google rating</span></div>
+      <div class="stat reveal"><b class="num" data-count="176" data-suffix="+">176+</b><span>Patient reviews</span></div>
+      <div class="stat reveal"><b class="num" data-count="11">11</b><span>Dental treatments under one roof</span></div>
+      <div class="stat reveal"><b class="num" data-count="6">6</b><span>Days a week, until 10 PM</span></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Treatments</span>
+        <h2>Everything your smile needs, in one clean, modern clinic.</h2>
+        <p>From a quick scaling to a full smile makeover. And when the family needs a doctor, our medical team is in the same building.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Choose a department">
+        <button class="tab" role="tab" id="tab-dental" aria-selected="true" aria-controls="panel-dental">Dental care</button>
+        <button class="tab" role="tab" id="tab-medical" aria-selected="false" aria-controls="panel-medical" tabindex="-1">Medical care</button>
+      </div>
+
+      <div class="svc-panel" id="panel-dental" role="tabpanel" aria-labelledby="tab-dental">
+        <div class="svc-grid">
+          <article class="svc featured">
+            <div class="svc-icon"><svg><use href="#i-veneer"/></svg></div>
+            <h3>Smile makeover</h3>
+            <p>Veneers, zirconia crowns and alignment planned together, so the result looks natural and lasts.</p>
+            <ul>
+              <li><svg><use href="#i-check"/></svg>Porcelain &amp; composite veneers</li>
+              <li><svg><use href="#i-check"/></svg>Zirconia crowns that match your teeth</li>
+              <li><svg><use href="#i-check"/></svg>Teeth whitening</li>
+              <li><svg><use href="#i-check"/></svg>A clear plan and price before we start</li>
+            </ul>
+            <a class="btn btn-primary" href="#book" style="margin-top:10px;width:fit-content">Plan my smile</a>
+          </article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-root"/></svg></div><span class="tag">Most requested</span><h3>Root canal treatment</h3><p>Save a painful tooth instead of losing it. Patients describe it as smooth and pain-free.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-implant"/></svg></div><h3>Dental implants</h3><p>Fixed, natural-looking replacements for missing teeth, finished with a zirconia crown.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-braces"/></svg></div><h3>Braces &amp; clear aligners</h3><p>Straighter teeth for teens and adults, with metal braces or nearly invisible aligners.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-clean"/></svg></div><h3>Scaling &amp; polishing</h3><p>Deep cleaning that removes tartar and stains. Your teeth feel fresh the same day.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-fill"/></svg></div><h3>Tooth-coloured fillings</h3><p>Repair cavities and broken teeth with fillings that blend in.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-extract"/></svg></div><h3>Wisdom tooth removal</h3><p>Careful, gentle extractions, even for patients who are nervous about pain.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-child"/></svg></div><h3>Children's dentistry</h3><p>Patient, friendly care that keeps young smiles healthy and fear-free.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-alert"/></svg></div><h3>Emergency dental care</h3><p>Sudden toothache, swelling or a broken tooth? Call us and we'll see you quickly.</p></article>
+        </div>
+      </div>
+
+      <div class="svc-panel" id="panel-medical" role="tabpanel" aria-labelledby="tab-medical" hidden>
+        <div class="svc-grid">
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-steth"/></svg></div><h3>General physician</h3><p>Everyday illnesses, check-ups and prescriptions for the whole family.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-heart"/></svg></div><h3>Gynae OPD</h3><p>Women's health consultations in a private, respectful setting.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-wave"/></svg></div><h3>Gynae ultrasound</h3><p>Pregnancy and pelvic ultrasounds available at the clinic.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-baby"/></svg></div><h3>Child specialist</h3><p>Care for babies and children, from fevers to growth check-ups.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-physio"/></svg></div><h3>Physiotherapy</h3><p>Back, neck and joint pain treatment and recovery sessions.</p></article>
+          <article class="svc"><div class="svc-icon"><svg><use href="#i-aesthetic"/></svg></div><h3>Medical aesthetics</h3><p>Skin and aesthetic treatments by qualified practitioners.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap ba">
+      <div class="ba-copy reveal">
+        <span class="eyebrow">Smile makeovers</span>
+        <h2 style="font-size:clamp(30px,4.2vw,46px);font-weight:600">Drag to see what a makeover can do.</h2>
+        <p>One patient had 20 veneers placed by Dr. Bilal and called the transformation “outstanding”. Another had seven crowns finished before flying abroad.</p>
+        <ul class="ba-list">
+          <li><svg><use href="#i-check"/></svg><span>Natural shade matched to your face and skin</span></li>
+          <li><svg><use href="#i-check"/></svg><span>Only the treatment you actually need, never upselling</span></li>
+          <li><svg><use href="#i-check"/></svg><span>Fair, clear pricing agreed before treatment</span></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="ba-frame" id="ba" style="--pos:50%">
+          <div class="ba-layer" aria-hidden="true">
+            <svg viewBox="0 0 400 180" id="teeth-before"></svg>
+          </div>
+          <div class="ba-layer ba-after" aria-hidden="true">
+            <svg viewBox="0 0 400 180" id="teeth-after"></svg>
+          </div>
+          <span class="ba-label l">Before</span><span class="ba-label r">After</span>
+          <div class="ba-handle"></div>
+          <input class="ba-range" id="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after: slide to reveal">
+        </div>
+        <p class="ba-note">Illustration. Real before-and-after photos from the clinic's patients will appear here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" style="background:var(--surface);border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Your visit</span>
+        <h2>No surprises. Every step explained.</h2>
+        <p>The thing patients mention most is that Dr. Bilal explains everything first. That's how every visit works here.</p>
+      </div>
+      <div class="process" id="process">
+        <div class="process-line" aria-hidden="true"><span id="process-fill"></span></div>
+        <div class="step reveal"><div class="step-n">1</div><h3>Check-up &amp; diagnosis</h3><p>A thorough exam to find the real cause of the problem.</p><q>He diagnosed the issue properly after other dentists couldn't.</q></div>
+        <div class="step reveal"><div class="step-n">2</div><h3>Clear treatment plan</h3><p>You see your options, the time needed and the cost before anything starts.</p><q>He took the time to answer all my questions.</q></div>
+        <div class="step reveal"><div class="step-n">3</div><h3>Gentle treatment</h3><p>Modern equipment, strict sterilisation and a calm pace.</p><q>The extraction was smooth and almost painless.</q></div>
+        <div class="step reveal"><div class="step-n">4</div><h3>Follow-up care</h3><p>Aftercare advice and check-ups until you're fully comfortable.</p><q>I walked in worried and walked out confident.</q></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCTOR -->
+  <section class="section band" id="doctor">
+    <div class="wrap doc">
+      <div class="portrait reveal">
+        <svg class="bg" viewBox="0 0 400 500" aria-hidden="true">
+          <g fill="none" stroke="#7FD8C8" stroke-opacity=".18">
+            <circle cx="200" cy="220" r="120"/><circle cx="200" cy="220" r="170"/><circle cx="200" cy="220" r="220"/><circle cx="200" cy="220" r="270"/>
+          </g>
+        </svg>
+        <div class="monogram"><div>BK</div></div>
+        <span class="portrait-note">Photo coming soon</span>
+        <div class="portrait-tag"><div><b>Dr. Bilal Khalid</b><span>Lead Dental Surgeon</span></div><span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span></div>
+      </div>
+      <div class="doc-copy">
+        <span class="eyebrow reveal">Meet your dentist</span>
+        <h2 class="reveal">The dentist nervous patients recommend to their families.</h2>
+        <p class="reveal">Dr. Bilal Khalid leads dental care at Waqas Medical &amp; Dental Clinic. Patients come for root canals, implants, braces and veneers, and keep coming back because he is patient, gentle and honest about what treatment you really need.</p>
+        <div class="qualities">
+          <div class="quality reveal"><b>Explains everything first</b><span>“Explained the entire procedure clearly beforehand, which eased my anxiety.”</span></div>
+          <div class="quality reveal"><b>Honest advice</b><span>“Only recommends treatments that are truly necessary.”</span></div>
+          <div class="quality reveal"><b>Gentle with fear</b><span>“I was very scared, but the treatment was painless.”</span></div>
+          <div class="quality reveal"><b>Fair prices</b><span>“Charges are less compared to other clinics in Lahore.”</span></div>
+        </div>
+        <div class="team reveal" aria-label="Medical team">
+          <span>Dental surgeons</span><span>General physician</span><span>Gynaecologist</span><span>Child specialist</span><span>Physiotherapist</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section" id="reviews">
+    <div class="wrap">
+      <div class="reviews-head">
+        <div class="section-head reveal" style="margin:0">
+          <span class="eyebrow">Patient stories</span>
+          <h2>In our patients' own words.</h2>
+        </div>
+        <div class="score reveal"><b class="num">4.9</b><div><span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><small>from 176 reviews on Google</small></div></div>
+      </div>
+      <div class="carousel" aria-roledescription="carousel" aria-label="Patient reviews">
+        <div class="track" id="track" tabindex="0"></div>
+        <div class="car-ctrl">
+          <button class="icon-btn" id="prev" aria-label="Previous review"><svg><use href="#i-left"/></svg></button>
+          <button class="icon-btn" id="next" aria-label="Next review"><svg><use href="#i-right"/></svg></button>
+          <button class="icon-btn" id="pause" aria-label="Pause automatic scrolling"><svg><use href="#i-pause"/></svg></button>
+          <span class="car-pos num" id="car-pos" aria-live="polite"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="why">
+        <div class="why-item reveal"><svg><use href="#i-shield"/></svg><h3>Strict sterilisation</h3><p>Patients notice the hygiene and “zero compromise on cross-infection control”.</p></div>
+        <div class="why-item reveal"><svg><use href="#i-chip"/></svg><h3>Modern equipment</h3><p>Procedures carried out with up-to-date machines and materials.</p></div>
+        <div class="why-item reveal"><svg><use href="#i-wallet"/></svg><h3>Fair, clear pricing</h3><p>Affordable treatment with costs explained before you begin.</p></div>
+        <div class="why-item reveal"><svg><use href="#i-time"/></svg><h3>Short waiting time</h3><p>Evening hours until 10 PM, so you can come after work or school.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT + BOOK -->
+  <section class="section" id="visit" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Visit us</span>
+        <h2>Find us at Mian Chowk, Green Town.</h2>
+      </div>
+      <div class="visit">
+        <div class="panel reveal">
+          <h3>Timings</h3>
+          <div class="hours" id="hours"></div>
+          <div class="contact-list">
+            <div class="contact"><i><svg><use href="#i-pin"/></svg></i><div><b>Address</b><span>Shop #644, Mian Chowk, Hassan Basri Road, Sector D-2, Block 5, Green Town, Lahore</span></div></div>
+            <div class="contact"><i><svg><use href="#i-phone"/></svg></i><div><b>Phone &amp; WhatsApp</b><span class="num">+92 321 448 8421</span> <button class="copy-btn" data-copy="+923214488421">Copy</button></div></div>
+          </div>
+          <a class="map-card" href="https://www.google.com/maps/search/?api=1&amp;query=31.4329943,74.3070841" target="_blank" rel="noopener" aria-label="Open the clinic location in Google Maps">
+            <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="400" height="225" fill="var(--soft)"/>
+              <g stroke="var(--surface)" stroke-width="14" fill="none" stroke-linecap="round">
+                <path d="M-10 150 L410 120"/><path d="M190 -10 L215 240"/>
+              </g>
+              <g stroke="var(--surface)" stroke-width="6" fill="none" opacity=".8">
+                <path d="M-10 60 L410 40"/><path d="M80 -10 L100 240"/><path d="M310 -10 L330 240"/><path d="M-10 200 L410 180"/>
+              </g>
+              <g fill="var(--soft-2)"><rect x="110" y="62" width="70" height="44" rx="6"/><rect x="225" y="55" width="76" height="52" rx="6"/><rect x="112" y="135" width="66" height="42" rx="6"/><rect x="232" y="130" width="70" height="40" rx="6"/><rect x="20" y="72" width="52" height="40" rx="6"/><rect x="342" y="60" width="50" height="46" rx="6"/></g>
+            </svg>
+            <div class="map-pin"><b>Waqas Dental</b><svg><use href="#i-pin"/></svg></div>
+            <span class="map-open">Open in Google Maps ↗</span>
+          </a>
+        </div>
+
+        <div class="panel reveal" id="book">
+          <h3>Book an appointment</h3>
+          <p style="color:var(--muted)">Fill this in and we'll prepare a WhatsApp message to the clinic. You'll get a reply to confirm your time.</p>
+          <form id="book-form" novalidate>
+            <div class="two">
+              <div class="field"><label for="b-name">Your name</label><input id="b-name" name="name" autocomplete="name" required><span class="err" id="e-name" hidden>Please enter your name.</span></div>
+              <div class="field"><label for="b-phone">Phone number</label><input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="03xx xxxxxxx" required><span class="err" id="e-phone" hidden>Please enter a phone number we can reach.</span></div>
+            </div>
+            <div class="two">
+              <div class="field"><label for="b-service">Treatment</label>
+                <select id="b-service" name="service">
+                  <option>Check-up / consultation</option><option>Root canal</option><option>Dental implant</option><option>Braces / aligners</option><option>Veneers / smile makeover</option><option>Scaling &amp; polishing</option><option>Filling</option><option>Wisdom tooth</option><option>Teeth whitening</option><option>Child's dental visit</option><option>Toothache / emergency</option><option>Medical consultation</option>
+                </select></div>
+              <div class="field"><label for="b-day">Preferred day</label><select id="b-day" name="day"></select></div>
+            </div>
+            <div class="field"><label for="b-note">Anything we should know? <span style="color:var(--muted);font-weight:400">(optional)</span></label><textarea id="b-note" name="note" placeholder="e.g. pain on the lower left side since 2 days"></textarea></div>
+            <button class="btn btn-primary" type="submit"><svg><use href="#i-wa"/></svg>Prepare WhatsApp message</button>
+            <div class="wa-ready" id="wa-ready" hidden>
+              <b>Your message is ready.</b>
+              <a class="btn btn-primary" id="wa-link" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Send on WhatsApp</a>
+              <span class="form-note">If WhatsApp doesn't open, call <b class="num">0321 448 8421</b>.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="wrap">
+    <div class="cta-band reveal">
+      <div>
+        <h2>Toothache won't wait. Neither should you.</h2>
+        <p>Open today until 10 PM. Call or message and we'll find you a time.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#book" style="background:var(--mint);color:#04201E"><svg><use href="#i-wa"/></svg>Book on WhatsApp</a>
+        <a class="btn btn-ghost" href="tel:+923214488421"><svg><use href="#i-phone"/></svg>Call now</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a class="logo" href="#top"><span class="logo-mark"><svg style="color:var(--primary-ink)"><use href="#i-tooth"/></svg></span><span class="logo-text"><b>Waqas Medical &amp; Dental Clinic</b><span>Mian Chowk, Green Town, Lahore</span></span></a>
+      <span>Mon – Sat, 11 AM – 10 PM · Sunday closed</span>
+    </div>
+    <p class="demo-note">Demo website prepared for Waqas Medical &amp; Dental Clinic. Reviews are quoted from public Google reviews. Clinic photos, doctor photo and before-and-after cases will be added with the clinic's permission.</p>
+  </div>
+</footer>
+
+<div class="mbar" aria-label="Quick contact">
+  <a class="btn btn-ghost" href="tel:+923214488421" style="background:var(--surface)"><svg><use href="#i-phone"/></svg>Call</a>
+  <a class="btn btn-primary" href="#book"><svg><use href="#i-wa"/></svg>Book</a>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  "use strict";
+  const $ = s => document.querySelector(s);
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const PHONE = "923214488421";
+
+  // ---------- Open / closed status in Lahore time ----------
+  const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  function lahoreNow() {
+    try {
+      const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Karachi", weekday: "long", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
+      const get = t => (parts.find(p => p.type === t) || {}).value;
+      return { day: get("weekday"), mins: parseInt(get("hour"), 10) % 24 * 60 + parseInt(get("minute"), 10) };
+    } catch (e) { const d = new Date(); return { day: DAYS[d.getDay()], mins: d.getHours() * 60 + d.getMinutes() }; }
+  }
+  const OPEN = 11 * 60, CLOSE = 22 * 60;
+  function renderStatus() {
+    const n = lahoreNow();
+    const isSun = n.day === "Sunday";
+    const open = !isSun && n.mins >= OPEN && n.mins < CLOSE;
+    $("#status-dot").classList.toggle("open", open);
+    let txt;
+    if (open) txt = "Open now · until 10 PM today";
+    else if (!isSun && n.mins < OPEN) txt = "Closed now · opens today at 11 AM";
+    else if (n.day === "Saturday" || isSun) txt = "Closed now · opens Monday at 11 AM";
+    else txt = "Closed now · opens tomorrow at 11 AM";
+    $("#status-text").textContent = txt;
+    const hours = $("#hours");
+    hours.innerHTML = "";
+    ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].forEach(d => {
+      const row = document.createElement("div");
+      if (d === n.day) row.classList.add("today");
+      if (d === "Sunday") row.classList.add("closed");
+      const a = document.createElement("span"); a.textContent = d + (d === n.day ? " (today)" : "");
+      const b = document.createElement("span"); b.className = "num"; b.textContent = d === "Sunday" ? "Closed" : "11:00 AM – 10:00 PM";
+      row.append(a, b); hours.append(row);
+    });
+    // preferred day options
+    const sel = $("#b-day");
+    if (!sel.options.length) {
+      const base = new Date();
+      for (let i = 0, added = 0; added < 7 && i < 10; i++) {
+        const d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + i);
+        if (d.getDay() === 0) continue;
+        const label = (i === 0 ? "Today, " : i === 1 ? "Tomorrow, " : "") + d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" });
+        sel.add(new Option(label, label)); added++;
+      }
+    }
+  }
+  renderStatus();
+  setInterval(renderStatus, 60000);
+
+  // ---------- Marquee ----------
+  const TREAT = ["Root canal treatment", "Dental implants", "Zirconia crowns", "Veneers", "Braces & aligners", "Scaling & polishing", "Teeth whitening", "Wisdom tooth removal", "Children's dentistry", "Emergency care"];
+  const mq = $("#marquee");
+  [...TREAT, ...TREAT].forEach((t, i) => {
+    const s = document.createElement("span"); s.className = "marquee-item";
+    if (i >= TREAT.length) s.setAttribute("aria-hidden", "true");
+    s.innerHTML = '<svg><use href="#i-sparkle"/></svg>';
+    s.append(document.createTextNode(t)); mq.append(s);
+  });
+
+  // ---------- Before / after teeth illustration ----------
+  function teeth(svg, after) {
+    const ns = "http://www.w3.org/2000/svg";
+    const g = document.createElementNS(ns, "g");
+    const gum = document.createElementNS(ns, "path");
+    gum.setAttribute("d", "M0 0 H400 V48 C330 70 270 74 200 74 C130 74 70 70 0 48 Z");
+    gum.setAttribute("fill", "#D9737A"); g.append(gum);
+    const widths = [34, 40, 48, 56, 56, 48, 40, 34];
+    const total = widths.reduce((a, b) => a + b, 0) + 7 * 4;
+    let x = (400 - total) / 2;
+    widths.forEach((w, i) => {
+      const center = Math.abs(i - 3.5);
+      const h = 92 - center * 7;
+      const y = 40 + center * 4;
+      const p = document.createElementNS(ns, "path");
+      const r = 10;
+      let tilt = 0, dy = 0, ww = w;
+      if (!after) { tilt = [3, -4, 2, -3, 4, -2, 5, -3][i]; dy = [4, -2, 6, 0, 3, -3, 5, 2][i]; ww = w - [2, 4, 0, 3, 1, 5, 2, 3][i]; }
+      p.setAttribute("d", `M${x} ${y} h${ww} v${h - r} q0 ${r} -${r} ${r} h-${ww - 2 * r} q-${r} 0 -${r} -${r} Z`);
+      p.setAttribute("transform", `rotate(${tilt} ${x + ww / 2} ${y}) translate(0 ${dy})`);
+      const id = (after ? "a" : "b") + i;
+      const grad = document.createElementNS(ns, "linearGradient");
+      grad.setAttribute("id", id); grad.setAttribute("x1", "0"); grad.setAttribute("y1", "0"); grad.setAttribute("x2", "0"); grad.setAttribute("y2", "1");
+      const s1 = document.createElementNS(ns, "stop"); s1.setAttribute("offset", "0"); s1.setAttribute("stop-color", after ? "#FFFFFF" : "#EBD9A6");
+      const s2 = document.createElementNS(ns, "stop"); s2.setAttribute("offset", "1"); s2.setAttribute("stop-color", after ? "#E6F3F0" : "#C9A86A");
+      grad.append(s1, s2); svg.append(grad);
+      p.setAttribute("fill", `url(#${id})`);
+      p.setAttribute("stroke", after ? "#D8ECE7" : "#B38F55"); p.setAttribute("stroke-width", "1");
+      g.append(p);
+      if (after) {
+        const shine = document.createElementNS(ns, "rect");
+        shine.setAttribute("x", x + 6); shine.setAttribute("y", y + 10); shine.setAttribute("width", 5); shine.setAttribute("height", h * 0.45); shine.setAttribute("rx", 2.5);
+        shine.setAttribute("fill", "#fff"); shine.setAttribute("opacity", ".8"); g.append(shine);
+      } else if (i % 3 === 1) {
+        const spot = document.createElementNS(ns, "circle");
+        spot.setAttribute("cx", x + ww / 2); spot.setAttribute("cy", y + h * 0.7); spot.setAttribute("r", 4);
+        spot.setAttribute("fill", "#9C7A3E"); spot.setAttribute("opacity", ".6"); spot.setAttribute("transform", `rotate(${tilt} ${x + ww / 2} ${y})`); g.append(spot);
+      }
+      x += w + 4;
+    });
+    const lip = document.createElementNS(ns, "path");
+    lip.setAttribute("d", "M0 150 C80 128 140 140 200 140 C260 140 320 128 400 150 V180 H0 Z");
+    lip.setAttribute("fill", "#7A2E33"); g.append(lip);
+    svg.append(g);
+  }
+  teeth($("#teeth-before"), false);
+  teeth($("#teeth-after"), true);
+  const ba = $("#ba"), range = $("#ba-range");
+  range.addEventListener("input", () => ba.style.setProperty("--pos", range.value + "%"));
+
+  // ---------- Services tabs ----------
+  const tabs = [$("#tab-dental"), $("#tab-medical")];
+  function selectTab(t, focus) {
+    tabs.forEach(b => {
+      const on = b === t;
+      b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1;
+      document.getElementById(b.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) t.focus();
+    if (window.gsap && !reduce) {
+      gsap.fromTo("#" + t.getAttribute("aria-controls") + " .svc", { y: 18, opacity: 0, scale: .97 }, { y: 0, opacity: 1, scale: 1, duration: .45, stagger: .05, ease: "back.out(1.4)", clearProps: "transform,opacity" });
+    }
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => selectTab(t));
+    t.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); selectTab(tabs[(i + 1) % 2], true); }
+    });
+  });
+
+  // ---------- Reviews ----------
+  const REVIEWS = [
+    { n: "Saneha A.", t: "Implant & zirconia crown", q: "I had my dental implant and zirconia crown done by Dr. Bilal. The zirconia work was absolutely amazing. He was very professional, kind and caring throughout." },
+    { n: "Haroon G.", t: "Extraction & 7 crowns", q: "I was flying out soon, but he assured me he could complete everything, and he kept his promise. The crowns look natural and the work was precise and top-quality." },
+    { n: "Sobia M.", t: "Wisdom tooth removal", q: "I was so afraid about pain and discomfort. Dr. Bilal is a real gentleman. He understood my fear and did his job perfectly." },
+    { n: "Shoaib A.", t: "Root canal, fillings & crowns", q: "I took my mother for treatment and, Alhamdulillah, she is doing perfectly fine now. We are so satisfied we're going back for implants too." },
+    { n: "Giselle A.", t: "20 veneers", q: "Very professional and economical. I got 20 veneers done by Dr. Bilal and the transformation is outstanding." },
+    { n: "Ch. Jilani", t: "Child's root canal", q: "Everything was explained step by step for my daughter's treatment, and she felt comfortable throughout. God bless you, Dr. Bilal." },
+    { n: "Arslan T.", t: "Dental check-up", q: "Highly skilled and professional, and only recommends treatments that are truly necessary. Best dental visit I've had in years." },
+    { n: "Habib ur R.", t: "Long-standing pain", q: "Several other dentists couldn't fix my pain. Dr. Bilal diagnosed the issue properly and treated it very responsibly. Hygiene is clearly a priority." },
+  ];
+  const track = $("#track");
+  REVIEWS.forEach((r, i) => {
+    const el = document.createElement("article");
+    el.className = "review";
+    el.setAttribute("role", "group");
+    el.setAttribute("aria-roledescription", "slide");
+    el.setAttribute("aria-label", `${i + 1} of ${REVIEWS.length}`);
+    el.innerHTML = `<div style="display:grid;gap:14px"><span class="stars" aria-label="5 stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><blockquote></blockquote></div><div style="display:grid;gap:12px"><span class="treat"></span><div class="review-who"><span class="avatar" aria-hidden="true"></span><div><b></b><span>Google review</span></div></div></div>`;
+    el.querySelector("blockquote").textContent = "“" + r.q + "”";
+    el.querySelector(".treat").textContent = r.t;
+    el.querySelector(".avatar").textContent = r.n.split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase();
+    el.querySelector(".review-who b").textContent = r.n;
+    track.append(el);
+  });
+  const slides = () => [...track.children];
+  function current() {
+    const left = track.scrollLeft;
+    let best = 0, dist = Infinity;
+    slides().forEach((s, i) => { const d = Math.abs(s.offsetLeft - track.offsetLeft - left); if (d < dist) { dist = d; best = i; } });
+    return best;
+  }
+  function go(i) {
+    const list = slides(); const n = (i + list.length) % list.length;
+    track.scrollTo({ left: list[n].offsetLeft - track.offsetLeft, behavior: reduce ? "auto" : "smooth" });
+  }
+  function updatePos() { $("#car-pos").textContent = `${current() + 1} / ${REVIEWS.length}`; }
+  track.addEventListener("scroll", () => { clearTimeout(updatePos._t); updatePos._t = setTimeout(updatePos, 80); }, { passive: true });
+  updatePos();
+  $("#prev").addEventListener("click", () => { stopAuto(); go(current() - 1); });
+  $("#next").addEventListener("click", () => { stopAuto(); go(current() + 1); });
+  track.addEventListener("keydown", e => { if (e.key === "ArrowRight") { e.preventDefault(); stopAuto(); go(current() + 1); } if (e.key === "ArrowLeft") { e.preventDefault(); stopAuto(); go(current() - 1); } });
+  let auto = null, paused = reduce;
+  function startAuto() { if (paused || auto) return; auto = setInterval(() => go(current() + 1), 5500); }
+  function stopAuto() { clearInterval(auto); auto = null; }
+  function setPaused(p) {
+    paused = p; const b = $("#pause");
+    b.setAttribute("aria-label", p ? "Start automatic scrolling" : "Pause automatic scrolling");
+    b.innerHTML = `<svg><use href="#i-${p ? "play" : "pause"}"/></svg>`;
+    p ? stopAuto() : startAuto();
+  }
+  $("#pause").addEventListener("click", () => setPaused(!paused));
+  ["mouseenter", "focusin", "touchstart"].forEach(ev => track.addEventListener(ev, stopAuto, { passive: true }));
+  ["mouseleave", "focusout"].forEach(ev => track.addEventListener(ev, startAuto));
+  setPaused(paused);
+
+  // ---------- Copy ----------
+  function toast(msg) { const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => (t.hidden = true), 2200); }
+  document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); toast("Number copied"); } catch (e) { toast("+92 321 448 8421"); }
+  }));
+
+  // ---------- Booking form → WhatsApp ----------
+  $("#book-form").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = e.target;
+    const name = f.name.value.trim(), phone = f.phone.value.trim();
+    $("#e-name").hidden = !!name; $("#e-phone").hidden = phone.replace(/\D/g, "").length >= 10;
+    if (!name) { f.name.focus(); return; }
+    if (phone.replace(/\D/g, "").length < 10) { f.phone.focus(); return; }
+    const msg = `Assalam o Alaikum, I'd like to book an appointment at Waqas Medical & Dental Clinic.\n\nName: ${name}\nPhone: ${phone}\nTreatment: ${f.service.value}\nPreferred day: ${f.day.value}` + (f.note.value.trim() ? `\nNote: ${f.note.value.trim()}` : "");
+    $("#wa-link").href = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+    $("#wa-ready").hidden = false;
+    $("#wa-link").focus();
+  });
+
+  // ---------- Nav state ----------
+  const nav = $("#nav");
+  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  // ---------- Motion (GSAP) ----------
+  if (!window.gsap || reduce) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero headline: word-by-word rise
+  const h1 = $("#hero-title");
+  const words = [];
+  h1.childNodes.forEach(node => {
+    if (node.nodeType === 3) {
+      node.textContent.split(/(\s+)/).forEach(part => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { words.push(document.createTextNode(part)); return; }
+        const s = document.createElement("span"); s.className = "w"; s.textContent = part; words.push(s);
+      });
+    } else { node.classList.add("w"); words.push(node); }
+  });
+  h1.replaceChildren(...words);
+  const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  tl.from(".status-pill", { y: 12, opacity: 0, duration: .5 })
+    .from("#hero-title .w", { yPercent: 60, opacity: 0, duration: .7, stagger: .06 }, "-=.2")
+    .from(".hero-lede, .cta-row, .trust-row", { y: 16, opacity: 0, duration: .6, stagger: .1 }, "-=.4")
+    .from(".halo", { scale: .85, opacity: 0, duration: 1, ease: "expo.out" }, .1)
+    .from("#hero-tooth", { y: 40, scale: .9, opacity: 0, duration: 1.1, ease: "expo.out" }, .25)
+    .from(".chip, .card-float", { y: 18, scale: .9, opacity: 0, duration: .6, stagger: .12, ease: "back.out(1.6)" }, .6);
+  gsap.to("#orbit", { rotate: 360, duration: 60, ease: "none", repeat: -1 });
+  // Gentle chip drift
+  gsap.utils.toArray(".chip").forEach((c, i) => gsap.to(c, { y: i % 2 ? 8 : -8, duration: 2.6 + i * .4, yoyo: true, repeat: -1, ease: "sine.inOut", delay: 1.4 }));
+  // Hero parallax on scroll
+  gsap.to(".hero-art", { yPercent: 10, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+
+  // Section reveals
+  gsap.utils.toArray(".reveal").forEach(el => {
+    gsap.from(el, { y: 28, opacity: 0, duration: .8, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } });
+  });
+  // Service cards stagger (skill preset: Stagger List)
+  ScrollTrigger.batch("#panel-dental .svc", {
+    start: "top 90%", once: true,
+    onEnter: batch => gsap.from(batch, { opacity: 0, scale: .92, y: 16, duration: .45, stagger: { each: .06, from: "start" }, ease: "back.out(1.4)" })
+  });
+  // Counters
+  gsap.utils.toArray("[data-count]").forEach(el => {
+    const end = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec || "0", 10), suf = el.dataset.suffix || "";
+    const obj = { v: 0 };
+    gsap.to(obj, { v: end, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%", once: true }, onUpdate: () => { el.textContent = obj.v.toFixed(dec) + suf; } });
+  });
+  // Process line draws as you scroll
+  gsap.fromTo("#process-fill", { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { trigger: "#process", start: "top 75%", end: "bottom 60%", scrub: .6 } });
+  // Before/after: teaser sweep when it first appears
+  ScrollTrigger.create({ trigger: "#ba", start: "top 75%", once: true, onEnter: () => {
+    const o = { p: 50 };
+    gsap.timeline().to(o, { p: 18, duration: .9, ease: "power2.inOut", onUpdate: () => { ba.style.setProperty("--pos", o.p + "%"); range.value = o.p; } })
+      .to(o, { p: 72, duration: 1.1, ease: "power2.inOut", onUpdate: () => { ba.style.setProperty("--pos", o.p + "%"); range.value = o.p; } })
+      .to(o, { p: 50, duration: .8, ease: "power2.out", onUpdate: () => { ba.style.setProperty("--pos", o.p + "%"); range.value = o.p; } });
+  }});
+})();
+</script>
+
+</body>
+</html>
