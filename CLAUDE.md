@@ -10,6 +10,16 @@ For any task that designs, builds, reviews or fixes a user interface (websites, 
 
 Treat the skill's results as recommendations: adapt fonts, palette and style to the client's actual business rather than copying generic output.
 
+## Unslop (every website, so nothing looks AI-made)
+
+Every website or UI build also uses the `unslop` skill (heydamir/unslop, CC BY 4.0, keep its credit):
+
+1. Before designing, write the unslop direction (product, character, world, moments, signature) from the client's real business, and use it alongside the ui-ux-pro-max design system.
+2. Build to its rules from the start (`references/tokens.md`, `references/signs.md`), not only as a cleanup at the end.
+3. Before delivery, run unslop's audit against `references/signs.md` and its checklist, fix what it finds, and pass the template check: if another business's name fits the page just as well, push the direction further.
+
+Where the rules conflict, unslop wins on how the page looks: no hue gradients, gradient text, glows, colored blobs, emoji icons, "New ✨" badges, uppercase tracked labels, looping or bouncy motion, or hype copy, even when a palette, style or component suggests them. Components from the sources below are used only when they fit the direction; drop or restyle any that add those tells (for example glow, shimmer, sparkle or meteor effects).
+
 ## Component sources (use these on every website)
 
 Every website build uses the sources below for components, templates and animation, instead of hand-writing what they already provide. Pick what fits the client; don't pile on effects.
@@ -46,10 +56,12 @@ Workflow:
 - Sales: `sales` and `sales-*` skills plus `.claude/agents/sales-*` (zubair-trabzada/ai-sales-team-claude).
 - Trading: `trader-*` skills (Jakeschincariol/day-trader-skill).
 - n8n: `n8n-*-official` (n8n-io/skills) and the community `n8n-*` skills (czlonkowski/n8n-skills).
+- Design: `unslop` (heydamir/unslop, CC BY 4.0).
 - Video: `ultimate-video-editor` (Rajbharti06/Ultimate-Video-Editing-Skills) and `motion-video-director` (mattypark/Motion-graphics-skill; upstream has no license, personal use only).
 
 ## Motion
 
+- Motion explains something: at most one entrance on load, one easing curve, no looping, parallax or hover-scale effects (see unslop pass 9).
 - Respect `prefers-reduced-motion` everywhere.
 - Animate `transform` and `opacity`, not layout properties.
 - Test every site at phone width (about 390px) before delivery.
