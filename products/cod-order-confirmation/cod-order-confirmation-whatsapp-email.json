@@ -6,7 +6,7 @@
         "authentication": "accessToken",
         "topic": "orders/create"
       },
-      "id": "3f53da16-dcd4-49f1-9e7e-3ac76668f618",
+      "id": "2f1fc5f8-ac59-45fa-a62c-c483edd32d8e",
       "name": "Shopify Trigger",
       "type": "n8n-nodes-base.shopifyTrigger",
       "typeVersion": 1,
@@ -14,7 +14,7 @@
         0,
         0
       ],
-      "webhookId": "4c7d5ef9-a970-4ec5-bdd4-e39afa7820fc"
+      "webhookId": "ef69ab47-7e2c-4c49-820e-e7f4eae47834"
     },
     {
       "parameters": {
@@ -23,7 +23,7 @@
         ],
         "options": {}
       },
-      "id": "d0d642bd-7c0a-4a16-9e3c-2fd26bb51bb3",
+      "id": "acfc1fcb-4d86-4553-97d5-4a8837df96b6",
       "name": "WhatsApp Trigger",
       "type": "n8n-nodes-base.whatsAppTrigger",
       "typeVersion": 1,
@@ -31,7 +31,7 @@
         0,
         200
       ],
-      "webhookId": "7bdeafc0-9d1e-4f7e-a1f4-a3d07486a9af"
+      "webhookId": "90a8f5cb-0211-457e-b556-54ed5224c4f6"
     },
     {
       "parameters": {
@@ -40,7 +40,7 @@
         "responseMode": "responseNode",
         "options": {}
       },
-      "id": "b41e0583-2485-4da1-a4a2-394d97245e95",
+      "id": "faa39ea8-0acf-4dd7-9f36-b9d25b4d1898",
       "name": "Email link opened",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.2,
@@ -48,7 +48,7 @@
         0,
         400
       ],
-      "webhookId": "f40efac1-050e-43d0-96a4-9ed8ec6226f0"
+      "webhookId": "25a448ae-114b-4ced-8956-345999ae4a4e"
     },
     {
       "parameters": {
@@ -57,7 +57,7 @@
         "responseMode": "responseNode",
         "options": {}
       },
-      "id": "89b973a0-cd9f-48e0-91a2-d3a525f44fc9",
+      "id": "a54893f3-b829-40cf-b286-cb10434c7adf",
       "name": "Email button pressed",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.2,
@@ -65,68 +65,68 @@
         0,
         600
       ],
-      "webhookId": "2cb252db-0b47-473d-889f-49c65d03d457"
+      "webhookId": "9efbb741-6e74-4a77-8f37-35cedc7f31ed"
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "0c637d62-4723-474c-b163-054b70a90c23",
+              "id": "d6bc5934-d6bf-41e0-9d61-624f19474200",
               "name": "store_name",
               "value": "Your Store Name",
               "type": "string"
             },
             {
-              "id": "e5040152-170c-4872-91e9-d7fb2b2cacd6",
+              "id": "99e54ad8-5045-41d7-965a-4af221507dc9",
               "name": "template_name",
               "value": "order_confirmation",
               "type": "string"
             },
             {
-              "id": "ba2a0275-0d48-4225-bd47-d8e43c7a4519",
+              "id": "89fce825-3372-4c30-b339-a95a67f18825",
               "name": "status_template_name",
               "value": "order_status_update",
               "type": "string"
             },
             {
-              "id": "fe9ac75b-9554-40fd-8ff8-4518009e551c",
+              "id": "c075b8c4-6453-4a98-bda1-cc6ab9ffae8e",
               "name": "template_language",
               "value": "en",
               "type": "string"
             },
             {
-              "id": "ee70fefd-83bc-4931-afc6-f858e882352e",
+              "id": "382e7517-a530-4dd0-9698-de3c5f3e226e",
               "name": "whatsapp_phone_number_id",
               "value": "PASTE_YOUR_PHONE_NUMBER_ID",
               "type": "string"
             },
             {
-              "id": "2da4f31e-9f7d-4839-8a6b-65d3d057858f",
+              "id": "909f2166-4f62-48cf-99b5-5eb74b232d95",
               "name": "default_country_code",
               "value": "92",
               "type": "string"
             },
             {
-              "id": "b747fc62-7602-4832-8d02-a46eac7ed03b",
+              "id": "d0726986-8500-48be-8b88-644ed0305607",
               "name": "email_from",
               "value": "Your Store <orders@yourstore.com>",
               "type": "string"
             },
             {
-              "id": "e8d809a0-f6ad-4c51-a832-58e004d6f152",
+              "id": "ad374e50-366a-46a0-8af7-2e9a7a2bc7a4",
               "name": "support_contact",
               "value": "WhatsApp 0300-0000000",
               "type": "string"
             },
             {
-              "id": "9cb01fc8-c710-477d-a80d-f4879c546076",
+              "id": "d53a7a07-573b-4778-9827-c487f8e0ccf4",
               "name": "order_action_url",
               "value": "https://YOUR-N8N-DOMAIN/webhook/cod-order-action",
               "type": "string"
             },
             {
-              "id": "cbc68088-b152-4596-aa23-d7f3eb2b92e5",
+              "id": "21021852-48ec-49f5-ab34-c59559dd7ce3",
               "name": "cod_only",
               "value": true,
               "type": "boolean"
@@ -136,7 +136,7 @@
         "includeOtherFields": true,
         "options": {}
       },
-      "id": "257fa6c7-6991-4665-9b70-aea7cfcc1180",
+      "id": "e866b93d-0d18-4fd8-bef9-61762e9c6ead",
       "name": "Store settings",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -156,7 +156,7 @@
           },
           "conditions": [
             {
-              "id": "55316b22-7ec9-45ac-b913-1cc1b8a7e52c",
+              "id": "4a15bd52-6ead-474e-90fd-14baf0403e2d",
               "leftValue": "={{ $('Shopify Trigger').isExecuted }}",
               "rightValue": "",
               "operator": {
@@ -171,7 +171,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "595412c4-1d76-42fd-a3ed-0b8afb641b4a",
+      "id": "6069baaf-7a83-4eb7-ad7c-be53bec07162",
       "name": "New Shopify order?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -191,7 +191,7 @@
           },
           "conditions": [
             {
-              "id": "104609eb-72ac-4e03-ab62-3216abcf1e7e",
+              "id": "e3af963d-5aac-4741-b340-2e06adc26191",
               "leftValue": "={{ $('WhatsApp Trigger').isExecuted }}",
               "rightValue": "",
               "operator": {
@@ -206,7 +206,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "ab201cf9-d868-4b20-b317-3b8e88c9f6aa",
+      "id": "31b0ad54-2701-4d95-8384-ba92b5bbd8cd",
       "name": "WhatsApp message?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -220,55 +220,55 @@
         "assignments": {
           "assignments": [
             {
-              "id": "03cf252f-0bb0-4c41-9dbb-56f481b98c47",
+              "id": "73364008-eac2-4891-b3c2-60dfe4450d43",
               "name": "orderId",
               "value": "={{ String($json.id) }}",
               "type": "string"
             },
             {
-              "id": "45fa31c9-96f2-4041-ba51-5513eeed4ac6",
+              "id": "07605eb8-69d8-4d37-82b4-c85537d21b02",
               "name": "orderName",
               "value": "={{ $json.name }}",
               "type": "string"
             },
             {
-              "id": "0170cc9c-ef8b-4052-970e-8efaca17991f",
+              "id": "6974231d-06b3-4b0d-90a1-a4adfbf475a3",
               "name": "customerName",
               "value": "={{ ($json.shipping_address?.first_name || $json.customer?.first_name || 'Customer').trim() }}",
               "type": "string"
             },
             {
-              "id": "b0352a12-8ae9-4be6-ad24-7f300860fd6c",
+              "id": "00cd07c7-0063-4580-b824-7aa7fd7567d1",
               "name": "phone",
               "value": "={{ (() => { const cc = $('Store settings').item.json.default_country_code; let p = String($json.shipping_address?.phone || $json.billing_address?.phone || $json.phone || $json.customer?.phone || '').replace(/\\D/g, ''); if (p.startsWith('00')) p = p.slice(2); if (p.startsWith('0')) p = cc + p.slice(1); else if (p.length === 10 && p.startsWith('3')) p = cc + p; return p; })() }}",
               "type": "string"
             },
             {
-              "id": "7c13ab9a-de76-489e-b283-34da156c0e09",
+              "id": "fccd0e8d-fe56-46f1-8de6-8d0071b5907f",
               "name": "email",
               "value": "={{ String($json.email || $json.contact_email || $json.customer?.email || '').trim().toLowerCase() }}",
               "type": "string"
             },
             {
-              "id": "6bbe2af1-8500-42af-87c1-52a9e055b0bb",
+              "id": "e8da1e8a-17aa-4e3d-9fa4-73f74d0cd23f",
               "name": "items",
               "value": "={{ ($json.line_items || []).map(i => i.quantity + ' x ' + i.title + (i.variant_title ? ' (' + i.variant_title + ')' : '')).join(', ').slice(0, 200) }}",
               "type": "string"
             },
             {
-              "id": "bc18b1ad-2a31-485a-a5a3-f2e67b89361e",
+              "id": "f33faf5d-e960-467d-be53-0ffdfaf955ac",
               "name": "total",
               "value": "={{ 'Rs ' + Number($json.total_price || 0).toLocaleString('en-US') }}",
               "type": "string"
             },
             {
-              "id": "55f1ff17-936a-41ab-85d8-2a160ff7b3ae",
+              "id": "fa960d03-65e8-4b75-8c6d-5b72bf680005",
               "name": "shopTags",
               "value": "={{ $json.tags || '' }}",
               "type": "string"
             },
             {
-              "id": "0465e92e-453a-496f-ab91-6a75a8ce241e",
+              "id": "5925f7bb-df4e-4b62-80b6-73d694575a3d",
               "name": "isCod",
               "value": "={{ ['cash','cod'].some(w => ($json.payment_gateway_names || []).join(' ').toLowerCase().includes(w)) || $json.financial_status === 'pending' }}",
               "type": "boolean"
@@ -277,7 +277,7 @@
         },
         "options": {}
       },
-      "id": "74d11069-6d2c-42f7-b337-b51b11a0004e",
+      "id": "1f2c0641-a52e-4330-970f-780cff99807b",
       "name": "Prepare order",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -293,7 +293,7 @@
         "encodingType": "hex",
         "stringLength": 40
       },
-      "id": "d9fea79d-5e4e-4d13-9f4f-a2a9d2e24877",
+      "id": "7170cb22-3a9b-4bfe-8435-8917f443dc2d",
       "name": "Create secure token",
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 2,
@@ -313,7 +313,7 @@
           },
           "conditions": [
             {
-              "id": "3b269bbe-b81a-4dba-9d4b-a2e487d65938",
+              "id": "177fd36d-af48-40ab-8d54-8d2f134c7cfe",
               "leftValue": "={{ !$('Store settings').item.json.cod_only || $('Prepare order').item.json.isCod }}",
               "rightValue": "",
               "operator": {
@@ -323,7 +323,7 @@
               }
             },
             {
-              "id": "6e01df22-7ef3-466d-a2fc-99ea11f8d471",
+              "id": "ec8c0828-0d72-4126-8823-d2ed7138d5c9",
               "leftValue": "={{ $('Prepare order').item.json.phone.length >= 11 || $('Prepare order').item.json.email.includes('@') }}",
               "rightValue": "",
               "operator": {
@@ -338,7 +338,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "c7c61eed-dae3-4685-99b6-48f706d25a8f",
+      "id": "69c2b86e-5e69-43e4-b10d-34f8cb4a524a",
       "name": "COD order we can reach?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -349,7 +349,7 @@
     },
     {
       "parameters": {},
-      "id": "824043f9-6b40-45ab-a3d3-3f75ca9e946d",
+      "id": "ff3e0fbd-3b6e-4524-a3f5-38d12dca4d8c",
       "name": "Skip (paid or no contact)",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
@@ -533,7 +533,7 @@
         },
         "options": {}
       },
-      "id": "be022c85-e86f-4be0-94ad-32f65b193eb2",
+      "id": "dc95c932-a947-44b3-b81f-fdc6405eb519",
       "name": "Save as pending",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -553,7 +553,7 @@
           },
           "conditions": [
             {
-              "id": "18af7946-9ea3-4ca6-9983-c54ed02dfe8a",
+              "id": "7853d2d2-4d1a-417d-b763-6f51ff6b2d27",
               "leftValue": "={{ $('Prepare order').item.json.phone.length >= 11 }}",
               "rightValue": "",
               "operator": {
@@ -568,7 +568,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "0e28d495-2ecd-4c09-97f2-2bf2b25d9e5a",
+      "id": "c5a77965-44cc-470f-ba35-97b8b3b07cb6",
       "name": "Has WhatsApp number?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -637,7 +637,7 @@
           ]
         }
       },
-      "id": "96fa24c3-5c10-4618-a9dc-12f5d316170d",
+      "id": "f4387f03-5349-49b2-af3b-bc89ffaf027c",
       "name": "Send WhatsApp request",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
@@ -823,7 +823,7 @@
         },
         "options": {}
       },
-      "id": "fe7890bf-d8c2-4287-85e4-07638b0e5e35",
+      "id": "59279118-3e3a-411c-b58e-abc69a1d6c94",
       "name": "Note WhatsApp sent",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -1004,7 +1004,7 @@
         },
         "options": {}
       },
-      "id": "5e4aed42-bafe-44b0-93e5-f0f4132d951c",
+      "id": "64876221-f85f-483d-b975-c2459055372e",
       "name": "Note WhatsApp failed",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -1024,7 +1024,7 @@
           },
           "conditions": [
             {
-              "id": "3954dc85-62a7-4ff2-a090-328096bfafc3",
+              "id": "2cdc4b03-daf9-414f-9c7c-6debcc39cd11",
               "leftValue": "={{ $('Prepare order').item.json.email.includes('@') }}",
               "rightValue": "",
               "operator": {
@@ -1039,7 +1039,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "a9bab0e0-c71b-40d7-9b31-758d71ce5858",
+      "id": "60e7f299-faec-4ee3-afaf-ceb7a5b7f347",
       "name": "Has email?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -1059,7 +1059,7 @@
           "appendAttribution": false
         }
       },
-      "id": "7560936a-9cdb-49c3-a6b4-78334f7a59dc",
+      "id": "ef0fc6ba-3fa2-44fa-8735-55099e9f828e",
       "name": "Send email request",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
@@ -1244,7 +1244,7 @@
         },
         "options": {}
       },
-      "id": "c4a804bf-7661-4c4a-a68f-991b959d208f",
+      "id": "c36d0c71-1fc8-4889-88fc-d59ebba62281",
       "name": "Note email sent",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -1425,7 +1425,7 @@
         },
         "options": {}
       },
-      "id": "e421d628-a439-4d7e-aacc-6a046e5ea937",
+      "id": "46b7531b-9e17-4c78-89e0-ff20f78dd1ec",
       "name": "Note email failed",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -1445,7 +1445,7 @@
           },
           "conditions": [
             {
-              "id": "08eb566d-b0db-40b5-b24f-b3fbdef38f41",
+              "id": "f68beac2-b1cc-45d0-8a9d-f9a96a723396",
               "leftValue": "={{ $json.messages?.[0]?.type }}",
               "rightValue": "button",
               "operator": {
@@ -1454,7 +1454,7 @@
               }
             },
             {
-              "id": "0f5bdb1c-7e3b-4cf0-879f-83201946408c",
+              "id": "a069ce07-845e-472a-8c8c-e604f5d286c7",
               "leftValue": "={{ $json.messages?.[0]?.button?.payload || '' }}",
               "rightValue": "^(CONFIRM|CANCEL):",
               "operator": {
@@ -1468,7 +1468,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "8a694a3c-0d17-415a-8b97-adfb22354ca5",
+      "id": "5c47a863-4f17-48e1-bbb7-4d82ddea29ff",
       "name": "Is it a button reply?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -1482,25 +1482,25 @@
         "assignments": {
           "assignments": [
             {
-              "id": "9c7534fd-9aa1-4555-9700-3f071c2a71a2",
+              "id": "7bc7bee3-f6dd-4312-8c35-005f83c73d3d",
               "name": "action",
               "value": "={{ $json.messages[0].button.payload.split(':')[0] }}",
               "type": "string"
             },
             {
-              "id": "a6351ad5-bcde-4715-abde-9950fe765f2f",
+              "id": "4a437a04-201c-4534-bf05-2247c2d5f2be",
               "name": "orderId",
               "value": "={{ $json.messages[0].button.payload.split(':')[1] }}",
               "type": "string"
             },
             {
-              "id": "dfb9a1ba-2ec1-4ef8-af1c-e41b91041613",
+              "id": "1a66ce46-71c7-4751-970b-3bacbd9d8371",
               "name": "phone",
               "value": "={{ $json.messages[0].from }}",
               "type": "string"
             },
             {
-              "id": "74f3ded1-51ba-43ce-ac54-81a79904ae24",
+              "id": "03a9a1b7-d728-46a9-9810-824fc7a527da",
               "name": "phoneNumberId",
               "value": "={{ $json.metadata.phone_number_id }}",
               "type": "string"
@@ -1509,7 +1509,7 @@
         },
         "options": {}
       },
-      "id": "25231ad2-a4fa-42f0-952c-4484b93e4e4e",
+      "id": "06e26e27-706f-4439-ad51-f1fb4473cf64",
       "name": "Read WhatsApp reply",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -1539,7 +1539,7 @@
         },
         "limit": 1
       },
-      "id": "b87b6aba-169d-4c31-b3f8-29b8b74a6135",
+      "id": "04183410-918b-4935-8f8f-0edb88ba1f48",
       "name": "Find order (WhatsApp)",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -1560,7 +1560,7 @@
           },
           "conditions": [
             {
-              "id": "efeacf1e-6e82-4f94-88d8-2d28214ac529",
+              "id": "ea6d454f-5fb5-422d-9386-004b34168249",
               "leftValue": "={{ $json.orderId || '' }}",
               "rightValue": "",
               "operator": {
@@ -1570,7 +1570,7 @@
               }
             },
             {
-              "id": "4b72bd39-c467-40e4-87c6-484be6ac9473",
+              "id": "26446b0d-e132-43ec-8130-379cf42ca263",
               "leftValue": "={{ $json.phone }}",
               "rightValue": "={{ $('Read WhatsApp reply').item.json.phone }}",
               "operator": {
@@ -1584,7 +1584,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "67646203-582f-4922-9584-8744f3c61328",
+      "id": "a3804745-2608-46d3-9763-c67bcfb7272f",
       "name": "Order belongs to this number?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -1595,7 +1595,7 @@
     },
     {
       "parameters": {},
-      "id": "20eaf45f-cede-4ef3-a30c-a8cf80c2a396",
+      "id": "be4841a3-6bfb-4d46-bc61-9fec0d15c3e7",
       "name": "Ignore (unknown order)",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
@@ -1615,7 +1615,7 @@
           },
           "conditions": [
             {
-              "id": "1ae56167-f060-41e7-b3a0-b91477482eb2",
+              "id": "ff72f288-2884-451e-bd1e-6be635abca0e",
               "leftValue": "={{ $json.status }}",
               "rightValue": "pending",
               "operator": {
@@ -1629,7 +1629,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "92bc7b02-39ea-4844-9649-d8e2a4af03b1",
+      "id": "46893990-34ae-4ddd-bd0b-38ccf96a553c",
       "name": "Still pending? (WhatsApp)",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -1646,7 +1646,7 @@
         "textBody": "=Aap ka order {{ $json.orderName }} pehle hi {{ $json.decidedVia === 'email' ? 'email' : 'WhatsApp' }} ke zariye {{ $json.status === 'confirmed' ? 'confirm' : 'cancel' }} ho chuka hai. Koi sawal ho to yahin likhein. / Your order is already {{ $json.status }} (answered via {{ $json.decidedVia === 'email' ? 'email' : 'WhatsApp' }}).",
         "additionalFields": {}
       },
-      "id": "b04602ae-afdf-4610-8bfb-c997be2b34d2",
+      "id": "7253c889-75c1-4f6a-9806-38e11b28a641",
       "name": "Reply: already decided",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
@@ -1663,13 +1663,13 @@
         "assignments": {
           "assignments": [
             {
-              "id": "8c793168-9b40-4d01-99b4-ce2b06efd83f",
+              "id": "c8f5d209-29da-4117-bf62-d488109469b6",
               "name": "action",
               "value": "={{ $('Read WhatsApp reply').item.json.action }}",
               "type": "string"
             },
             {
-              "id": "37b2be66-64c7-47b8-88fd-cc29211cda31",
+              "id": "efc8bd6d-b320-457d-b889-e8b3222ebd0e",
               "name": "source",
               "value": "whatsapp",
               "type": "string"
@@ -1679,7 +1679,7 @@
         "includeOtherFields": true,
         "options": {}
       },
-      "id": "eeb4aacd-0535-4efa-b421-e1d10ac7b3e4",
+      "id": "f27b4a1f-59ce-4c73-9aa7-97f59c6e4888",
       "name": "Decision from WhatsApp",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -1689,35 +1689,11 @@
       ]
     },
     {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "1ba684f1-66c8-460e-8219-3ab5ce4cbc33",
-              "leftValue": "={{ $json.messages?.[0]?.from || '' }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "id": "9e63d988-3cc6-490b-93e8-103398f90499",
-      "name": "Other customer message?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "parameters": {},
+      "id": "bca925c6-9175-4a17-af35-7e512cca699a",
+      "name": "Ignore other messages",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
       "position": [
         1120,
         440
@@ -1725,53 +1701,28 @@
     },
     {
       "parameters": {
-        "source": "database",
-        "workflowId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "",
-          "cachedResultName": ""
-        },
-        "mode": "once",
-        "options": {
-          "waitForSubWorkflow": false
-        }
-      },
-      "id": "d5219498-4624-4bec-8c96-e5d4092b02e5",
-      "name": "Send to review workflow",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        1340,
-        440
-      ],
-      "onError": "continueRegularOutput",
-      "disabled": true
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "7ebb1bc7-c2a1-40c3-b647-7bcdfc5eb2a6",
+              "id": "260b665d-1a66-46b3-8ae0-85d808eb8623",
               "name": "orderId",
               "value": "={{ String(($json.body?.order) || ($json.query?.order) || '') }}",
               "type": "string"
             },
             {
-              "id": "07a5c41a-fb7c-47fe-8418-dd6b387b1205",
+              "id": "1d0d98f4-1113-4025-ae15-f168d35e62e7",
               "name": "action",
               "value": "={{ String(($json.body?.action) || ($json.query?.action) || '').toUpperCase() }}",
               "type": "string"
             },
             {
-              "id": "d32383e0-6c14-453f-bcb7-0136a59fb725",
+              "id": "234143de-96be-4f6e-ba86-aba92a1fbc2f",
               "name": "token",
               "value": "={{ String(($json.body?.token) || ($json.query?.token) || '') }}",
               "type": "string"
             },
             {
-              "id": "5f259420-9f2a-4640-b28e-44ddafaaed03",
+              "id": "b9106d73-fe62-4a47-ba5d-a52f131d873b",
               "name": "step",
               "value": "={{ $('Email button pressed').isExecuted ? 'apply' : 'show' }}",
               "type": "string"
@@ -1780,7 +1731,7 @@
         },
         "options": {}
       },
-      "id": "946f587e-ea76-4be7-b841-ca96847da96e",
+      "id": "8e856cdf-2b40-4ffc-97dd-c471fd6cd01c",
       "name": "Read email request",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -1810,7 +1761,7 @@
         },
         "limit": 1
       },
-      "id": "e5ea6be8-e466-4dde-a466-40c3a3c073d4",
+      "id": "bca553e7-8e1e-42c6-aa29-38f698208f3b",
       "name": "Find order (email)",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -1831,7 +1782,7 @@
           },
           "conditions": [
             {
-              "id": "19b19be5-deef-476f-a285-19fb0a69a202",
+              "id": "8f79c434-a926-4bd9-ae66-bcd1cea16076",
               "leftValue": "={{ $json.orderId || '' }}",
               "rightValue": "",
               "operator": {
@@ -1841,7 +1792,7 @@
               }
             },
             {
-              "id": "91ef8c47-9213-4a01-b804-6ccbe9000a37",
+              "id": "9175b40e-a7b9-43a8-9e5c-01ef00c5397c",
               "leftValue": "={{ $json.actionToken || '' }}",
               "rightValue": "={{ $('Read email request').item.json.token }}",
               "operator": {
@@ -1850,7 +1801,7 @@
               }
             },
             {
-              "id": "cdf75135-dc88-4fdf-b515-6bd7cf3f088f",
+              "id": "6d43f66e-5768-4a0c-b793-890e6da70518",
               "leftValue": "={{ $('Read email request').item.json.token.length >= 32 && ['CONFIRM','CANCEL'].includes($('Read email request').item.json.action) }}",
               "rightValue": "",
               "operator": {
@@ -1865,7 +1816,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "22279e24-4535-4170-96d6-f039ab4cd7e4",
+      "id": "28b70d0c-8f78-45d3-9ae1-9beef55b8533",
       "name": "Link is valid?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -1890,7 +1841,7 @@
           }
         }
       },
-      "id": "c1a2ba3c-ff47-4c72-82e9-1f304ca1deb4",
+      "id": "6c1527b2-6efb-4bb4-83ec-4bc07df3bd27",
       "name": "Page: link not valid",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
@@ -1910,7 +1861,7 @@
           },
           "conditions": [
             {
-              "id": "70ddec32-d159-4a95-92f6-87b515aab9ed",
+              "id": "47776197-c667-46af-a9b7-ad41826ab3ad",
               "leftValue": "={{ $json.status }}",
               "rightValue": "pending",
               "operator": {
@@ -1924,7 +1875,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "f9405821-c06f-45b2-a01d-e1b726aa512a",
+      "id": "9c80ffa3-2089-4b3b-9bd4-339b47a4395e",
       "name": "Still pending? (email)",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -1949,7 +1900,7 @@
           }
         }
       },
-      "id": "9f2c589a-95e1-4ccd-bce1-7488614924bd",
+      "id": "9f3f293c-0241-4e03-b690-53de89aeb677",
       "name": "Page: already decided",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
@@ -1969,7 +1920,7 @@
           },
           "conditions": [
             {
-              "id": "5ab085e4-9ee3-4268-8c03-a19e655fa9b7",
+              "id": "bb7b1ebb-399b-4ca1-a27c-575c0fdb5c6c",
               "leftValue": "={{ $('Read email request').item.json.step }}",
               "rightValue": "apply",
               "operator": {
@@ -1983,7 +1934,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "3f11c65c-4c19-4db4-87fa-17357e759a3f",
+      "id": "4768f9ce-8908-4ba7-8330-501d2e598bef",
       "name": "Button pressed?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -2008,7 +1959,7 @@
           }
         }
       },
-      "id": "ffbf94d7-f849-4f7a-a3a4-edd07aba698d",
+      "id": "62324989-e9d7-40c9-a0e4-06c4ae1d1640",
       "name": "Page: confirm your choice",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
@@ -2022,13 +1973,13 @@
         "assignments": {
           "assignments": [
             {
-              "id": "44cf0194-198d-48c3-933f-b21bae66c73f",
+              "id": "7417bb95-f475-4423-87c8-57287fdf0087",
               "name": "action",
               "value": "={{ $('Read email request').item.json.action }}",
               "type": "string"
             },
             {
-              "id": "aaaaebe0-fa23-4d30-9e7e-74797c3a6752",
+              "id": "8dc6cce6-3d8f-41be-bc04-d6e3fe12a81e",
               "name": "source",
               "value": "email",
               "type": "string"
@@ -2038,7 +1989,7 @@
         "includeOtherFields": true,
         "options": {}
       },
-      "id": "aecd59de-37d9-44eb-914d-51af755451a8",
+      "id": "f3bdf0ab-75e6-4592-85c3-ebfeea90eb53",
       "name": "Decision from email",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -2049,7 +2000,7 @@
     },
     {
       "parameters": {},
-      "id": "eb2ceac0-d2b3-4b44-9878-a8a20eecdcd9",
+      "id": "24830d9a-4c98-4121-85d5-3c3dd054a98c",
       "name": "Decision",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
@@ -2068,7 +2019,7 @@
           "tags": "={{ [$('Decision').item.json.shopTags, $('Decision').item.json.action === 'CONFIRM' ? 'COD Confirmed' : 'COD Cancelled'].filter(t => t).join(', ') }}"
         }
       },
-      "id": "b1cd5dee-53b4-4c5e-a57a-b86f9aebb61f",
+      "id": "56137914-8711-4964-b75a-e7df98724543",
       "name": "Tag order in Shopify",
       "type": "n8n-nodes-base.shopify",
       "typeVersion": 1,
@@ -2253,7 +2204,7 @@
         },
         "options": {}
       },
-      "id": "3a629479-8fe5-4a63-b871-0afdbfadb281",
+      "id": "9f1488bc-c5e9-4608-b576-58dfe98f4a64",
       "name": "Save decision",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -2273,7 +2224,7 @@
           },
           "conditions": [
             {
-              "id": "e8d1bbba-4826-467f-8cfd-fcf39b627377",
+              "id": "9e120a8f-096f-420f-b9af-27311c970623",
               "leftValue": "={{ $('Decision').item.json.source }}",
               "rightValue": "whatsapp",
               "operator": {
@@ -2287,7 +2238,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "ca9c9b32-c302-4b05-bc7f-000bbb38b702",
+      "id": "b0bf4325-426e-4fee-8e4b-dcf8b5dbecb4",
       "name": "Decided on WhatsApp?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -2304,7 +2255,7 @@
         "textBody": "={{ $('Decision').item.json.action === 'CONFIRM' ? 'Shukriya ' + $('Decision').item.json.customerName + '! Aap ka order ' + $('Decision').item.json.orderName + ' confirm ho gaya hai aur jald dispatch hoga. / Thank you, your order is confirmed.' : 'Aap ka order ' + $('Decision').item.json.orderName + ' cancel kar diya gaya hai. Ghalti se hua ho to yahin reply karein. / Your order has been cancelled.' }}",
         "additionalFields": {}
       },
-      "id": "ee75ff29-9d1a-438a-a57b-6a46c8a950ae",
+      "id": "2824ad0f-90ec-4f6c-aa2c-45d866a5b94a",
       "name": "Reply on WhatsApp",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
@@ -2327,7 +2278,7 @@
           },
           "conditions": [
             {
-              "id": "b35d439b-0b2a-4a34-86e1-a593ad2991e0",
+              "id": "482dba0f-cbd8-4365-8728-95ec2d612bcf",
               "leftValue": "={{ $('Decision').item.json.email.includes('@') }}",
               "rightValue": "",
               "operator": {
@@ -2342,7 +2293,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "5b435550-30ad-4eda-a849-51e7066d250f",
+      "id": "a899298f-043a-47e8-ab4d-213986cc8b8b",
       "name": "Customer has email?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -2362,7 +2313,7 @@
           "appendAttribution": false
         }
       },
-      "id": "3025bee6-1c3b-4517-952c-3a8ace5b5b3f",
+      "id": "e7633511-38db-4e3f-979b-682e49de78e9",
       "name": "Email: status update",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
@@ -2391,7 +2342,7 @@
           }
         }
       },
-      "id": "9e7b0006-91ef-4611-aa71-4f7ec634f0a9",
+      "id": "82fbcf61-0b37-496b-9122-b0edcb02103a",
       "name": "Page: done",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
@@ -2411,7 +2362,7 @@
           },
           "conditions": [
             {
-              "id": "781e8192-536c-48b4-afc1-d5803fb6f622",
+              "id": "d4191fae-7d78-4784-a650-8a1e050795b4",
               "leftValue": "={{ $('Decision').item.json.phone.length >= 11 }}",
               "rightValue": "",
               "operator": {
@@ -2426,7 +2377,7 @@
         "looseTypeValidation": true,
         "options": {}
       },
-      "id": "0980f955-86ab-4a2c-8c58-b7ea9fb1078d",
+      "id": "dea9a3f3-334c-4fcd-8862-d41f1ac3826d",
       "name": "Customer has WhatsApp?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -2465,7 +2416,7 @@
           ]
         }
       },
-      "id": "29186343-63ac-4445-b386-7d8c92ca3e50",
+      "id": "eae5227f-7a17-405c-898b-1ac492fce870",
       "name": "WhatsApp: status update",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
@@ -2480,11 +2431,11 @@
     },
     {
       "parameters": {
-        "content": "## COD Order Confirmation: WhatsApp + Email\n\n1. Create two WhatsApp Utility templates: **order_confirmation** (5 variables, Confirm + Cancel quick replies) and **order_status_update** (3 variables). Text in SETUP-GUIDE.md.\n2. Create the Data Table **codConfirmations** (columns in SETUP-GUIDE.md).\n3. Edit **Store settings** (the only place with your details).\n4. Connect Shopify, WhatsApp API, WhatsApp Trigger and SMTP credentials.\n5. Optional, for product reviews: publish the review workflow first, then in **Send to review workflow** pick it and enable the node (it ships disabled).\n6. Publish, then place a test COD order.\n\nOne answer wins: whichever the customer uses first (WhatsApp or email) tags the Shopify order and the other channel is updated automatically (status email, or the order_status_update WhatsApp template).",
+        "content": "## COD Order Confirmation: WhatsApp + Email\n\n1. Create two WhatsApp Utility templates: **order_confirmation** (5 variables, Confirm + Cancel quick replies) and **order_status_update** (3 variables). Text in SETUP-GUIDE.md.\n2. Create the Data Table **codConfirmations** (columns in SETUP-GUIDE.md).\n3. Edit **Store settings** (the only place with your details).\n4. Connect Shopify, WhatsApp API, WhatsApp Trigger and SMTP credentials.\n5. Publish, then place a test COD order.\n\nOne answer wins: whichever the customer uses first (WhatsApp or email) tags the Shopify order and the other channel is updated automatically (status email, or the order_status_update WhatsApp template).",
         "height": 330,
         "width": 640
       },
-      "id": "509b951c-629f-4ec1-b877-66a2ece939ae",
+      "id": "4c956852-f467-4fab-8fea-af26e1707537",
       "name": "Setup (read first)",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -2499,7 +2450,7 @@
         "height": 140,
         "width": 460
       },
-      "id": "5a16f67c-4f87-435f-b8eb-a22be07e7233",
+      "id": "ce982aee-fb52-482a-9a3c-7928fb59c1af",
       "name": "Email links are two-step",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -2514,7 +2465,7 @@
         "height": 130,
         "width": 420
       },
-      "id": "ae254dcb-fcb5-44de-9d13-4fc8dc4dbe1d",
+      "id": "60a6197b-6f35-4b34-80e2-e2b440ed8e08",
       "name": "Tags, not auto-cancel",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -2741,18 +2692,7 @@
         ],
         [
           {
-            "node": "Other customer message?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Other customer message?": {
-      "main": [
-        [
-          {
-            "node": "Send to review workflow",
+            "node": "Ignore other messages",
             "type": "main",
             "index": 0
           }

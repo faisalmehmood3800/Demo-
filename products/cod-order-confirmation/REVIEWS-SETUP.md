@@ -1,3 +1,5 @@
+> **Paused (not in use).** The current COD workflow no longer passes WhatsApp messages to this review workflow, so it will not receive ratings as it stands. Kept for later; it needs reconnecting before use.
+
 # Product reviews on WhatsApp after delivery (Shopify): setup guide
 
 **Roman Urdu mein khulasa:** jab order customer tak deliver ho jata hai, us ke 3 se 4 din baad customer ko WhatsApp par message jata hai ke product kaisa laga, saath mein 5 buttons (5 se 1 tak rating). Customer rating dabata hai, phir bot 1-2 line ka review maangta hai, aur sab kuch ek table mein save ho jata hai. Agar rating 1 ya 2 ho, to store owner ko foran email alert jata hai taake woh customer ko call kar sake. Ye sirf WhatsApp par chalta hai.
