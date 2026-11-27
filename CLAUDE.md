@@ -20,6 +20,8 @@ For any task that designs, builds, reviews or fixes a user interface (websites, 
 2. Use focused `--domain` and `--stack` searches (`nextjs`, `shadcn`, `html-tailwind`) for specific concerns.
 3. Before delivering, read `.claude/skills/ui-ux-pro-max/references/pro-rules.md` and `references/quick-reference.md`, and run through the pre-delivery checklist.
 
+Also load the `pro-website-playbook` skill on every website, landing page or store build: it holds the agency's research, hero-asset, scroll-animation, payment and selling workflow, learned from tutorials the user chose.
+
 Treat the skill's results as recommendations: adapt fonts, palette and style to the client's actual business rather than copying generic output.
 
 ## Unslop (every website, so nothing looks AI-made)
@@ -95,6 +97,7 @@ HyperFrames telemetry is off with `HYPERFRAMES_NO_TELEMETRY=1` in `.claude/setti
 - n8n: `n8n-*-official` (n8n-io/skills) and the community `n8n-*` skills (czlonkowski/n8n-skills).
 - Shopify: `shopify-*` skills and the `shopify-ai-toolkit` plugin (see above).
 - Design: `unslop` (heydamir/unslop, CC BY 4.0).
+- Agency playbook: `pro-website-playbook` (written here from the user's chosen YouTube tutorials).
 - Video: `hyperframes` plugin (heygen-com/hyperframes, Apache 2.0), `ultimate-video-editor` (Rajbharti06/Ultimate-Video-Editing-Skills) and `motion-video-director` (mattypark/Motion-graphics-skill; upstream has no license, personal use only).
 
 ## Motion
