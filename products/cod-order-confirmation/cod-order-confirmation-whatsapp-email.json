@@ -1,0 +1,2838 @@
+{
+  "name": "COD Order Confirmation: WhatsApp + Email (Shopify)",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "orders/create"
+      },
+      "id": "bca11907-673c-42c6-9fcb-32b3e583a4e8",
+      "name": "Shopify Trigger",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "e6516fce-8ad1-46f6-9f47-e20083ea957a"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "id": "9eb5797e-9eaf-46a8-a862-6c4ee03e1911",
+      "name": "WhatsApp Trigger",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ],
+      "webhookId": "237330bb-910d-41df-96a0-0fa424940c44"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "cod-order-action",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "191ecd29-a7db-4357-9f48-61120b75846a",
+      "name": "Email link opened",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        400
+      ],
+      "webhookId": "835c13f1-896b-4259-8359-e57280c21435"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cod-order-action",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "e208188e-131c-4609-bf46-34e0db83d025",
+      "name": "Email button pressed",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        600
+      ],
+      "webhookId": "05b80b4b-a003-4e50-aec2-5356e048e250"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8b895997-0f51-43c9-9233-3d08b5d6ca8a",
+              "name": "store_name",
+              "value": "Your Store Name",
+              "type": "string"
+            },
+            {
+              "id": "220b289d-3502-494b-be77-30d9154ca787",
+              "name": "template_name",
+              "value": "order_confirmation",
+              "type": "string"
+            },
+            {
+              "id": "fef14ead-609c-40b2-ae6d-365ceee0291d",
+              "name": "template_language",
+              "value": "en",
+              "type": "string"
+            },
+            {
+              "id": "d27800b7-2553-47a8-b9de-654949dc4b01",
+              "name": "whatsapp_phone_number_id",
+              "value": "PASTE_YOUR_PHONE_NUMBER_ID",
+              "type": "string"
+            },
+            {
+              "id": "d68afc79-aae7-436e-ad24-fab726c023e5",
+              "name": "default_country_code",
+              "value": "92",
+              "type": "string"
+            },
+            {
+              "id": "271aeb82-142e-4f58-8f32-2414c0776c45",
+              "name": "email_from",
+              "value": "Your Store <orders@yourstore.com>",
+              "type": "string"
+            },
+            {
+              "id": "04509e18-a9f3-4375-a5a1-5a15222d1cda",
+              "name": "support_contact",
+              "value": "WhatsApp 0300-0000000",
+              "type": "string"
+            },
+            {
+              "id": "f83166d3-91a4-45c3-bb1f-a457effc4548",
+              "name": "order_action_url",
+              "value": "https://YOUR-N8N-DOMAIN/webhook/cod-order-action",
+              "type": "string"
+            },
+            {
+              "id": "7c378ef6-8487-4ee9-92fa-2df1b72df10b",
+              "name": "cod_only",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "2e253913-99d0-4565-ae41-6afef3ab35ab",
+      "name": "Store settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "49a4d4d4-dd0a-4157-8e14-adbd3941cd5e",
+              "leftValue": "={{ $('Shopify Trigger').isExecuted }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "16c49438-7ce1-41e1-aac3-957d2889c365",
+      "name": "New Shopify order?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "71a8d16d-decd-42db-9a5c-27621e7a4683",
+              "leftValue": "={{ $('WhatsApp Trigger').isExecuted }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "7a577e6b-20df-49b3-99be-62d3e5a08509",
+      "name": "WhatsApp message?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        680,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8ed7a9b4-24b5-402b-aaa2-c9df518c0042",
+              "name": "orderId",
+              "value": "={{ String($json.id) }}",
+              "type": "string"
+            },
+            {
+              "id": "51b1cf83-a0b6-4be1-b189-7546a480ba91",
+              "name": "orderName",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "187686a0-12c7-458a-ad0c-af9b08d831e2",
+              "name": "customerName",
+              "value": "={{ ($json.shipping_address?.first_name || $json.customer?.first_name || 'Customer').trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "17c2d1a9-1eed-48f3-9aba-097da15c6452",
+              "name": "phone",
+              "value": "={{ (() => { const cc = $('Store settings').item.json.default_country_code; let p = String($json.shipping_address?.phone || $json.billing_address?.phone || $json.phone || $json.customer?.phone || '').replace(/\\D/g, ''); if (p.startsWith('00')) p = p.slice(2); if (p.startsWith('0')) p = cc + p.slice(1); else if (p.length === 10 && p.startsWith('3')) p = cc + p; return p; })() }}",
+              "type": "string"
+            },
+            {
+              "id": "beae1c67-c622-4a90-84ce-e559bce36bc3",
+              "name": "email",
+              "value": "={{ String($json.email || $json.contact_email || $json.customer?.email || '').trim().toLowerCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "470a2227-d83a-4a89-ac5e-c86b6990d92a",
+              "name": "items",
+              "value": "={{ ($json.line_items || []).map(i => i.quantity + ' x ' + i.title + (i.variant_title ? ' (' + i.variant_title + ')' : '')).join(', ').slice(0, 200) }}",
+              "type": "string"
+            },
+            {
+              "id": "8e0b9fe9-d1c7-4bd5-acf0-21962cb2b968",
+              "name": "total",
+              "value": "={{ 'Rs ' + Number($json.total_price || 0).toLocaleString('en-US') }}",
+              "type": "string"
+            },
+            {
+              "id": "9d3a92bd-33ef-4f67-9202-e9fb24100d23",
+              "name": "shopTags",
+              "value": "={{ $json.tags || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "22bb224c-4a5f-4b8a-b74f-b7f715fcd6f5",
+              "name": "isCod",
+              "value": "={{ ['cash','cod'].some(w => ($json.payment_gateway_names || []).join(' ').toLowerCase().includes(w)) || $json.financial_status === 'pending' }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b32a9d79-df74-42dd-92c5-2891d02b5e97",
+      "name": "Prepare order",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        700,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "action": "generate",
+        "dataPropertyName": "actionToken",
+        "encodingType": "hex",
+        "stringLength": 40
+      },
+      "id": "6a7fd972-210e-4bb6-bd78-3bef672ece5e",
+      "name": "Create secure token",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 2,
+      "position": [
+        920,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "67e75be8-7c26-4f98-baae-21b1af947af3",
+              "leftValue": "={{ !$('Store settings').item.json.cod_only || $('Prepare order').item.json.isCod }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "ecc3ca68-df46-455a-8432-695f49c7ba13",
+              "leftValue": "={{ $('Prepare order').item.json.phone.length >= 11 || $('Prepare order').item.json.email.includes('@') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "e4239ca2-bdc1-4031-af04-5762ad0232e0",
+      "name": "COD order we can reach?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1140,
+        -200
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "acf8861f-4107-46a2-a1cd-11523e1e43c7",
+      "name": "Skip (paid or no contact)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "codConfirmations"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "orderId": "={{ $('Prepare order').item.json.orderId }}",
+            "orderName": "={{ $('Prepare order').item.json.orderName }}",
+            "phone": "={{ $('Prepare order').item.json.phone }}",
+            "email": "={{ $('Prepare order').item.json.email }}",
+            "customerName": "={{ $('Prepare order').item.json.customerName }}",
+            "items": "={{ $('Prepare order').item.json.items }}",
+            "total": "={{ $('Prepare order').item.json.total }}",
+            "shopTags": "={{ $('Prepare order').item.json.shopTags }}",
+            "actionToken": "={{ $('Create secure token').item.json.actionToken }}",
+            "status": "pending",
+            "decidedVia": "",
+            "whatsappSent": "no",
+            "emailSent": "no",
+            "waMessageId": ""
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "total",
+              "displayName": "total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "shopTags",
+              "displayName": "shopTags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "actionToken",
+              "displayName": "actionToken",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "decidedVia",
+              "displayName": "decidedVia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "whatsappSent",
+              "displayName": "whatsappSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "emailSent",
+              "displayName": "emailSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "73c4f805-c986-42a9-ad25-77a88ed53d47",
+      "name": "Save as pending",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1360,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ad2846b3-d420-4e48-ab6b-49ba75f29041",
+              "leftValue": "={{ $('Prepare order').item.json.phone.length >= 11 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "e609179d-620b-46b3-aa77-321403c4f172",
+      "name": "Has WhatsApp number?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1580,
+        -340
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendTemplate",
+        "phoneNumberId": "={{ $('Store settings').item.json.whatsapp_phone_number_id }}",
+        "recipientPhoneNumber": "={{ $('Prepare order').item.json.phone }}",
+        "template": "={{ $('Store settings').item.json.template_name + '|' + $('Store settings').item.json.template_language }}",
+        "components": {
+          "component": [
+            {
+              "type": "body",
+              "bodyParameters": {
+                "parameter": [
+                  {
+                    "type": "text",
+                    "text": "={{ $('Prepare order').item.json.customerName }}"
+                  },
+                  {
+                    "type": "text",
+                    "text": "={{ $('Store settings').item.json.store_name }}"
+                  },
+                  {
+                    "type": "text",
+                    "text": "={{ $('Prepare order').item.json.orderName }}"
+                  },
+                  {
+                    "type": "text",
+                    "text": "={{ $('Prepare order').item.json.items }}"
+                  },
+                  {
+                    "type": "text",
+                    "text": "={{ $('Prepare order').item.json.total }}"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "button",
+              "sub_type": "quick_reply",
+              "index": 0,
+              "buttonParameters": {
+                "parameter": {
+                  "type": "payload",
+                  "payload": "={{ 'CONFIRM:' + $('Prepare order').item.json.orderId }}"
+                }
+              }
+            },
+            {
+              "type": "button",
+              "sub_type": "quick_reply",
+              "index": 1,
+              "buttonParameters": {
+                "parameter": {
+                  "type": "payload",
+                  "payload": "={{ 'CANCEL:' + $('Prepare order').item.json.orderId }}"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "id": "8d32d381-95ab-41d3-90b8-dff6a04290f4",
+      "name": "Send WhatsApp request",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        1800,
+        -420
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "codConfirmations"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $('Prepare order').item.json.orderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "whatsappSent": "sent",
+            "waMessageId": "={{ $json.messages?.[0]?.id || '' }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "total",
+              "displayName": "total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "shopTags",
+              "displayName": "shopTags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "actionToken",
+              "displayName": "actionToken",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "decidedVia",
+              "displayName": "decidedVia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "whatsappSent",
+              "displayName": "whatsappSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "emailSent",
+              "displayName": "emailSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "6b83422c-da53-4d11-b3ac-9124e83958b6",
+      "name": "Note WhatsApp sent",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2020,
+        -500
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "codConfirmations"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $('Prepare order').item.json.orderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "whatsappSent": "failed"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "total",
+              "displayName": "total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "shopTags",
+              "displayName": "shopTags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "actionToken",
+              "displayName": "actionToken",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "decidedVia",
+              "displayName": "decidedVia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "whatsappSent",
+              "displayName": "whatsappSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "emailSent",
+              "displayName": "emailSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "74d7c372-d931-40c9-b066-8b82c6900021",
+      "name": "Note WhatsApp failed",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2020,
+        -340
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9b787a92-9792-4fc7-8a67-d71c5d48eb5f",
+              "leftValue": "={{ $('Prepare order').item.json.email.includes('@') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "a896b1e6-3175-405b-8508-3b931d6dde2e",
+      "name": "Has email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1580,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $('Store settings').item.json.email_from }}",
+        "toEmail": "={{ $('Prepare order').item.json.email }}",
+        "subject": "=Please confirm your order {{ $('Prepare order').item.json.orderName }} - {{ $('Store settings').item.json.store_name }}",
+        "emailFormat": "html",
+        "html": "=<div style=\"background:#f4f4f2;padding:24px 12px;font-family:Arial,Helvetica,sans-serif;color:#1d1d1b\"><div style=\"max-width:520px;margin:0 auto;background:#ffffff;border:1px solid #e6e6e2;border-radius:12px;padding:28px 24px\"><p style=\"margin:0 0 6px;font-size:14px;color:#77776f\">{{ $('Store settings').item.json.store_name }}</p><h1 style=\"margin:0 0 16px;font-size:21px;font-weight:600\">Please confirm your order {{ $('Prepare order').item.json.orderName }}</h1><p style=\"margin:0 0 16px;font-size:15px;line-height:1.55\">Assalam o Alaikum {{ $('Prepare order').item.json.customerName }}, thank you for your order. It is Cash on Delivery, so we dispatch it once you confirm.</p><table style=\"width:100%;border-collapse:collapse;font-size:15px;margin:0 0 20px\"><tr><td style=\"padding:6px 0;color:#77776f;width:80px;vertical-align:top\">Items</td><td style=\"padding:6px 0\">{{ $('Prepare order').item.json.items }}</td></tr><tr><td style=\"padding:6px 0;color:#77776f\">Total</td><td style=\"padding:6px 0;font-weight:600\">{{ $('Prepare order').item.json.total }}</td></tr></table><a href=\"{{ $('Store settings').item.json.order_action_url }}?order={{ $('Prepare order').item.json.orderId }}&action=CONFIRM&token={{ $('Create secure token').item.json.actionToken }}\" style=\"display:block;text-align:center;background:#1d1d1b;color:#ffffff;text-decoration:none;padding:13px 16px;border-radius:10px;font-size:16px;margin:0 0 10px\">Confirm order</a><a href=\"{{ $('Store settings').item.json.order_action_url }}?order={{ $('Prepare order').item.json.orderId }}&action=CANCEL&token={{ $('Create secure token').item.json.actionToken }}\" style=\"display:block;text-align:center;background:#ffffff;color:#1d1d1b;border:1px solid #1d1d1b;text-decoration:none;padding:12px 16px;border-radius:10px;font-size:16px\">Cancel order</a><p style=\"margin:18px 0 0;font-size:13px;color:#77776f;line-height:1.5\">{{ $('Prepare order').item.json.phone.length >= 11 ? 'You can also answer on WhatsApp. Whichever you use first counts. ' : '' }}Questions: {{ $('Store settings').item.json.support_contact }}</p></div></div>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "b6fc5d2e-83c9-4418-b71c-ff6f6b47fa39",
+      "name": "Send email request",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1800,
+        -180
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "codConfirmations"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $('Prepare order').item.json.orderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "emailSent": "sent"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "total",
+              "displayName": "total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "shopTags",
+              "displayName": "shopTags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "actionToken",
+              "displayName": "actionToken",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "decidedVia",
+              "displayName": "decidedVia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "whatsappSent",
+              "displayName": "whatsappSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "emailSent",
+              "displayName": "emailSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "59d595dc-2cd2-4f56-8501-f2fe4b23747c",
+      "name": "Note email sent",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2020,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "codConfirmations"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $('Prepare order').item.json.orderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "emailSent": "failed"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "total",
+              "displayName": "total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "shopTags",
+              "displayName": "shopTags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "actionToken",
+              "displayName": "actionToken",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "decidedVia",
+              "displayName": "decidedVia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "whatsappSent",
+              "displayName": "whatsappSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "emailSent",
+              "displayName": "emailSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "1c37e64d-d77e-45a4-b4f2-f24a589b382f",
+      "name": "Note email failed",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2020,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1b5d439b-9970-4264-b326-764876684e54",
+              "leftValue": "={{ $json.messages?.[0]?.type }}",
+              "rightValue": "button",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "276a377a-9728-4d6a-ba87-5c28cdf346f1",
+              "leftValue": "={{ $json.messages?.[0]?.button?.payload || '' }}",
+              "rightValue": ":",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "3d25c839-77fc-4498-a404-4b82f9e53108",
+      "name": "Is it a button reply?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        900,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f2ad6e4-cd85-45d1-ac73-624821e80538",
+              "name": "action",
+              "value": "={{ $json.messages[0].button.payload.split(':')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "aa48c7fe-f68d-45cc-8bf5-e2083c5b9f7d",
+              "name": "orderId",
+              "value": "={{ $json.messages[0].button.payload.split(':')[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "75629453-975b-465c-a689-365f37131c7c",
+              "name": "phone",
+              "value": "={{ $json.messages[0].from }}",
+              "type": "string"
+            },
+            {
+              "id": "1b858e92-4346-4d29-abce-446430a1b361",
+              "name": "phoneNumberId",
+              "value": "={{ $json.metadata.phone_number_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fb77213a-6689-4913-9aaf-670d4f0ca4a3",
+      "name": "Read WhatsApp reply",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "codConfirmations"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $json.orderId }}"
+            }
+          ]
+        },
+        "limit": 1
+      },
+      "id": "e86387c5-ec37-4b4c-9714-5e698253aa46",
+      "name": "Find order (WhatsApp)",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1340,
+        260
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "72f51ef7-a47d-47b4-b5f9-90415fa3ade6",
+              "leftValue": "={{ $json.orderId || '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b6c3f9a9-ad23-4b29-a30c-4e9820dc42af",
+              "leftValue": "={{ $json.phone }}",
+              "rightValue": "={{ $('Read WhatsApp reply').item.json.phone }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "5e89de3c-489f-4aa7-bc72-4ca61202490b",
+      "name": "Order belongs to this number?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1560,
+        260
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "6a40ad8a-b183-4708-afad-8cf6f0aa2d58",
+      "name": "Ignore (unknown order)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "78fc471a-a006-4de6-a136-1f3340a3a472",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "20dd0870-6d2e-4562-9688-c6ac05763ce3",
+      "name": "Still pending? (WhatsApp)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1780,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('Read WhatsApp reply').item.json.phoneNumberId }}",
+        "recipientPhoneNumber": "={{ $('Read WhatsApp reply').item.json.phone }}",
+        "textBody": "=Aap ka order {{ $json.orderName }} pehle hi {{ $json.decidedVia === 'email' ? 'email' : 'WhatsApp' }} ke zariye {{ $json.status === 'confirmed' ? 'confirm' : 'cancel' }} ho chuka hai. Koi sawal ho to yahin likhein. / Your order is already {{ $json.status }} (answered via {{ $json.decidedVia === 'email' ? 'email' : 'WhatsApp' }}).",
+        "additionalFields": {}
+      },
+      "id": "1a9e807a-9d33-4547-8441-13b4d43d9699",
+      "name": "Reply: already decided",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        2000,
+        340
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8f6fcca7-6820-4b4b-b172-a9dc91c3207b",
+              "name": "action",
+              "value": "={{ $('Read WhatsApp reply').item.json.action }}",
+              "type": "string"
+            },
+            {
+              "id": "238e0a3c-2420-416b-9e15-1c8bc3be74e0",
+              "name": "source",
+              "value": "whatsapp",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "bbb224d7-e39b-4aae-ba23-b943529265d0",
+      "name": "Decision from WhatsApp",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3638b79d-ad0a-408b-93c8-554a9d2f7510",
+              "name": "orderId",
+              "value": "={{ String(($json.body?.order) || ($json.query?.order) || '') }}",
+              "type": "string"
+            },
+            {
+              "id": "865945ca-6da1-4419-9272-268fb4c98ac5",
+              "name": "action",
+              "value": "={{ String(($json.body?.action) || ($json.query?.action) || '').toUpperCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "c8cb748c-95f4-43af-a6ea-0a6320c49f0e",
+              "name": "token",
+              "value": "={{ String(($json.body?.token) || ($json.query?.token) || '') }}",
+              "type": "string"
+            },
+            {
+              "id": "f6e12877-33b3-429b-9d23-0779e61843e4",
+              "name": "step",
+              "value": "={{ $('Email button pressed').isExecuted ? 'apply' : 'show' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1a774fa8-5397-4eda-b1f4-35d81742388e",
+      "name": "Read email request",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        900,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "codConfirmations"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $json.orderId }}"
+            }
+          ]
+        },
+        "limit": 1
+      },
+      "id": "6e9d6c36-d059-4b90-bfc1-efb063144283",
+      "name": "Find order (email)",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        620
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "09630294-9ae5-484c-adda-30dc540529ff",
+              "leftValue": "={{ $json.orderId || '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "6bcbe3b3-48e7-4474-b40d-87b1d6488267",
+              "leftValue": "={{ $json.actionToken || '' }}",
+              "rightValue": "={{ $('Read email request').item.json.token }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "4aa24769-2889-40ed-8968-92fa4d158efe",
+              "leftValue": "={{ $('Read email request').item.json.token.length >= 32 && ['CONFIRM','CANCEL'].includes($('Read email request').item.json.action) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "3c392d67-abe5-44b9-b9ad-cd508b4b7bcf",
+      "name": "Link is valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1340,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Link not valid</title><style>body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f4f4f2;color:#1d1d1b}main{max-width:460px;margin:48px auto;padding:32px 28px;background:#fff;border:1px solid #e6e6e2;border-radius:14px}h1{font-size:22px;font-weight:600;margin:0 0 12px;line-height:1.3}p{line-height:1.55;margin:0 0 12px;color:#4a4a46}small{color:#77776f}button{width:100%;margin-top:16px;padding:13px 16px;font-size:16px;border-radius:10px;border:1px solid #1d1d1b;background:#1d1d1b;color:#fff;cursor:pointer}button:focus-visible{outline:3px solid #8a8a84;outline-offset:2px}dl{margin:16px 0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:15px}dt{color:#77776f}dd{margin:0}</style></head><body><main><small>{{ $('Store settings').item.json.store_name }}</small><h1>This link is not valid</h1><p>Please use the latest message we sent you, or contact the store.</p></main></body></html>",
+        "options": {
+          "responseCode": 400,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "id": "7bd24422-ce53-42a7-8708-86961c325dcd",
+      "name": "Page: link not valid",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1560,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0f7d6bd9-d054-467a-9070-5d037ebab320",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "345dd57a-2110-40b7-9015-e4b1c2e96754",
+      "name": "Still pending? (email)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1560,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Already answered</title><style>body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f4f4f2;color:#1d1d1b}main{max-width:460px;margin:48px auto;padding:32px 28px;background:#fff;border:1px solid #e6e6e2;border-radius:14px}h1{font-size:22px;font-weight:600;margin:0 0 12px;line-height:1.3}p{line-height:1.55;margin:0 0 12px;color:#4a4a46}small{color:#77776f}button{width:100%;margin-top:16px;padding:13px 16px;font-size:16px;border-radius:10px;border:1px solid #1d1d1b;background:#1d1d1b;color:#fff;cursor:pointer}button:focus-visible{outline:3px solid #8a8a84;outline-offset:2px}dl{margin:16px 0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:15px}dt{color:#77776f}dd{margin:0}</style></head><body><main><small>{{ $('Store settings').item.json.store_name }}</small><h1>Order {{ $json.orderName }} is already {{ $json.status }}</h1><p>We received your answer via {{ $json.decidedVia === 'email' ? 'email' : 'WhatsApp' }}. Nothing else is needed.</p></main></body></html>",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "id": "9d400e81-2862-4a50-a895-fea491f2fb6e",
+      "name": "Page: already decided",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1780,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5d9c531c-4798-43ec-b2ba-ec2c37fa39f2",
+              "leftValue": "={{ $('Read email request').item.json.step }}",
+              "rightValue": "apply",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "15503607-d71b-4fe7-81cc-1819a6330f2b",
+      "name": "Button pressed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1780,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Your order</title><style>body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f4f4f2;color:#1d1d1b}main{max-width:460px;margin:48px auto;padding:32px 28px;background:#fff;border:1px solid #e6e6e2;border-radius:14px}h1{font-size:22px;font-weight:600;margin:0 0 12px;line-height:1.3}p{line-height:1.55;margin:0 0 12px;color:#4a4a46}small{color:#77776f}button{width:100%;margin-top:16px;padding:13px 16px;font-size:16px;border-radius:10px;border:1px solid #1d1d1b;background:#1d1d1b;color:#fff;cursor:pointer}button:focus-visible{outline:3px solid #8a8a84;outline-offset:2px}dl{margin:16px 0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:15px}dt{color:#77776f}dd{margin:0}</style></head><body><main><small>{{ $('Store settings').item.json.store_name }}</small><h1>Do you want to {{ $('Read email request').item.json.action === 'CONFIRM' ? 'confirm' : 'cancel' }} order {{ $json.orderName }}?</h1><dl><dt>Items</dt><dd>{{ $json.items }}</dd><dt>Total</dt><dd>{{ $json.total }}</dd></dl><form method=\"post\"><input type=\"hidden\" name=\"order\" value=\"{{ $json.orderId }}\"><input type=\"hidden\" name=\"action\" value=\"{{ $('Read email request').item.json.action }}\"><input type=\"hidden\" name=\"token\" value=\"{{ $('Read email request').item.json.token }}\"><button type=\"submit\">Yes, {{ $('Read email request').item.json.action === 'CONFIRM' ? 'confirm' : 'cancel' }} this order</button></form></main></body></html>",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "id": "57360f81-5d3a-40d9-9b7f-bea3e26847e6",
+      "name": "Page: confirm your choice",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2000,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dbf78025-0e1c-4267-8626-ac03865aac55",
+              "name": "action",
+              "value": "={{ $('Read email request').item.json.action }}",
+              "type": "string"
+            },
+            {
+              "id": "26fd6774-fe73-4a48-b46a-fe1ca6ea5aac",
+              "name": "source",
+              "value": "email",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "fa5b5cce-3fe3-4294-8aee-8e9516eeb3d3",
+      "name": "Decision from email",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        520
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "dd2de1f0-5dec-448e-acd1-522c46c20480",
+      "name": "Decision",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "resource": "order",
+        "operation": "update",
+        "orderId": "={{ $('Decision').item.json.orderId }}",
+        "updateFields": {
+          "tags": "={{ [$('Decision').item.json.shopTags, $('Decision').item.json.action === 'CONFIRM' ? 'COD Confirmed' : 'COD Cancelled'].filter(t => t).join(', ') }}"
+        }
+      },
+      "id": "cd0f0a14-b7d9-434f-89ea-a20185c30b3d",
+      "name": "Tag order in Shopify",
+      "type": "n8n-nodes-base.shopify",
+      "typeVersion": 1,
+      "position": [
+        2460,
+        360
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "codConfirmations"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $('Decision').item.json.orderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "={{ $('Decision').item.json.action === 'CONFIRM' ? 'confirmed' : 'cancelled' }}",
+            "decidedVia": "={{ $('Decision').item.json.source }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "total",
+              "displayName": "total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "shopTags",
+              "displayName": "shopTags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "actionToken",
+              "displayName": "actionToken",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "decidedVia",
+              "displayName": "decidedVia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "whatsappSent",
+              "displayName": "whatsappSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "emailSent",
+              "displayName": "emailSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "7811b393-e4e0-4a79-be43-cfc7f1991d09",
+      "name": "Save decision",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2680,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a122a5d-ed3b-4c19-a596-36df09315d6e",
+              "leftValue": "={{ $('Decision').item.json.source }}",
+              "rightValue": "whatsapp",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "2fb3bf31-2b70-4b10-bd5f-1ca7d5e8b6ee",
+      "name": "Decided on WhatsApp?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2900,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('Read WhatsApp reply').item.json.phoneNumberId }}",
+        "recipientPhoneNumber": "={{ $('Read WhatsApp reply').item.json.phone }}",
+        "textBody": "={{ $('Decision').item.json.action === 'CONFIRM' ? 'Shukriya ' + $('Decision').item.json.customerName + '! Aap ka order ' + $('Decision').item.json.orderName + ' confirm ho gaya hai aur jald dispatch hoga. / Thank you, your order is confirmed.' : 'Aap ka order ' + $('Decision').item.json.orderName + ' cancel kar diya gaya hai. Ghalti se hua ho to yahin reply karein. / Your order has been cancelled.' }}",
+        "additionalFields": {}
+      },
+      "id": "f73e1b29-4d68-4ada-8f2d-2833530cbc7e",
+      "name": "Reply on WhatsApp",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        3120,
+        260
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6c3bf8ae-a82a-44f6-8752-76c3f37d016b",
+              "leftValue": "={{ $('Decision').item.json.email.includes('@') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "c77829d5-7d15-4a27-aca6-f3bb8b632c0e",
+      "name": "Customer has email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3340,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $('Store settings').item.json.email_from }}",
+        "toEmail": "={{ $('Decision').item.json.email }}",
+        "subject": "=Order {{ $('Decision').item.json.orderName }} {{ $('Decision').item.json.action === 'CONFIRM' ? 'confirmed' : 'cancelled' }} - {{ $('Store settings').item.json.store_name }}",
+        "emailFormat": "html",
+        "html": "=<div style=\"font-family:Arial,Helvetica,sans-serif;color:#1d1d1b;max-width:520px;margin:0 auto;padding:24px\"><p style=\"color:#77776f;font-size:14px;margin:0 0 6px\">{{ $('Store settings').item.json.store_name }}</p><h1 style=\"font-size:20px;font-weight:600;margin:0 0 12px\">Order {{ $('Decision').item.json.orderName }} {{ $('Decision').item.json.action === 'CONFIRM' ? 'confirmed' : 'cancelled' }}</h1><p style=\"font-size:15px;line-height:1.55;margin:0\">We received your answer on WhatsApp, so the buttons in our earlier email are no longer needed.</p></div>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "95072780-322f-4b77-a6f1-260f322d0d7a",
+      "name": "Email: status update",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        3560,
+        180
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Thank you</title><style>body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f4f4f2;color:#1d1d1b}main{max-width:460px;margin:48px auto;padding:32px 28px;background:#fff;border:1px solid #e6e6e2;border-radius:14px}h1{font-size:22px;font-weight:600;margin:0 0 12px;line-height:1.3}p{line-height:1.55;margin:0 0 12px;color:#4a4a46}small{color:#77776f}button{width:100%;margin-top:16px;padding:13px 16px;font-size:16px;border-radius:10px;border:1px solid #1d1d1b;background:#1d1d1b;color:#fff;cursor:pointer}button:focus-visible{outline:3px solid #8a8a84;outline-offset:2px}dl{margin:16px 0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:15px}dt{color:#77776f}dd{margin:0}</style></head><body><main><small>{{ $('Store settings').item.json.store_name }}</small><h1>{{ $('Decision').item.json.action === 'CONFIRM' ? 'Order confirmed. Thank you!' : 'Order cancelled' }}</h1><p>Order {{ $('Decision').item.json.orderName }} {{ $('Decision').item.json.action === 'CONFIRM' ? 'will be dispatched soon.' : 'has been cancelled. If this was a mistake, please contact the store.' }}</p><p>The WhatsApp buttons for this order are no longer needed.</p></main></body></html>",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "id": "7a1ed5b7-5a2d-4719-b9d3-91f73c4cb58e",
+      "name": "Page: done",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3120,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## COD Order Confirmation: WhatsApp + Email\n\n1. Create the WhatsApp template **order_confirmation** (Utility, 5 variables, Confirm + Cancel quick replies).\n2. Create the Data Table **codConfirmations** (columns in SETUP-GUIDE.md).\n3. Edit **Store settings** (the only place with your details).\n4. Connect Shopify, WhatsApp API, WhatsApp Trigger and SMTP credentials.\n5. Publish, then place a test COD order.\n\nOne answer wins: whichever the customer uses first (WhatsApp or email) updates the order; the other channel then says it is already done.",
+        "height": 330,
+        "width": 640
+      },
+      "id": "ce65965b-c8e5-4b8a-af67-8ec4f6a91b09",
+      "name": "Setup (read first)",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -620
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Opening the email link only shows a page. The order changes when the customer presses the button on that page, so email security scanners that pre-open links cannot confirm or cancel orders.",
+        "height": 140,
+        "width": 460
+      },
+      "id": "f92b0b65-07c6-4a40-8550-5ceb44b1608e",
+      "name": "Email links are two-step",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        860,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "content": "The workflow only tags the Shopify order (COD Confirmed / COD Cancelled). Cancelling, refunds and stock stay in your hands.",
+        "height": 130,
+        "width": 420
+      },
+      "id": "9c5955d0-be30-47b6-99d8-f387c7560d77",
+      "name": "Tags, not auto-cancel",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2440,
+        560
+      ]
+    }
+  ],
+  "connections": {
+    "Shopify Trigger": {
+      "main": [
+        [
+          {
+            "node": "Store settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Store settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email link opened": {
+      "main": [
+        [
+          {
+            "node": "Store settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email button pressed": {
+      "main": [
+        [
+          {
+            "node": "Store settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store settings": {
+      "main": [
+        [
+          {
+            "node": "New Shopify order?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New Shopify order?": {
+      "main": [
+        [
+          {
+            "node": "Prepare order",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WhatsApp message?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare order": {
+      "main": [
+        [
+          {
+            "node": "Create secure token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create secure token": {
+      "main": [
+        [
+          {
+            "node": "COD order we can reach?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "COD order we can reach?": {
+      "main": [
+        [
+          {
+            "node": "Save as pending",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip (paid or no contact)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save as pending": {
+      "main": [
+        [
+          {
+            "node": "Has WhatsApp number?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Has email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has WhatsApp number?": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp request": {
+      "main": [
+        [
+          {
+            "node": "Note WhatsApp sent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Note WhatsApp failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has email?": {
+      "main": [
+        [
+          {
+            "node": "Send email request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email request": {
+      "main": [
+        [
+          {
+            "node": "Note email sent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Note email failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp message?": {
+      "main": [
+        [
+          {
+            "node": "Is it a button reply?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Read email request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is it a button reply?": {
+      "main": [
+        [
+          {
+            "node": "Read WhatsApp reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read WhatsApp reply": {
+      "main": [
+        [
+          {
+            "node": "Find order (WhatsApp)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find order (WhatsApp)": {
+      "main": [
+        [
+          {
+            "node": "Order belongs to this number?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order belongs to this number?": {
+      "main": [
+        [
+          {
+            "node": "Still pending? (WhatsApp)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ignore (unknown order)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still pending? (WhatsApp)": {
+      "main": [
+        [
+          {
+            "node": "Decision from WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reply: already decided",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read email request": {
+      "main": [
+        [
+          {
+            "node": "Find order (email)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find order (email)": {
+      "main": [
+        [
+          {
+            "node": "Link is valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Link is valid?": {
+      "main": [
+        [
+          {
+            "node": "Still pending? (email)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Page: link not valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still pending? (email)": {
+      "main": [
+        [
+          {
+            "node": "Button pressed?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Page: already decided",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Button pressed?": {
+      "main": [
+        [
+          {
+            "node": "Decision from email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Page: confirm your choice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decision from WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decision from email": {
+      "main": [
+        [
+          {
+            "node": "Decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decision": {
+      "main": [
+        [
+          {
+            "node": "Tag order in Shopify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tag order in Shopify": {
+      "main": [
+        [
+          {
+            "node": "Save decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save decision": {
+      "main": [
+        [
+          {
+            "node": "Decided on WhatsApp?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decided on WhatsApp?": {
+      "main": [
+        [
+          {
+            "node": "Reply on WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Page: done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply on WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Customer has email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer has email?": {
+      "main": [
+        [
+          {
+            "node": "Email: status update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Karachi"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}
