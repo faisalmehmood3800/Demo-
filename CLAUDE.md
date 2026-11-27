@@ -62,8 +62,9 @@ Workflow:
 
 1. Load `using-n8n-skills-official` and `using-n8n-mcp-skills` first, then the specific skills the task needs (for example `n8n-agents-official` and `n8n-agents` for an AI agent, `n8n-workflow-patterns` for structure, `n8n-error-handling-official` for webhooks and unattended runs).
 2. Where an official and a community skill cover the same topic, read both and follow the official one if they disagree.
-3. Validate the workflow (`n8n-validation-expert`) and add error handling before delivery.
-4. If no n8n MCP server is connected, deliver the workflow as an importable JSON file and say so; with one connected, build and test it in the user's n8n directly.
+3. Also load `n8n-agency-playbook`: the agency's recipes for manager-plus-specialist teams, RAG help-desk bots, voice calling agents, catalogue sync and always-on agents (architecture, prompts, Urdu voice, security, cost). Node syntax still comes from the official and community skills.
+4. Validate the workflow (`n8n-validation-expert`) and add error handling before delivery.
+5. If no n8n MCP server is connected, deliver the workflow as an importable JSON file and say so; with one connected, build and test it in the user's n8n directly.
 
 ## Shopify stores (always use the Shopify skills)
 
@@ -92,12 +93,12 @@ HyperFrames telemetry is off with `HYPERFRAMES_NO_TELEMETRY=1` in `.claude/setti
 
 ## Other installed skills
 
-- Sales: `sales` and `sales-*` skills plus `.claude/agents/sales-*` (zubair-trabzada/ai-sales-team-claude).
+- Sales: `sales` and `sales-*` skills plus `.claude/agents/sales-*` (zubair-trabzada/ai-sales-team-claude), and `agency-offer-playbook` for offers, packages, pricing and honest selling (load it for any offer, proposal, pricing or outreach copy).
 - Trading: `trader-*` skills (Jakeschincariol/day-trader-skill).
 - n8n: `n8n-*-official` (n8n-io/skills) and the community `n8n-*` skills (czlonkowski/n8n-skills).
 - Shopify: `shopify-*` skills and the `shopify-ai-toolkit` plugin (see above).
 - Design: `unslop` (heydamir/unslop, CC BY 4.0).
-- Agency playbook: `pro-website-playbook` (written here from the user's chosen YouTube tutorials).
+- Agency playbooks written here from the user's chosen YouTube tutorials: `pro-website-playbook` (websites), `n8n-agency-playbook` (automations and agents), `agency-offer-playbook` (offers and sales). Source notes: `.claude/skills/pro-website-playbook/references/tutorial-notes-2026-11-27.md`.
 - Video: `hyperframes` plugin (heygen-com/hyperframes, Apache 2.0), `ultimate-video-editor` (Rajbharti06/Ultimate-Video-Editing-Skills) and `motion-video-director` (mattypark/Motion-graphics-skill; upstream has no license, personal use only).
 
 ## Motion
