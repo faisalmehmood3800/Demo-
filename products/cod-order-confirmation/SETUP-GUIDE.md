@@ -1,6 +1,6 @@
 # COD Order Confirmation on WhatsApp + Email (Shopify): setup guide
 
-**Roman Urdu mein khulasa:** jab bhi Shopify store par Cash on Delivery order aata hai, customer ko **WhatsApp aur email dono** par order ki tafseel ke saath Confirm aur Cancel ka option jata hai. Customer jis bhi channel par pehle jawab de, wahi faisla lagta hai: Shopify order par tag lag jata hai (COD Confirmed ya COD Cancelled), aur doosre channel par customer ko khud update chala jata hai. Email se confirm kiya to WhatsApp par message aata hai ke order confirm ho gaya, button dabane ki zaroorat nahi. WhatsApp se confirm kiya to email aati hai ke order confirm ho gaya, email ke buttons ki zaroorat nahi. Is se jhooti COD orders aur wapas aane wale parcels kam hote hain.
+**Roman Urdu mein khulasa:** jab bhi Shopify store par Cash on Delivery order aata hai, customer ko **WhatsApp aur email dono** par order ki tafseel ke saath Confirm aur Cancel ka option jata hai. Customer jis bhi channel par pehle jawab de, wahi faisla lagta hai: Shopify order par tag lag jata hai (COD Confirmed ya COD Cancelled), aur doosre channel par customer ko khud update chala jata hai. Customer kisi bhi ek jagah se confirm kare, **WhatsApp aur email dono par** "order confirmed" ka message chala jata hai, aur doosri jagah button dabane ki zaroorat nahi rehti. Cancel bhi isi tarah hota hai. Is se jhooti COD orders aur wapas aane wale parcels kam hote hain.
 
 ## What it does
 
@@ -13,7 +13,7 @@
    - tags the Shopify order `COD Confirmed` or `COD Cancelled`,
    - saves the status and where it came from (`decidedVia`: `whatsapp` or `email`),
    - answered on WhatsApp: a thank-you or cancellation message on WhatsApp, **plus an automatic status email** ("Order confirmed, the email buttons are no longer needed"),
-   - answered by email: a "Thank you, order confirmed" (or "Order cancelled") page in the browser, **plus an automatic WhatsApp update** ("Aap ka order confirm ho gaya hai, buttons dabane ki zaroorat nahi") sent with the `order_status_update` template.
+   - answered by email: a "Thank you, order confirmed" (or "Order cancelled") page in the browser, **plus the same confirmation email**, **plus an automatic WhatsApp update** ("Aap ka order confirm ho gaya hai, buttons dabane ki zaroorat nahi") sent with the `order_status_update` template.
 5. **The other channel can't undo it.** If the customer still taps the WhatsApp button, they are told "already confirmed via email" (or cancelled). If they later open the email link, the page says "Order is already cancelled. We received your answer via WhatsApp." Nothing changes twice.
 6. Prepaid (card) orders and orders with neither a phone nor an email are skipped.
 
@@ -114,7 +114,7 @@ In n8n go to **Data tables → Create**, name it exactly `codConfirmations`, and
 2. Place a COD test order with your own WhatsApp number and email.
 3. You should get the WhatsApp template and the email within seconds.
 4. In the email press **Confirm order**, then **Yes, confirm this order**. Check: Shopify order tagged `COD Confirmed`, Data Table row `confirmed` with `decidedVia` = `email`.
-5. Within seconds you should get the WhatsApp update "your order #… is now confirmed". If you still tap **Confirm order** on the old message, you get "already confirmed via email".
+5. Within seconds you should get both the WhatsApp update "your order #… is now confirmed" and a confirmation email. If you still tap **Confirm order** on the old message, you get "already confirmed via email".
 6. Place a second test order, tap **Cancel order** on WhatsApp. Check the `COD Cancelled` tag and the status email; then open that order's email link: the page should say it is already cancelled.
 7. Cancel the test orders in Shopify.
 
@@ -126,7 +126,7 @@ Run on a local n8n 2.49 with a real Data Table, the real email webhooks and page
 |---|---|---|
 | 1 | New COD order, phone `0300-1234567` and email `Ali@Example.com` | WhatsApp template to `923001234567` with `CONFIRM:7001` / `CANCEL:7001`; email to `ali@example.com` with both links and a 40-character token; row `pending`, both sends `sent` |
 | 2a | Email link opened (GET) | Confirm page shown, row **still pending** (link scanners can't decide) |
-| 2b | Button on that page pressed (POST) | Tag `Online, COD Confirmed`, row `confirmed` via `email`, thank-you page, and the WhatsApp update `order_status_update` to `923001234567` with `Ali`, `#1001`, `confirmed` |
+| 2b | Button on that page pressed (POST) | Tag `Online, COD Confirmed`, row `confirmed` via `email`, thank-you page, confirmation email to `ali@example.com`, and the WhatsApp update `order_status_update` to `923001234567` with `Ali`, `#1001`, `confirmed` |
 | 3 | Same customer then taps Confirm on WhatsApp | "Aap ka order #1001 pehle hi email ke zariye confirm ho chuka hai…", nothing changed |
 | 3b | Tap for that order from a different number | Ignored, nothing changed |
 | 4 | Second order, Cancel on WhatsApp | Tag `Online, COD Cancelled`, row `cancelled` via `whatsapp`, WhatsApp cancellation text and status email |
@@ -134,7 +134,7 @@ Run on a local n8n 2.49 with a real Data Table, the real email webhooks and page
 | 6 | Link with a wrong token | "This link is not valid" page, HTTP 400 |
 | 7 | Paid card order | Skipped, nothing sent or saved |
 | 8 | COD order with email only | Email sent, no WhatsApp attempted, row `pending` |
-| 9 | That email-only customer cancels by email | Tag `COD Cancelled`, row `cancelled` via `email`, no WhatsApp attempted, page without the WhatsApp line |
+| 9 | That email-only customer cancels by email | Tag `COD Cancelled`, row `cancelled` via `email`, cancellation email sent, no WhatsApp attempted, page without the WhatsApp line |
 
 Not covered: the live Shopify webhook, Meta's template approval, real WhatsApp and email delivery, and spam placement of your emails. Do Step 4 with your own accounts before turning it on for customers. If a customer answers on both channels within the same second, the first one to save wins; the second may also tag, which is harmless.
 
