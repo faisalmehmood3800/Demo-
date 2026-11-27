@@ -1,0 +1,2052 @@
+{
+  "name": "Product Reviews on WhatsApp after Delivery (Shopify)",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "fulfillment_events/create"
+      },
+      "id": "552fa2a3-e467-4977-9ebe-da424b6e3bea",
+      "name": "Delivery update (courier)",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -200
+      ],
+      "webhookId": "176f83e9-3f45-4806-923f-f7a88d6bfddc"
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "orders/updated"
+      },
+      "id": "85f281b8-13f2-4c0d-9f2e-7c3252ef672d",
+      "name": "Order updated (Delivered tag)",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "0de50024-77ec-4d91-83fc-772f61000e38"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 18,
+              "triggerAtMinute": 13
+            }
+          ]
+        }
+      },
+      "id": "52474474-56c0-4f7f-ba15-403f72a991c8",
+      "name": "Every day 6:13 pm",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "e51bc45b-ab63-428a-953a-69c34ba0d778",
+      "name": "Customer reply (from COD workflow)",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "82270314-b0a5-4e8f-8b64-356d77aff10a",
+              "name": "store_name",
+              "value": "Your Store Name",
+              "type": "string"
+            },
+            {
+              "id": "904c52ef-69d8-4c39-bb8b-b09850a5d028",
+              "name": "review_template_name",
+              "value": "order_review_request",
+              "type": "string"
+            },
+            {
+              "id": "e4c25682-56cd-4823-aaa2-44937b57761a",
+              "name": "template_language",
+              "value": "en",
+              "type": "string"
+            },
+            {
+              "id": "cdd2a74c-a67d-4513-8325-00ccfb08ca31",
+              "name": "whatsapp_phone_number_id",
+              "value": "PASTE_YOUR_PHONE_NUMBER_ID",
+              "type": "string"
+            },
+            {
+              "id": "1b4b6915-833d-4b5b-8e01-aa194a29a5f8",
+              "name": "default_country_code",
+              "value": "92",
+              "type": "string"
+            },
+            {
+              "id": "e9ef805f-d2fd-4f27-a711-879e89929f64",
+              "name": "review_after_days",
+              "value": 3,
+              "type": "number"
+            },
+            {
+              "id": "e801747f-5102-4a6d-9e78-975423748499",
+              "name": "delivered_tag",
+              "value": "Delivered",
+              "type": "string"
+            },
+            {
+              "id": "12e7eece-f4c5-446f-b822-b46dcecb2549",
+              "name": "max_per_day",
+              "value": 100,
+              "type": "number"
+            },
+            {
+              "id": "6ac2d8e0-b22e-4caa-82ff-d94de7a35067",
+              "name": "public_review_link",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "57eee187-704c-42ea-af76-f7237804f7df",
+              "name": "owner_email",
+              "value": "owner@yourstore.com",
+              "type": "string"
+            },
+            {
+              "id": "1ea9e81a-53e2-4673-8de2-4e3387008669",
+              "name": "email_from",
+              "value": "Your Store <orders@yourstore.com>",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "9e4653d2-93b4-4842-8dd3-dbb19e607258",
+      "name": "Review settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1cd2c06-9bfc-4657-b10e-51d070ffc3fd",
+              "leftValue": "={{ $('Delivery update (courier)').isExecuted ? $json.status === 'delivered' : ($('Order updated (Delivered tag)').isExecuted && String($json.tags || '').split(',').map(t => t.trim().toLowerCase()).includes($('Review settings').item.json.delivered_tag.toLowerCase())) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "0add4b7b-eea0-40b8-98d8-c351ce6e6d62",
+      "name": "Delivered?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a0e05b23-3b9e-4c61-8085-9a1eaba1982f",
+              "leftValue": "={{ $('Every day 6:13 pm').isExecuted }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "7e447337-59c2-4279-8d9f-5bc90816019f",
+      "name": "Daily check?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        250
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5670aafb-1679-4b39-b4bf-7290dc84934e",
+              "name": "orderId",
+              "value": "={{ String($('Delivery update (courier)').isExecuted ? $json.order_id : $json.id) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bde872da-4dce-4602-93f8-5d5b66ab47d2",
+      "name": "Delivered order id",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        680,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "reviewRequests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $json.orderId }}"
+            }
+          ]
+        },
+        "limit": 1
+      },
+      "id": "eefb4534-6247-478b-ae8d-9715d574684c",
+      "name": "Already recorded?",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        900,
+        -200
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "64e155e6-8ffd-4e9f-ae53-adcc3908a546",
+              "leftValue": "={{ $json.orderId || '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "a1ea381a-7302-4cc9-a52c-fce2357be715",
+      "name": "New delivery?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "resource": "order",
+        "operation": "get",
+        "orderId": "={{ $('Delivered order id').item.json.orderId }}",
+        "options": {}
+      },
+      "id": "f312bcee-87b1-4eda-aa1d-2ba91636afc8",
+      "name": "Get order from Shopify",
+      "type": "n8n-nodes-base.shopify",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        -260
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3bcdce02-8555-4f42-aa85-b5583829effe",
+              "leftValue": "={{ ( (() => { const cc = $('Review settings').item.json.default_country_code; let p = String($json.shipping_address?.phone || $json.billing_address?.phone || $json.phone || $json.customer?.phone || '').replace(/\\D/g, ''); if (p.startsWith('00')) p = p.slice(2); if (p.startsWith('0')) p = cc + p.slice(1); else if (p.length === 10 && p.startsWith('3')) p = cc + p; return p; })()).length >= 11 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "324a56ee-7026-4a6d-99b7-e547e9745bd8",
+      "name": "Has WhatsApp number?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1560,
+        -260
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "reviewRequests"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "orderId": "={{ String($json.id) }}",
+            "orderName": "={{ $json.name }}",
+            "phone": "={{ (() => { const cc = $('Review settings').item.json.default_country_code; let p = String($json.shipping_address?.phone || $json.billing_address?.phone || $json.phone || $json.customer?.phone || '').replace(/\\D/g, ''); if (p.startsWith('00')) p = p.slice(2); if (p.startsWith('0')) p = cc + p.slice(1); else if (p.length === 10 && p.startsWith('3')) p = cc + p; return p; })() }}",
+            "customerName": "={{ ($json.shipping_address?.first_name || $json.customer?.first_name || 'Customer').trim() }}",
+            "items": "={{ ($json.line_items || []).map(i => i.title).filter((t, i, a) => a.indexOf(t) === i).join(', ').slice(0, 120) }}",
+            "deliveredAt": "={{ $now.toISO() }}",
+            "status": "waiting",
+            "rating": "",
+            "reviewText": "",
+            "askedAt": "",
+            "waMessageId": ""
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "deliveredAt",
+              "displayName": "deliveredAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "reviewText",
+              "displayName": "reviewText",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "askedAt",
+              "displayName": "askedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "4a268662-c7f9-4829-a978-d66c983575a8",
+      "name": "Save delivery",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1780,
+        -280
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b4477408-9411-47ed-bd5d-d580499d83e2",
+      "name": "Skip (already recorded or no number)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "reviewRequests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "waiting"
+            },
+            {
+              "keyName": "deliveredAt",
+              "condition": "lte",
+              "keyValue": "={{ $now.minus({ days: $('Review settings').item.json.review_after_days }).toISO() }}"
+            }
+          ]
+        },
+        "limit": "={{ $('Review settings').item.json.max_per_day }}",
+        "orderBy": true,
+        "orderByColumn": "deliveredAt",
+        "orderByDirection": "ASC"
+      },
+      "id": "17a28280-be56-42b2-8a08-998f34d4a20d",
+      "name": "Find orders to ask",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        680,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendTemplate",
+        "phoneNumberId": "={{ $('Review settings').item.json.whatsapp_phone_number_id }}",
+        "recipientPhoneNumber": "={{ $json.phone }}",
+        "template": "={{ $('Review settings').item.json.review_template_name + '|' + $('Review settings').item.json.template_language }}",
+        "components": {
+          "component": [
+            {
+              "type": "body",
+              "bodyParameters": {
+                "parameter": [
+                  {
+                    "type": "text",
+                    "text": "={{ $json.customerName }}"
+                  },
+                  {
+                    "type": "text",
+                    "text": "={{ $json.orderName }}"
+                  },
+                  {
+                    "type": "text",
+                    "text": "={{ $json.items }}"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "button",
+              "sub_type": "quick_reply",
+              "index": 0,
+              "buttonParameters": {
+                "parameter": {
+                  "type": "payload",
+                  "payload": "={{ 'RATE5:' + $json.orderId }}"
+                }
+              }
+            },
+            {
+              "type": "button",
+              "sub_type": "quick_reply",
+              "index": 1,
+              "buttonParameters": {
+                "parameter": {
+                  "type": "payload",
+                  "payload": "={{ 'RATE4:' + $json.orderId }}"
+                }
+              }
+            },
+            {
+              "type": "button",
+              "sub_type": "quick_reply",
+              "index": 2,
+              "buttonParameters": {
+                "parameter": {
+                  "type": "payload",
+                  "payload": "={{ 'RATE3:' + $json.orderId }}"
+                }
+              }
+            },
+            {
+              "type": "button",
+              "sub_type": "quick_reply",
+              "index": 3,
+              "buttonParameters": {
+                "parameter": {
+                  "type": "payload",
+                  "payload": "={{ 'RATE2:' + $json.orderId }}"
+                }
+              }
+            },
+            {
+              "type": "button",
+              "sub_type": "quick_reply",
+              "index": 4,
+              "buttonParameters": {
+                "parameter": {
+                  "type": "payload",
+                  "payload": "={{ 'RATE1:' + $json.orderId }}"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "id": "742ba731-1f4b-4752-8222-21da89618775",
+      "name": "Ask for a review",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        900,
+        180
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "reviewRequests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $('Find orders to ask').item.json.orderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "asked",
+            "askedAt": "={{ $now.toISO() }}",
+            "waMessageId": "={{ $json.messages?.[0]?.id || '' }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "deliveredAt",
+              "displayName": "deliveredAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "reviewText",
+              "displayName": "reviewText",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "askedAt",
+              "displayName": "askedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "19a26c45-e913-4fad-bb33-f1c94d90d40f",
+      "name": "Mark asked",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "reviewRequests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $('Find orders to ask').item.json.orderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "send_failed"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "deliveredAt",
+              "displayName": "deliveredAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "reviewText",
+              "displayName": "reviewText",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "askedAt",
+              "displayName": "askedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "7c061565-1dbd-4697-a624-c8b062326544",
+      "name": "Mark send failed",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "db3a8659-3702-426d-8975-55c0c9b6b99c",
+              "name": "phone",
+              "value": "={{ $json.messages?.[0]?.from || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "eedbf81a-fb91-46bc-a814-885c3860e9aa",
+              "name": "phoneNumberId",
+              "value": "={{ $json.metadata?.phone_number_id || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "66294ae3-1384-4cc1-93eb-8286c8763109",
+              "name": "type",
+              "value": "={{ $json.messages?.[0]?.type || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "cfcb7fd0-e85f-4b02-ab79-7bde60708dc8",
+              "name": "payload",
+              "value": "={{ $json.messages?.[0]?.button?.payload || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "84fb9490-1703-4bed-8e9c-c047b0bef902",
+              "name": "text",
+              "value": "={{ String($json.messages?.[0]?.text?.body || '').trim().slice(0, 1000) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "98a3fe03-3611-496b-b9fb-995a80c068eb",
+      "name": "Read message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        680,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "642bc68a-ec24-4da5-a406-1c5cc45ac3ef",
+              "leftValue": "={{ $json.payload }}",
+              "rightValue": "^RATE[1-5]:",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "3f4d56ce-0fa4-4072-a52d-08b8428a6e73",
+      "name": "Rating button?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        900,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "reviewRequests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $json.payload.split(':')[1] }}"
+            }
+          ]
+        },
+        "limit": 1
+      },
+      "id": "690f9e9e-5a4e-4360-96fe-f06e46112cdf",
+      "name": "Find asked order",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        380
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9f011522-65c0-438a-8790-47349e7d800d",
+              "leftValue": "={{ $json.phone || '' }}",
+              "rightValue": "={{ $('Read message').item.json.phone }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "83dc2717-c131-41db-9caf-95b9a41d8d8a",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "asked",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "77b9bbf0-e294-470b-b3e5-c5f3d93ac641",
+      "name": "Asked this number?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1340,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "reviewRequests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $json.orderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "rated",
+            "rating": "={{ $('Read message').item.json.payload.slice(4, 5) }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "deliveredAt",
+              "displayName": "deliveredAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "reviewText",
+              "displayName": "reviewText",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "askedAt",
+              "displayName": "askedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "cdc16495-911b-4d70-843d-379bcd89abce",
+      "name": "Save rating",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1560,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('Read message').item.json.phoneNumberId }}",
+        "recipientPhoneNumber": "={{ $('Read message').item.json.phone }}",
+        "textBody": "={{ Number($('Read message').item.json.payload.slice(4, 5)) >= 4 ? 'Shukriya! Khushi hui ke aap ko pasand aaya.' : 'Shukriya, aap ki rai hamare liye zaroori hai.' }} Kya aap 1-2 line mein batayenge kya acha laga ya kya behtar ho sakta tha? Bas yahin likh dein. / Thank you! Could you tell us in a line or two what you liked or what we could do better?",
+        "additionalFields": {}
+      },
+      "id": "c64daea4-114d-487c-972b-fdfa11a8ed3c",
+      "name": "Ask for a few words",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        1780,
+        360
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fc805786-2103-44c8-a038-386471d74502",
+              "leftValue": "={{ Number($('Read message').item.json.payload.slice(4, 5)) <= 2 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "ed2cfb7d-25c7-4366-b62e-27e996802c61",
+      "name": "Unhappy customer?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2000,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $('Review settings').item.json.email_from }}",
+        "toEmail": "={{ $('Review settings').item.json.owner_email }}",
+        "subject": "=Low rating ({{ $('Read message').item.json.payload.slice(4, 5) }}/5) on order {{ $('Find asked order').item.json.orderName }}",
+        "emailFormat": "text",
+        "text": "=Customer {{ $('Find asked order').item.json.customerName }} rated order {{ $('Find asked order').item.json.orderName }} ({{ $('Find asked order').item.json.items }}) {{ $('Read message').item.json.payload.slice(4, 5) }} out of 5.\n\nWhatsApp: +{{ $('Read message').item.json.phone }}\n\nThey were asked to write a few words; their reply will be saved in the reviewRequests table. Consider calling them today.",
+        "options": {}
+      },
+      "id": "34f8cf1d-1e19-46b4-a749-cbbb7337c1d4",
+      "name": "Alert the owner",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2220,
+        340
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "id": "e47477bf-5cff-4bb4-9427-33ae4f992b5b",
+      "name": "Ignore (not asked or already rated)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "65a3dd39-24ae-4286-a83a-3bb07696dc88",
+              "leftValue": "={{ $('Read message').item.json.type }}",
+              "rightValue": "text",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "cba2acf7-c7ba-45a4-90a2-d5f432572eaa",
+              "leftValue": "={{ $('Read message').item.json.text }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "15b5f059-0f50-41bf-8abe-43505d81e556",
+      "name": "Text message?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "reviewRequests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "phone",
+              "condition": "eq",
+              "keyValue": "={{ $('Read message').item.json.phone }}"
+            },
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "rated"
+            }
+          ]
+        },
+        "limit": 1,
+        "orderBy": true,
+        "orderByColumn": "askedAt",
+        "orderByDirection": "DESC"
+      },
+      "id": "aadf7d0a-4aef-4a24-ae9e-25cfbc8668a0",
+      "name": "Find rated order",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1340,
+        720
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c4b9fd3f-160a-4cb9-8b3e-dcb323446c35",
+              "leftValue": "={{ $json.orderId || '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "78bd325a-935e-4843-b8ac-432f4e27ea3d",
+      "name": "Waiting for their words?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1560,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "reviewRequests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "orderId",
+              "condition": "eq",
+              "keyValue": "={{ $json.orderId }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "reviewed",
+            "reviewText": "={{ $('Read message').item.json.text }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "orderName",
+              "displayName": "orderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "items",
+              "displayName": "items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "deliveredAt",
+              "displayName": "deliveredAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "reviewText",
+              "displayName": "reviewText",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "askedAt",
+              "displayName": "askedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "waMessageId",
+              "displayName": "waMessageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "e5509edf-927d-4bb9-b4ab-df2dd99aa54d",
+      "name": "Save review",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1780,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "={{ $('Read message').item.json.phoneNumberId }}",
+        "recipientPhoneNumber": "={{ $('Read message').item.json.phone }}",
+        "textBody": "=Shukriya {{ $('Find rated order').item.json.customerName }}! Aap ka review save ho gaya hai.{{ $('Review settings').item.json.public_review_link ? ' Agar aap chahein to yahan bhi likh sakte hain: ' + $('Review settings').item.json.public_review_link : '' }} / Thank you, your review has been saved.",
+        "additionalFields": {}
+      },
+      "id": "66160a83-d8df-4af7-ae72-77e28eafe359",
+      "name": "Thank the customer",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        2000,
+        700
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {},
+      "id": "683927cc-2904-4aa5-893a-e01e12360455",
+      "name": "Ignore (not a review)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Product reviews on WhatsApp\n\n1. Create the WhatsApp template **order_review_request** (Utility, 3 variables, 5 quick replies). Text in SETUP-GUIDE.md.\n2. Create the Data Table **reviewRequests** (columns in SETUP-GUIDE.md).\n3. Edit **Review settings**.\n4. Connect Shopify, WhatsApp API and SMTP credentials.\n5. Publish this workflow first.\n6. In the COD workflow, open **Send to review workflow**, pick this workflow, enable the node, then publish the COD workflow.",
+        "height": 320,
+        "width": 620
+      },
+      "id": "e4bc8a9e-7ae6-4599-abfd-1a394f2b9f76",
+      "name": "Setup (read first)",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -560
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Either your courier app marks the shipment **delivered** in Shopify, or you add the tag **Delivered** to the order. The order is saved once; the daily run asks for a review **3 days** later (setting review_after_days), so the message lands 3 to 4 days after delivery.",
+        "height": 170,
+        "width": 480
+      },
+      "id": "18c2fac4-68f2-400b-939d-873404c9dbbd",
+      "name": "How delivery is detected",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        600,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "content": "A Meta app sends all WhatsApp messages to one webhook, so the COD workflow's WhatsApp Trigger receives them and passes every non-COD message here.",
+        "height": 150,
+        "width": 440
+      },
+      "id": "e102ad53-38d2-4736-90ab-7c9dbe3f40a7",
+      "name": "Replies arrive via the COD workflow",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        600,
+        880
+      ]
+    }
+  ],
+  "connections": {
+    "Delivery update (courier)": {
+      "main": [
+        [
+          {
+            "node": "Review settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order updated (Delivered tag)": {
+      "main": [
+        [
+          {
+            "node": "Review settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every day 6:13 pm": {
+      "main": [
+        [
+          {
+            "node": "Review settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer reply (from COD workflow)": {
+      "main": [
+        [
+          {
+            "node": "Review settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Review settings": {
+      "main": [
+        [
+          {
+            "node": "Delivered?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delivered?": {
+      "main": [
+        [
+          {
+            "node": "Delivered order id",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Daily check?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delivered order id": {
+      "main": [
+        [
+          {
+            "node": "Already recorded?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Already recorded?": {
+      "main": [
+        [
+          {
+            "node": "New delivery?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New delivery?": {
+      "main": [
+        [
+          {
+            "node": "Get order from Shopify",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip (already recorded or no number)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get order from Shopify": {
+      "main": [
+        [
+          {
+            "node": "Has WhatsApp number?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has WhatsApp number?": {
+      "main": [
+        [
+          {
+            "node": "Save delivery",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip (already recorded or no number)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily check?": {
+      "main": [
+        [
+          {
+            "node": "Find orders to ask",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Read message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find orders to ask": {
+      "main": [
+        [
+          {
+            "node": "Ask for a review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask for a review": {
+      "main": [
+        [
+          {
+            "node": "Mark asked",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark send failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read message": {
+      "main": [
+        [
+          {
+            "node": "Rating button?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rating button?": {
+      "main": [
+        [
+          {
+            "node": "Find asked order",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Text message?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find asked order": {
+      "main": [
+        [
+          {
+            "node": "Asked this number?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Asked this number?": {
+      "main": [
+        [
+          {
+            "node": "Save rating",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ignore (not asked or already rated)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save rating": {
+      "main": [
+        [
+          {
+            "node": "Ask for a few words",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask for a few words": {
+      "main": [
+        [
+          {
+            "node": "Unhappy customer?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unhappy customer?": {
+      "main": [
+        [
+          {
+            "node": "Alert the owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text message?": {
+      "main": [
+        [
+          {
+            "node": "Find rated order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find rated order": {
+      "main": [
+        [
+          {
+            "node": "Waiting for their words?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Waiting for their words?": {
+      "main": [
+        [
+          {
+            "node": "Save review",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ignore (not a review)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save review": {
+      "main": [
+        [
+          {
+            "node": "Thank the customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Karachi"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

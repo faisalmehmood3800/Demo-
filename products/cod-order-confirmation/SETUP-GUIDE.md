@@ -96,7 +96,7 @@ In n8n go to **Data tables → Create**, name it exactly `codConfirmations`, and
    - `support_contact`: shown at the bottom of the email, for example `WhatsApp 0300-0000000`
    - `order_action_url`: your n8n address + `/webhook/cod-order-action`, for example `https://n8n.yourstore.com/webhook/cod-order-action`. Copy it from the **Email link opened** node → *Production URL*.
    - `cod_only`: `true` to message only COD orders
-3. **Credentials.** The red triangles you see after import are not errors: they mark the 9 nodes that still need your login. They disappear when you connect these:
+3. **Credentials.** The red triangles you see after import are not errors: they mark the 9 nodes that need a login (Send to review workflow is deactivated and shows no mark) that still need your login. They disappear when you connect these:
 
 | Node | Credential |
 |---|---|
@@ -137,6 +137,12 @@ Run on a local n8n 2.49 with a real Data Table, the real email webhooks and page
 | 9 | That email-only customer cancels by email | Tag `COD Cancelled`, row `cancelled` via `email`, cancellation email sent, no WhatsApp attempted, page without the WhatsApp line |
 
 Not covered: the live Shopify webhook, Meta's template approval, real WhatsApp and email delivery, and spam placement of your emails. Do Step 4 with your own accounts before turning it on for customers. If a customer answers on both channels within the same second, the first one to save wins; the second may also tag, which is harmless.
+
+## Add-on: product reviews after delivery
+
+`review-request-whatsapp.json` asks customers for a rating and a short review on WhatsApp 3 to 4 days after delivery. It works through this workflow's WhatsApp Trigger: the node **Send to review workflow** passes every WhatsApp message that is not a Confirm/Cancel tap to the review workflow. That node ships **deactivated**, so this workflow publishes and works on its own. To use reviews, follow `REVIEWS-SETUP.md`.
+
+Only buttons whose payload starts with `CONFIRM:` or `CANCEL:` can change an order here, so a rating tap can never confirm or cancel an order.
 
 ## Troubleshooting
 
