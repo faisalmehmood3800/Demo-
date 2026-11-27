@@ -11,8 +11,9 @@ Sources the user asked me to learn from (Hindi auto-transcripts, read in full on
 - "How to Build a Website for Local Businesses in 14 minutes", youtube.com/watch?v=AXMyFEBUteM
 - "How I Vibe coded Apple-Style $5000 Website With AI (Claude)", youtube.com/watch?v=YvH8l_3r_GA (read 2026-11-27)
 - "CLAUDE CODE FULL COURSE - Build & Sell AI Apps (2026)", youtube.com/watch?v=_FZcKRS74P4 (read 2026-11-27)
+- "Claude Opus 4.7 + Claude New Design taking Every Designer job", youtube.com/watch?v=mhxSWQSL3dY (read 2026-11-27)
 
-Detailed notes from the later tutorials, including automation and selling, are in `references/tutorial-notes-2026-11-27.md`. Automation recipes live in `n8n-agency-playbook`; offers and pricing in `agency-offer-playbook`.
+Detailed notes from the later tutorials, including automation and selling, are in `references/tutorial-notes-2026-11-27.md` (sections A to E) and `references/tutorial-notes-batch2-2026-11-27.md` (sections F to M, including step-by-step notes for the 3D site and local-business videos above). Automation recipes live in `n8n-agency-playbook`; offers and pricing in `agency-offer-playbook`.
 
 Both videos spend much of their time on swapping Claude Code to cheaper models (MiniMax) or a wrapper (Pilotdeck). That part does not apply here. What follows is the craft that does. The `$2,000 to $4,000` price is the presenter's claim, not a verified market rate.
 
@@ -25,6 +26,9 @@ This playbook works inside the rules of CLAUDE.md: ui-ux-pro-max sets the design
 3. Record the result in the unslop direction (product, character, world, moments, signature) and the ui-ux-pro-max design system.
 
 ## 2. Brief first, then build
+
+- Set up the brand's design system before the first page, deck or carousel: name, logo, fonts, colours, assets, notes. Every later piece then stays consistent (the Claude Design tutorial's main advice; here that means the ui-ux-pro-max design system persisted in the project, and for decks, carousels or visual designs the Artifact tool's quickstart with a design system).
+- For client sign-off, agree the layout first as a wireframe (boxes: where the headline, button and image go), then show the high-fidelity version. Clients change their minds on layout cheaply at the wireframe stage.
 
 - Collect the full brief before building: brand name, offer, audience, pages, real facts (phone, address, hours, prices), assets, colours and fonts from step 1. One complete brief up front beats rebuilding later; the presenter had to rebuild because he gave the design late.
 - If anything is missing, ask the questions first (brand name, colours, stack) instead of guessing. Plan, get the plan approved, then build.

@@ -88,6 +88,7 @@ Shopify's plugin sends usage data, including the prompt, to shopify.dev when its
 - HyperFrames (heygen-com/hyperframes, Apache 2.0; `hyperframes` plugin enabled in `.claude/settings.json`): the default for videos made in code, such as launch and promo films, explainers, reels and vertical clips, captions on footage, data and chart videos, slideshows and remakes of an existing video. Start with its `hyperframes` skill, then `hyperframes-cli`, `hyperframes-registry` and `media-use` as needed. Render with `npx hyperframes render` and check the result before delivery.
 - `ultimate-video-editor`: cutting, grading, audio and export of existing footage with FFmpeg.
 - `motion-video-director`: an alternative motion-graphics workflow when the user asks for it.
+- `ai-video-content-playbook`: AI-generated footage (Veo/Flow, Kling, Nano Banana and similar): scripts and hooks, the prompt formula, consistent characters, camera, lighting and lens language, product hero clips and honest use. Load it whenever a video, reel, ad or hero asset involves generated images or clips; HyperFrames or `ultimate-video-editor` then assembles them.
 
 HyperFrames telemetry is off with `HYPERFRAMES_NO_TELEMETRY=1` in `.claude/settings.json`, so skip the skill's `hyperframes feedback` reports. Keep it off unless the user asks otherwise. Don't sign in to HeyGen or use paid HeyGen media without the user's go-ahead.
 
@@ -98,8 +99,8 @@ HyperFrames telemetry is off with `HYPERFRAMES_NO_TELEMETRY=1` in `.claude/setti
 - n8n: `n8n-*-official` (n8n-io/skills) and the community `n8n-*` skills (czlonkowski/n8n-skills).
 - Shopify: `shopify-*` skills and the `shopify-ai-toolkit` plugin (see above).
 - Design: `unslop` (heydamir/unslop, CC BY 4.0).
-- Agency playbooks written here from the user's chosen YouTube tutorials: `pro-website-playbook` (websites), `n8n-agency-playbook` (automations and agents), `agency-offer-playbook` (offers and sales). Source notes: `.claude/skills/pro-website-playbook/references/tutorial-notes-2026-11-27.md`.
-- Video: `hyperframes` plugin (heygen-com/hyperframes, Apache 2.0), `ultimate-video-editor` (Rajbharti06/Ultimate-Video-Editing-Skills) and `motion-video-director` (mattypark/Motion-graphics-skill; upstream has no license, personal use only).
+- Agency playbooks written here from the user's chosen YouTube tutorials: `pro-website-playbook` (websites), `n8n-agency-playbook` (automations and agents), `agency-offer-playbook` (offers and sales). Source notes: `.claude/skills/pro-website-playbook/references/tutorial-notes-2026-11-27.md` and `tutorial-notes-batch2-2026-11-27.md` in the same folder.
+- Video: `ai-video-content-playbook` (written here from the user's chosen tutorials), `hyperframes` plugin (heygen-com/hyperframes, Apache 2.0), `ultimate-video-editor` (Rajbharti06/Ultimate-Video-Editing-Skills) and `motion-video-director` (mattypark/Motion-graphics-skill; upstream has no license, personal use only).
 
 ## Motion
 
