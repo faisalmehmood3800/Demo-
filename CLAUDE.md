@@ -106,7 +106,7 @@ HyperFrames telemetry is off with `HYPERFRAMES_NO_TELEMETRY=1` in `.claude/setti
 ## Other installed skills
 
 - Marketing: `marketing-skills` plugin (coreyhaines31/marketingskills, MIT), 53 skills such as `marketing-skills:copywriting`, `free-tools`, `launch` and `programmatic-seo` (see above).
-- Sales: `sales` and `sales-*` skills plus `.claude/agents/sales-*` (zubair-trabzada/ai-sales-team-claude), and `agency-offer-playbook` for offers, packages, pricing and honest selling (load it for any offer, proposal, pricing or outreach copy).
+- Sales: `sales` and `sales-*` skills plus `.claude/agents/sales-*` (zubair-trabzada/ai-sales-team-claude), and `agency-offer-playbook` for offers, packages, pricing and honest selling (load it for any offer, proposal, pricing or outreach copy). `sellbird-outreach` (ethanplusai/sellbird, AGPL-3.0, keep its LICENSE and NOTICE) adds cold-email, prospecting, signal, objection, LinkedIn and honest social-post knowledge: load it for any client-finding, cold email, follow-up or reply task.
 - Trading: `trader-*` skills (Jakeschincariol/day-trader-skill).
 - n8n: `n8n-*-official` (n8n-io/skills) and the community `n8n-*` skills (czlonkowski/n8n-skills).
 - Shopify: `shopify-*` skills and the `shopify-ai-toolkit` plugin (see above).
