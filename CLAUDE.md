@@ -66,6 +66,17 @@ Workflow:
 4. Validate the workflow (`n8n-validation-expert`) and add error handling before delivery.
 5. If no n8n MCP server is connected, deliver the workflow as an importable JSON file and say so; with one connected, build and test it in the user's n8n directly.
 
+## Marketing (always use the marketing skills)
+
+The `marketing-skills` plugin (coreyhaines31/marketingskills, MIT; enabled in `.claude/settings.json`) holds 53 marketing skills, named `marketing-skills:<skill>`. For any task that markets, launches, prices or sells the user's own products, tool website or content, load the ones that apply, for example:
+
+- Product launch and sales pages: `launch`, `product-marketing`, `copywriting`, `copy-editing`, `cro`, `pricing`, `offers`, `signup`, `onboarding`.
+- Tool website and search traffic: `free-tools`, `programmatic-seo`, `seo-audit`, `ai-seo`, `schema`, `site-architecture`, `directory-submissions`, `link-building`.
+- Getting the word out: `content-strategy`, `social`, `community-marketing`, `video`, `lead-magnets`, `emails`, `referrals`, `marketing-ideas`, `marketing-plan`.
+- Outreach: `cold-email` and `prospecting`, together with the `sales` skills and the honesty rules of `agency-offer-playbook`.
+
+Some of these skills name paid partner tools; mention one only when it truly fits, say plainly that it is a paid or partner tool, and prefer free options for this user. The skills are written for US/EU SaaS; adapt prices, channels and laws to the user's market (Pakistan, the Gulf, Singapore, Australia). The honesty rules above still win: no invented proof, fake urgency or unverified claims.
+
 ## Shopify stores (always use the Shopify skills)
 
 For any task that builds, sets up or customises a Shopify store or theme, always use these together:
@@ -94,6 +105,7 @@ HyperFrames telemetry is off with `HYPERFRAMES_NO_TELEMETRY=1` in `.claude/setti
 
 ## Other installed skills
 
+- Marketing: `marketing-skills` plugin (coreyhaines31/marketingskills, MIT), 53 skills such as `marketing-skills:copywriting`, `free-tools`, `launch` and `programmatic-seo` (see above).
 - Sales: `sales` and `sales-*` skills plus `.claude/agents/sales-*` (zubair-trabzada/ai-sales-team-claude), and `agency-offer-playbook` for offers, packages, pricing and honest selling (load it for any offer, proposal, pricing or outreach copy).
 - Trading: `trader-*` skills (Jakeschincariol/day-trader-skill).
 - n8n: `n8n-*-official` (n8n-io/skills) and the community `n8n-*` skills (czlonkowski/n8n-skills).
