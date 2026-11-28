@@ -93,15 +93,12 @@ h1 { font-size: clamp(40px, 5.4vw, 72px); line-height: 1.02; letter-spacing: -0.
 .step-p { margin: 0; max-width: 36ch; color: var(--fg2); font-size: 17px; }
 .scroll-hint { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
 
-.scene { position: relative; min-width: 0; height: min(78svh, 680px); }
-.scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.scene-fallback { position: absolute; inset: 0; display: none; place-items: center; }
-.no-webgl .scene-fallback { display: grid; }
-.no-webgl .scene canvas { display: none; }
+.scene { position: relative; min-width: 0; height: min(84svh, 760px); aspect-ratio: 9 / 16; max-width: 100%; justify-self: center; border-radius: 20px; overflow: hidden; background: var(--deep); box-shadow: inset 0 0 0 1px var(--line); }
+.scene canvas, .scene img.poster { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
 
 /* Signature: the scale readout */
 .readout {
-  position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%);
   display: flex; gap: 4px; padding: 4px; border-radius: 12px;
   background: var(--deep); box-shadow: inset 0 0 0 1px var(--line);
   font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap;
@@ -114,7 +111,7 @@ h1 { font-size: clamp(40px, 5.4vw, 72px); line-height: 1.02; letter-spacing: -0.
 
 @media (max-width: 860px) {
   .pin-grid { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; align-items: stretch; gap: 0; padding-block: 8px 24px; }
-  .scene { order: -1; height: auto; min-height: 0; }
+  .scene { order: -1; height: auto; min-height: 0; width: 100%; aspect-ratio: auto; justify-self: stretch; }
   .copy { height: 300px; }
   .lede { font-size: 16px; }
   .readout div { min-width: 0; padding: 6px 10px; }
@@ -127,7 +124,7 @@ h1 { font-size: clamp(40px, 5.4vw, 72px); line-height: 1.02; letter-spacing: -0.
 .rm .pin-grid { height: auto; padding-block: 24px 64px; }
 .rm .copy { height: auto; display: grid; gap: 40px; }
 .rm .layer { position: static; opacity: 1 !important; transform: none !important; }
-.rm .scene { height: 520px; }
+.rm .scene { height: 640px; }
 .rm .scroll-hint { display: none; }
 
 /* Sections below the stage */
@@ -185,7 +182,27 @@ section.block { padding-block: 96px; border-top: 1px solid var(--line); }
 .hours dt { color: var(--fg2); }
 .hours dd { margin: 0; }
 
+/* Bean to cup: grinder still beside text */
+.split { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 48px; align-items: center; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; gap: 24px; } }
+.split figure { margin: 0; border-radius: var(--r-card); overflow: hidden; box-shadow: inset 0 0 0 1px var(--line); aspect-ratio: 4 / 3; background: var(--deep); }
+.split img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.facts { margin: 24px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.facts div { display: grid; gap: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
+.facts dt { font-size: 13px; color: var(--muted); }
+.facts dd { margin: 0; font-family: var(--font-mono); font-size: 18px; font-variant-numeric: tabular-nums; }
+
+/* Pickup band: a full-width photo with the text on its dark side */
+.band { position: relative; border-top: 1px solid var(--line); min-height: 560px; display: grid; align-items: center; overflow: hidden; }
+.band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+.band .wrap { position: relative; display: flex; justify-content: flex-start; padding-block: 96px; }
+.band-text { max-width: 420px; display: grid; gap: 16px; padding: 28px; border-radius: var(--r-card); background: rgba(18, 17, 15, 0.82); box-shadow: inset 0 0 0 1px var(--line); }
+.band-text h2 { font-size: clamp(28px, 3vw, 38px); line-height: 1.1; letter-spacing: -0.02em; }
+.band-text p { margin: 0; color: var(--fg2); }
+@media (max-width: 760px) { .band { min-height: 0; } .band img { position: static; height: 300px; } .band .wrap { padding-block: 0 48px; margin-top: -48px; } }
+
 footer { border-top: 1px solid var(--line); }
+footer .credits { margin: 0; padding-bottom: 24px; font-size: 12px; color: var(--muted); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 24px; font-size: 13px; color: var(--muted); }
 </style>
 
@@ -234,16 +251,29 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           </div>
         </div>
         <div class="scene" id="scene">
-          <canvas id="cup" aria-label="An espresso cup on a saucer filling with coffee as you scroll" role="img"></canvas>
-          <div class="scene-fallback" aria-hidden="true">
-            <svg width="260" height="260" viewBox="0 0 260 260"><circle cx="130" cy="130" r="118" fill="#2a2724"/><circle cx="130" cy="130" r="84" fill="#e9e3d9"/><circle cx="130" cy="130" r="70" fill="#a8683a"/><circle cx="122" cy="124" r="30" fill="#c58a55"/></svg>
-          </div>
+          <img class="poster" src="frames/001.webp" alt="" aria-hidden="true">
+          <canvas id="cup" aria-label="An espresso shot pouring into a white cup as you scroll" role="img"></canvas>
           <dl class="readout" aria-live="off">
             <div><dt>Dose</dt><dd>18.0 g</dd></div>
             <div><dt>Yield</dt><dd><b id="yield">0.0</b> g</dd></div>
             <div><dt>Time</dt><dd><span id="time">0</span> s</dd></div>
           </dl>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="grind-h">
+    <div class="wrap split">
+      <figure><img src="img/grinder.webp" alt="A burr grinder dropping fresh coffee into a dosing cup" loading="lazy" width="1400" height="788"></figure>
+      <div>
+        <h2 id="grind-h" class="step-h">Ground for each cup, never ahead</h2>
+        <p class="step-p" style="margin-top:16px">Beans go into the grinder only when your order comes in. Ground coffee loses its aroma within minutes, so nothing sits waiting in a hopper</p>
+        <dl class="facts">
+          <div><dt>Dose</dt><dd>18.0 g</dd></div>
+          <div><dt>Water</dt><dd>93 °C</dd></div>
+          <div><dt>Ratio</dt><dd>1 : 2</dd></div>
+        </dl>
       </div>
     </div>
   </section>
@@ -279,6 +309,17 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </section>
 
+  <section class="band" aria-labelledby="band-h">
+    <img src="img/cup-beans.webp" alt="A white cup of black coffee on a dark table scattered with coffee beans" loading="lazy" width="1600" height="900">
+    <div class="wrap">
+      <div class="band-text">
+        <h2 id="band-h">Your name on the cup, waiting by the door</h2>
+        <p>Send the order on your way here. We start the shot when you are five minutes out, so it is hot when you walk in</p>
+        <div><a class="btn btn-primary" href="#menu">Order ahead</a></div>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="visit" aria-labelledby="visit-h">
     <div class="wrap">
       <div class="block-head"><h2 id="visit-h">Visit</h2></div>
@@ -304,9 +345,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   </section>
 </main>
 
-<footer><div class="wrap"><span>Eighteen Grams, a concept site</span><span>Design and build by your studio</span></div></footer>
+<footer><div class="wrap"><span>Eighteen Grams, a concept site</span><span>Design and build by your studio</span></div><div class="wrap"><p class="credits">Footage from Pexels, free to use under the Pexels licence</p></div></footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -409,139 +449,61 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       el.setAttribute("aria-hidden", a > 0.5 ? "false" : "true");
     });
   }
-  function pourAmount(p) { return smooth(0.22, 0.8, p); }
+  function pourAmount(p) { return smooth(0.18, 0.88, p); }
   function setReadout(p) {
-    var t = clamp((p - 0.22) / 0.58, 0, 1);
+    var t = clamp((p - 0.18) / 0.7, 0, 1);
     yieldEl.textContent = (36 * pourAmount(p)).toFixed(1);
     timeEl.textContent = String(Math.round(28 * t));
   }
 
-  /* ---------- Three.js cup ---------- */
+  /* ---------- Frame sequence: real footage scrubbed by scroll ---------- */
   var draw = function () {};
   var canvas = document.getElementById("cup");
-  var scene3 = document.getElementById("scene");
-  var hasGL = false;
-  try { hasGL = !!(window.THREE && (canvas.getContext("webgl2") || canvas.getContext("webgl"))); } catch (e) { hasGL = false; }
-  if (!hasGL) {
-    document.documentElement.classList.add("no-webgl");
-  } else {
-    var T = window.THREE;
-    var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.outputEncoding = T.sRGBEncoding;
-    renderer.toneMapping = T.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = T.PCFSoftShadowMap;
-
-    var scene = new T.Scene();
-    var camera = new T.PerspectiveCamera(30, 1, 0.1, 50);
-
-    scene.add(new T.HemisphereLight(0xfff1e0, 0x1b1611, 0.65));
-    var key = new T.DirectionalLight(0xffe2c4, 1.35);
-    key.position.set(2.6, 4.2, 2.4);
-    key.castShadow = true;
-    key.shadow.mapSize.set(1024, 1024);
-    key.shadow.camera.left = -2; key.shadow.camera.right = 2; key.shadow.camera.top = 2; key.shadow.camera.bottom = -2;
-    key.shadow.radius = 6; key.shadow.bias = -0.0006;
-    scene.add(key);
-    var rim = new T.DirectionalLight(0xc9d4e6, 0.35);
-    rim.position.set(-3, 2.2, -2.5);
-    scene.add(rim);
-
-    var ground = new T.Mesh(new T.PlaneGeometry(12, 12), new T.ShadowMaterial({ opacity: 0.42 }));
-    ground.rotation.x = -Math.PI / 2;
-    ground.receiveShadow = true;
-    scene.add(ground);
-
-    var ceramic = new T.MeshPhysicalMaterial({ color: 0xebe5db, roughness: 0.32, clearcoat: 0.7, clearcoatRoughness: 0.2, side: T.DoubleSide });
-
-    // Saucer
-    var sP = [[0, 0], [0.55, 0], [0.82, 0.025], [0.95, 0.07], [0.99, 0.1], [0.96, 0.105], [0.84, 0.07], [0.6, 0.04], [0.42, 0.035], [0, 0.035]]
-      .map(function (a) { return new T.Vector2(a[0], a[1]); });
-    var saucer = new T.Mesh(new T.LatheGeometry(sP, 96), ceramic);
-    saucer.castShadow = true; saucer.receiveShadow = true;
-    scene.add(saucer);
-
-    // Cup: outer wall, rim, inner wall
-    var base = 0.035;
-    var cupPts = [[0, 0], [0.27, 0], [0.33, 0.04], [0.39, 0.28], [0.45, 0.6], [0.48, 0.84], [0.485, 0.88], [0.455, 0.885], [0.445, 0.84], [0.415, 0.6], [0.355, 0.3], [0.29, 0.1], [0, 0.1]];
-    var cup = new T.Mesh(new T.LatheGeometry(cupPts.map(function (a) { return new T.Vector2(a[0], a[1] + base); }), 128), ceramic);
-    cup.castShadow = true; cup.receiveShadow = true;
-    scene.add(cup);
-    var inner = [[0.29, 0.1], [0.355, 0.3], [0.415, 0.6], [0.445, 0.84]];
-    function innerR(y) {
-      for (var i = 0; i < inner.length - 1; i++) {
-        if (y <= inner[i + 1][1]) return lerp(inner[i][0], inner[i + 1][0], (y - inner[i][1]) / (inner[i + 1][1] - inner[i][1]));
-      }
-      return inner[inner.length - 1][0];
-    }
-
-    // Handle
-    var handle = new T.Mesh(new T.TorusGeometry(0.19, 0.042, 20, 64, Math.PI * 1.05), ceramic);
-    handle.rotation.z = -Math.PI / 2 - 0.08;
-    handle.position.set(0.46, base + 0.5, 0);
-    handle.castShadow = true;
-    scene.add(handle);
-
-    // Crema surface, painted on a canvas texture
-    var cv = document.createElement("canvas"); cv.width = cv.height = 512;
-    var g = cv.getContext("2d");
-    var rg = g.createRadialGradient(236, 240, 20, 256, 256, 256);
-    rg.addColorStop(0, "#d39a62"); rg.addColorStop(0.45, "#b7773f"); rg.addColorStop(0.85, "#7d4523"); rg.addColorStop(1, "#4e2a16");
-    g.fillStyle = rg; g.fillRect(0, 0, 512, 512);
-    var seed = 7; var rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
-    for (var k = 0; k < 2200; k++) {
-      var ang = rnd() * Math.PI * 2, rad = Math.sqrt(rnd()) * 250;
-      g.fillStyle = rnd() > 0.5 ? "rgba(70,36,16,0.22)" : "rgba(240,200,150,0.18)";
-      g.beginPath(); g.arc(256 + Math.cos(ang) * rad, 256 + Math.sin(ang) * rad, rnd() * 2.2 + 0.4, 0, Math.PI * 2); g.fill();
-    }
-    var cremaTex = new T.CanvasTexture(cv); cremaTex.encoding = T.sRGBEncoding;
-    var crema = new T.Mesh(new T.CircleGeometry(1, 96), new T.MeshStandardMaterial({ map: cremaTex, roughness: 0.45, metalness: 0 }));
-    crema.rotation.x = -Math.PI / 2;
-    scene.add(crema);
-
-    // Falling stream
-    var stream = new T.Mesh(new T.CylinderGeometry(0.7, 1, 1, 20, 1, true), new T.MeshPhysicalMaterial({ color: 0x3a1c0b, roughness: 0.12, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.1, transparent: true, opacity: 0.88 }));
-    scene.add(stream);
-
-    var target = new T.Vector3(0, 0.42, 0);
-    function size() {
-      var w = scene3.clientWidth, h = scene3.clientHeight;
-      if (!w || !h) return;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    }
-    draw = function (p) {
-      // Camera: a slow orbit that rises to look into the cup during the pour, then settles
-      var a = smooth(0, 0.3, p), b = smooth(0.78, 1, p);
-      var theta = lerp(lerp(0.95, 0.35, a), -0.45, b);
-      var elev = lerp(lerp(0.32, 0.92, a), 0.5, b);
-      var dist = lerp(lerp(4.2, 3.75, a), 4.2, b);
-      if (camera.aspect < 0.9) dist *= 1.32;
-      camera.position.set(Math.sin(theta) * Math.cos(elev) * dist, target.y + Math.sin(elev) * dist, Math.cos(theta) * Math.cos(elev) * dist);
-      camera.lookAt(target);
-
-      var fill = pourAmount(p);
-      var level = lerp(0.105, 0.76, fill);
-      crema.visible = fill > 0.004;
-      var r = innerR(level) - 0.004;
-      crema.scale.set(r, r, 1);
-      crema.position.y = level + base;
-
-      var flow = smooth(0.2, 0.26, p) * (1 - smooth(0.76, 0.82, p));
-      stream.visible = flow > 0.01;
-      var top = 2.6, bottom = level + base;
-      var thick = 0.009 * flow + 0.0015;
-      stream.scale.set(thick, top - bottom, thick);
-      stream.position.set(-0.03, (top + bottom) / 2, 0.02);
-
-      renderer.render(scene, camera);
-    };
-    size();
-    window.addEventListener("resize", function () { size(); draw(state.p); });
+  var ctx = canvas.getContext("2d");
+  var box = document.getElementById("scene");
+  var N = 120, frames = new Array(N), loaded = new Array(N), last = -1;
+  var name = function (i) { return "frames/" + String(i + 1).padStart(3, "0") + ".webp"; };
+  function load(i) {
+    var im = new Image();
+    im.decoding = "async";
+    im.onload = function () { loaded[i] = true; paint(); };
+    im.src = name(i);
+    frames[i] = im;
   }
+  var cur = 0;
+  function size() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(box.clientWidth * dpr);
+    canvas.height = Math.round(box.clientHeight * dpr);
+    last = -1; paint();
+  }
+  function paint() {
+    // Draw the nearest frame that has arrived, cropped to cover the panel
+    var i = -1;
+    for (var k = 0; k < N; k++) {
+      if (cur - k >= 0 && loaded[cur - k]) { i = cur - k; break; }
+      if (cur + k < N && loaded[cur + k]) { i = cur + k; break; }
+    }
+    if (i < 0 || i === last) return;
+    var im = frames[i], cw = canvas.width, ch = canvas.height;
+    var s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+    var w = im.naturalWidth * s, h = im.naturalHeight * s;
+    ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+    last = i;
+  }
+  // First frame now, then the rest in order of need
+  load(0);
+  var order = [];
+  for (var step = 16; step >= 1; step = Math.floor(step / 2)) for (var j = 0; j < N; j += step) if (order.indexOf(j) < 0) order.push(j);
+  var qi = 1;
+  (function pump() {
+    var n = 0;
+    while (qi < order.length && n < 6) { if (!frames[order[qi]]) load(order[qi]); qi++; n++; }
+    if (qi < order.length) setTimeout(pump, 60);
+  })();
+  draw = function (p) { cur = Math.round(clamp((p - 0.06) / 0.86, 0, 1) * (N - 1)); paint(); };
+  size();
+  window.addEventListener("resize", function () { size(); draw(state.p); });
 
   /* ---------- Drive it ---------- */
   var state = { p: 0 };
